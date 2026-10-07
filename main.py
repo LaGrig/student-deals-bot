@@ -11,8 +11,78 @@ HISTORY_FILE = "data/processed_ids.json"
 
 CHANNEL_USERNAME = TELEGRAM_CHAT_ID.replace("@", "") if TELEGRAM_CHAT_ID else "discounts4students"
 
-# 1. Постоянные студенческие программы, софт и гранты
+# 1. Постоянные программы, локальные ивенты, одежда и работа
 EVERGREEN_DEALS = [
+    {
+        "id": "sk_trains_free",
+        "title": "Бесплатные поезда по Словакии для студентов (ŽSSK)",
+        "category": "Транспорт и Путешествия",
+        "main_tag": "словакия",
+        "benefit": "100% бесплатно во 2-м классе всех поездов ŽSSK",
+        "duration": "На весь период дневной формы обучения (до 26 лет)",
+        "region": "🇸🇰 Словакия (Кошице, Братислава, Татры)",
+        "requirements": "Студенческий билет с чипом ISIC (вузы TUKE, UPJŠ и др.)",
+        "description": "Уникальная льгота для студентов словацких вузов: бесплатный проезд на всех поездах государственной железной дороги по всей Словакии (поездки из Кошице в горы Высокие Татры, Братиславу и к границам).",
+        "how_to": "1. Получите студенческий ISIC в вашем университете (например, TUKE или UPJŠ).\n2. На вокзале Кошице (Železničná stanica Košice) в кассе оформите Preukaz pre študenta.\n3. Оформляйте бесплатные нулевые билеты на сайте zssk.sk или в приложении Ideme vlakom.",
+        "link": "https://www.zssk.sk/bezplatna-preprava/",
+        "extra_tags": ["кошице", "словакия", "поезда", "isic"]
+    },
+    {
+        "id": "kosice_tabacka_usmev",
+        "title": "Студенческий досуг в Кошице: Tabačka Kulturfabrik и Kino Úsmev",
+        "category": "Ивенты и Досуг",
+        "main_tag": "кошице",
+        "benefit": "Скидки до 40% на концерты, фестивали и кино",
+        "duration": "Постоянно при предъявлении ISIC",
+        "region": "🇸🇰 Кошице (Словакия)",
+        "requirements": "Карта ISIC любого вуза",
+        "description": "Главные точки притяжения молодёжи и студентов в Кошице. Культурный центр Tabačka Kulturfabrik (живые концерты, выставки, фестивали) и культовый артхаусный кинотеатр Kino Úsmev предлагают специальные студенческие цены.",
+        "how_to": "Выбирайте билет «Zľavnený / Študent» при покупке онлайн на сайтах площадок или показывайте ISIC в кассе.",
+        "link": "https://tabacka.sk/",
+        "extra_tags": ["кошице", "словакия", "ивенты", "концерты"]
+    },
+    {
+        "id": "odessa_theaters_culture",
+        "title": "Скидка 50% на театры, оперу и филармонию в Одессе",
+        "category": "Ивенты и Досуг",
+        "main_tag": "одесса",
+        "benefit": "Скидка 50% от стоимости билета",
+        "duration": "Постоянно в течение театрального сезона",
+        "region": "🇺🇦 Одесса (Украина)",
+        "requirements": "Студенческий билет украинского вуза",
+        "description": "Одесский национальный академический театр оперы и балета, Одесская областная филармония и Украинский театр предоставляют скидку 50% для студентов. Отличный способ культурно провести вечер компанией за минимальные деньги.",
+        "how_to": "Приобретайте билеты в кассах театров, показав студенческий билет, либо выбирайте студенческий тариф при онлайн-бронировании.",
+        "link": "https://operahouse.od.ua/",
+        "extra_tags": ["одесса", "украина", "ивенты", "культура"]
+    },
+    {
+        "id": "asos_student_discount",
+        "title": "Скидка 10% на брендовую одежду и обувь в ASOS",
+        "category": "Одежда и Стиль",
+        "main_tag": "одежда",
+        "benefit": "Постоянная скидка 10% на весь ассортимент",
+        "duration": "Круглый год на весь период учёбы",
+        "region": "🌍 Global (доставка в Украину, Словакию и ЕС)",
+        "requirements": "Студенческая почта (.edu) или верификация через UNiDAYS",
+        "description": "Один из крупнейших мультибрендовых магазинов молодёжной одежды, кроссовок (Nike, New Balance, adidas) и аксессуаров. Студенческий код действует постоянно и суммируется со многими сезонными скидками.",
+        "how_to": "1. Перейдите на страницу ASOS Student.\n2. Введите университетскую почту или подтвердите статус через UNiDAYS.\n3. Персональный промокод придёт на email.",
+        "link": "https://www.asos.com/discover/students/asosteam/",
+        "extra_tags": ["одежда", "стиль", "кроссовки", "скидки"]
+    },
+    {
+        "id": "student_remote_jobs",
+        "title": "Удалённая работа и стажировки: проверенные варианты для студентов",
+        "category": "Работа и Стажировки",
+        "main_tag": "работа",
+        "benefit": "Оплата от $400 до $1200 / гибкие смены под пары",
+        "duration": "Постоянные наборы",
+        "region": "🌍 Global / Remote (Украина, Словакия, ЕС)",
+        "requirements": "Базовый английский или грамотный язык, 4–5 часов в день",
+        "description": "С чего начать зарабатывать студенту: 1) Оплачиваемые IT-стажировки (Genesis, SoftServe), 2) Чат-саппорт на гибких сменах, 3) Тестирование приложений (uTest, Testlio), где компании платят за проверку мобильных программ в свободное время.",
+        "how_to": "1. Зарегистрируйтесь на uTest и пройдите бесплатную Академию тестировщика.\n2. Начните получать приглашения на платные тест-циклы мобильных игр и сайтов.",
+        "link": "https://www.utest.com/",
+        "extra_tags": ["работа", "стажировки", "удаленка", "фриланс"]
+    },
     {
         "id": "canva_pro_student",
         "title": "Canva Pro для студентов",
@@ -21,7 +91,7 @@ EVERGREEN_DEALS = [
         "benefit": "Бесплатно 100% (обычная цена: $120/год)",
         "duration": "На весь период учебы",
         "region": "🌍 Global",
-        "requirements": "Студенческий билет или через GitHub Student Pack",
+        "requirements": "Студенческий билет или GitHub Student Pack",
         "description": "Премиум-подписка Canva: миллионы платных шаблонов, премиум-шрифты, удаление фона в один клик, экспорт в высоком качестве и генеративный ИИ Magic Studio.",
         "how_to": "1. Перейдите на страницу Canva for Education.\n2. Войдите через аккаунт студента или свяжите с GitHub Student Developer Pack.",
         "link": "https://www.canva.com/education/",
@@ -40,48 +110,6 @@ EVERGREEN_DEALS = [
         "how_to": "1. Зайдите на страницу Coursera for Campus.\n2. Введите университетскую почту для подтверждения участия вашего вуза.",
         "link": "https://www.coursera.org/for-university-and-college-students",
         "extra_tags": ["coursera", "сертификаты", "курсы"]
-    },
-    {
-        "id": "github_campus_experts",
-        "title": "GitHub Campus Experts (Гранты и Статус)",
-        "category": "Гранты и Сообщества",
-        "main_tag": "гранты",
-        "benefit": "Финансирование студенческих хакатонов + закрытый мерч",
-        "duration": "Наборы проходят 2 раза в год (весна / осень)",
-        "region": "🌍 Global (включая Украину)",
-        "requirements": "Студент дневной формы от 18 лет, наличие профиля GitHub",
-        "description": "Официальная программа подготовки лидеров от GitHub. Участники получают оплату поездок на IT-конференции, бюджеты на проведение митапов в своем вузе и прямой контакт с командой GitHub.",
-        "how_to": "1. Перейдите на страницу программы.\n2. Подайте заявку и пройдите короткий модуль обучения Community Leader.",
-        "link": "https://education.github.com/experts",
-        "extra_tags": ["github", "хакатоны", "global"]
-    },
-    {
-        "id": "ms_student_ambassadors",
-        "title": "Microsoft Learn Student Ambassadors",
-        "category": "Гранты и Амбассадорство",
-        "main_tag": "гранты",
-        "benefit": "$150/мес в Azure + бесплатный софт и ваучеры на сертификации",
-        "duration": "На весь период учебы (приём заявок открыт круглый год)",
-        "region": "🌍 Global",
-        "requirements": "Студент любого аккредитованного колледжа или вуза",
-        "description": "Программа для активных студентов: ежемесячные кредиты $150 на облако Azure, бесплатная подписка Visual Studio Enterprise, доступ к закрытым воркшопам Microsoft и бесплатные ваучеры на сдачу международных экзаменов (стоимостью от $100).",
-        "how_to": "1. Откройте studentambassadors.microsoft.com.\n2. Заполните анкету и запишите короткое видео о своей мотивации.",
-        "link": "https://studentambassadors.microsoft.com/",
-        "extra_tags": ["microsoft", "azure", "сертификаты", "global"]
-    },
-    {
-        "id": "gdsc_google",
-        "title": "Google Developer Student Clubs (GDSC)",
-        "category": "Сообщества и Хакатоны",
-        "main_tag": "гранты",
-        "benefit": "Доступ к менторам Google + участие в Solution Challenge",
-        "duration": "Ежегодные наборы",
-        "region": "🌍 Global (клубы действуют во многих вузах Украины)",
-        "requirements": "Студенты бакалавриата и магистратуры всех специальностей",
-        "description": "Университетские клубы при поддержке Google. Доступ к закрытым хакатонам Google Solution Challenge с призовым фондом более $10,000, бесплатные подписки на Google Cloud Skills Boost.",
-        "how_to": "Найдите клуб своего университета на платформе Google Developers или подайте заявку на открытие нового клуба.",
-        "link": "https://developers.google.com/community/gdsc",
-        "extra_tags": ["google", "хакатоны", "global"]
     }
 ]
 
@@ -189,10 +217,9 @@ def send_telegram_card(deal):
     if desc:
         text += f"{desc}\n\n"
     if how_to:
-        text += f"💡 <b>Как забрать:</b>\n{how_to}\n\n"
+        text += f"💡 <b>Как забрать / оформить:</b>\n{how_to}\n\n"
     text += f"{tags_string}"
 
-    # Одинарная аккуратная кнопка действия
     reply_markup = {
         "inline_keyboard": [
             [
@@ -213,7 +240,7 @@ def send_telegram_card(deal):
     try:
         response = requests.post(url, json=payload, timeout=15)
         print(f"Отправка '{title[:35]}...': HTTP {response.status_code}")
-        time.sleep(1.5)  # Защита от спам-фильтра Telegram
+        time.sleep(1.5)
         return response.status_code == 200
     except Exception as e:
         print(f"Ошибка отправки: {e}")
@@ -227,14 +254,17 @@ def main():
     processed_ids = load_processed_ids()
     new_processed = set(processed_ids)
 
-    # 1. Публикуем постоянную программу (Canva, Coursera, гранты), если ещё не было
+    # 1. Публикуем до 2 предложений из каталога за один запуск
+    published_from_catalog = 0
     for deal in EVERGREEN_DEALS:
         deal_id = deal["id"]
         if deal_id not in processed_ids:
-            print(f"Публикация постоянного предложения: {deal['title']}")
+            print(f"Публикация из каталога: {deal['title']}")
             if send_telegram_card(deal):
                 new_processed.add(deal_id)
-                break
+                published_from_catalog += 1
+                if published_from_catalog >= 2:
+                    break
 
     # 2. Проверяем до 10 свежих записей в каждой динамической ленте
     for feed_info in DYNAMIC_FEEDS:
