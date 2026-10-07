@@ -7,7 +7,6 @@ TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 HISTORY_FILE = "data/processed_ids.json"
 
-# Источники: бесплатные раздачи игр и скидки для студентов
 FEEDS = [
     {
         "url": "https://www.reddit.com/r/FreeGameFindings/new/.rss",
@@ -49,35 +48,54 @@ def detect_region(text):
     return "🌍 Global / Онлайн"
 
 def send_telegram_message(title, link, category, region):
+    # Безопасное экранирование символов для HTML
+    safe_title = title.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    
     text = (
-        f"🎓 **[{category}]**\n\n"
-        f"📢 **{title}**\n\n"
-        f"📍 **Регион:** {region}\n"
-        f"🔗 [Перейти к акции]({link})"
+        f"🎓 <b>[{category}]</b>\n\n"
+        f"📢 <b>{safe_title}</b>\n\n"
+        f"📍 <b>Регион:</b> {region}\n"
+        f"🔗 <a href=\"{link}\">Перейти к акции</a>"
     )
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text,
-        "parse_mode": "Markdown",
+        "parse_mode": "HTML",
         "disable_web_page_preview": False
     }
-    response = requests.post(url, json=payload, timeout=15)
-    return response.status_code == 200
+    
+    try:
+        response = requests.post(url, json=payload, timeout=15)
+        print(f"Отправка поста '{title[:35]}...': Статус {response.status_code}")
+        print(f"Ответ от Telegram API: {response.text}")
+        return response.status_code == 200
+    except Exception as e:
+        print(f"Сетевая ошибка при отправке: {e}")
+        return False
 
 def main():
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-        print("Ошибка: переменные окружения не заданы.")
+        print(f"КРИТИЧЕСКАЯ ОШИБКА: TELEGRAM_BOT_TOKEN или TELEGRAM_CHAT_ID пустые!")
         return
 
+    print(f"Запуск бота. Канал назначения: {TELEGRAM_CHAT_ID}")
     processed_ids = load_processed_ids()
     new_processed = set(processed_ids)
 
+    total_found = 0
     for feed_info in FEEDS:
+        print(f"Проверка источника: {feed_info['category']}")
         feed = feedparser.parse(feed_info["url"], agent="Mozilla/5.0")
-        for entry in feed.entries[:5]:
+        
+        entries = feed.entries[:5]
+        print(f"Найдено записей в фиде: {len(entries)}")
+        
+        for entry in entries:
+            total_found += 1
             post_id = entry.get("id") or entry.get("link")
             if not post_id or post_id in processed_ids:
+                print(f"Пост уже был опубликован ранее: {entry.title[:30]}...")
                 continue
 
             title = entry.title
@@ -97,6 +115,7 @@ def main():
                 new_processed.add(post_id)
 
     save_processed_ids(new_processed)
+    print(f"Работа завершена. Всего проверено постов: {total_found}")
 
 if __name__ == "__main__":
     main()
