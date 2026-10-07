@@ -167,13 +167,7 @@ def send_telegram_card(deal):
     reply_markup = {
         "inline_keyboard": [
             [
-                {"text": "🔗 Забрать предложение / Перейти", "url": link}
-            ],
-            [
-                {
-                    "text": f"📂 Все посты: {category}",
-                    "url": f"https://t.me/{CHANNEL_USERNAME}?q=%23{main_tag}"
-                }
+                {"text": "🔗 Забрать предложение", "url": link}
             ]
         ]
     }
