@@ -11,8 +11,36 @@ HISTORY_FILE = "data/processed_ids.json"
 
 CHANNEL_USERNAME = TELEGRAM_CHAT_ID.replace("@", "") if TELEGRAM_CHAT_ID else "discounts4students"
 
-# 1. Студенческие программы, гранты и амбассадорство
+# 1. Постоянные студенческие программы, софт и гранты
 EVERGREEN_DEALS = [
+    {
+        "id": "canva_pro_student",
+        "title": "Canva Pro для студентов",
+        "category": "Дизайн и Презентации",
+        "main_tag": "дизайн",
+        "benefit": "Бесплатно 100% (обычная цена: $120/год)",
+        "duration": "На весь период учебы",
+        "region": "🌍 Global",
+        "requirements": "Студенческий билет или через GitHub Student Pack",
+        "description": "Премиум-подписка Canva: миллионы платных шаблонов, премиум-шрифты, удаление фона в один клик, экспорт в высоком качестве и генеративный ИИ Magic Studio.",
+        "how_to": "1. Перейдите на страницу Canva for Education.\n2. Войдите через аккаунт студента или свяжите с GitHub Student Developer Pack.",
+        "link": "https://www.canva.com/education/",
+        "extra_tags": ["canva", "графика", "дизайн"]
+    },
+    {
+        "id": "coursera_student",
+        "title": "Coursera for Campus (Студенческий доступ)",
+        "category": "Курсы и Обучение",
+        "main_tag": "курсы",
+        "benefit": "1 бесплатный курс с официальным сертификатом в год",
+        "duration": "12 месяцев с возможностью продления",
+        "region": "🌍 Global",
+        "requirements": "Студенческая почта вашего вуза",
+        "description": "Бесплатный доступ к тысячам курсов от Google, IBM, Yale и Stanford с получением официального подтверждённого сертификата для резюме и LinkedIn.",
+        "how_to": "1. Зайдите на страницу Coursera for Campus.\n2. Введите университетскую почту для подтверждения участия вашего вуза.",
+        "link": "https://www.coursera.org/for-university-and-college-students",
+        "extra_tags": ["coursera", "сертификаты", "курсы"]
+    },
     {
         "id": "github_campus_experts",
         "title": "GitHub Campus Experts (Гранты и Статус)",
@@ -67,7 +95,7 @@ DYNAMIC_FEEDS = [
         "default_benefit": "100% скидка (Бесплатно вместо $40–$90)",
         "default_duration": "24–48 часов по промокоду (в профиле навсегда)",
         "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Нажмите «Оформить» ➔ убедитесь, что цена $0 (бесплатно) ➔ нажмите «Записаться». Привязка карты не нужна!"
+        "how_to_tip": "Нажмите кнопку «Забрать предложение» ➔ убедитесь, что цена $0 ➔ нажмите «Записаться». Привязка карты не нужна!"
     },
     {
         "url": "https://www.reddit.com/r/FreeGameFindings/new/.rss",
@@ -122,7 +150,7 @@ def escape_html(text):
     return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 def extract_direct_link(summary_html, fallback_url):
-    """Извлекает прямую целевую ссылку из описания Reddit (вместо ссылки на обсуждение)"""
+    """Извлекает прямую целевую ссылку из описания (вместо ссылки на обсуждение)"""
     if not summary_html:
         return fallback_url
     found_links = re.findall(r'href=[\"\']([^\"\']+)[\"\']', summary_html)
@@ -164,6 +192,7 @@ def send_telegram_card(deal):
         text += f"💡 <b>Как забрать:</b>\n{how_to}\n\n"
     text += f"{tags_string}"
 
+    # Одинарная аккуратная кнопка действия
     reply_markup = {
         "inline_keyboard": [
             [
@@ -184,7 +213,7 @@ def send_telegram_card(deal):
     try:
         response = requests.post(url, json=payload, timeout=15)
         print(f"Отправка '{title[:35]}...': HTTP {response.status_code}")
-        time.sleep(1.5)  # Лимит Telegram
+        time.sleep(1.5)  # Защита от спам-фильтра Telegram
         return response.status_code == 200
     except Exception as e:
         print(f"Ошибка отправки: {e}")
@@ -198,20 +227,20 @@ def main():
     processed_ids = load_processed_ids()
     new_processed = set(processed_ids)
 
-    # 1. Публикуем 1 актуальную программу грантов/амбассадорства (если еще не было)
+    # 1. Публикуем постоянную программу (Canva, Coursera, гранты), если ещё не было
     for deal in EVERGREEN_DEALS:
         deal_id = deal["id"]
         if deal_id not in processed_ids:
-            print(f"Публикация гранта: {deal['title']}")
+            print(f"Публикация постоянного предложения: {deal['title']}")
             if send_telegram_card(deal):
                 new_processed.add(deal_id)
-                break  # по 1 за запуск, чтобы дозировать контент
+                break
 
-    # 2. Мониторим горячие раздачи (курсы, игры, софт)
+    # 2. Проверяем до 10 свежих записей в каждой динамической ленте
     for feed_info in DYNAMIC_FEEDS:
         try:
             feed = feedparser.parse(feed_info["url"], agent="Mozilla/5.0")
-            for entry in feed.entries[:2]:  # берём 2 самые свежие из каждой категории
+            for entry in feed.entries[:10]:
                 post_id = entry.get("id") or entry.get("link")
                 if not post_id or post_id in processed_ids:
                     continue
