@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import feedparser
 import requests
 
@@ -7,11 +8,52 @@ TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 HISTORY_FILE = "data/processed_ids.json"
 
-# Получаем чистое имя канала без @ для создания внутриканальных ссылок
 CHANNEL_USERNAME = TELEGRAM_CHAT_ID.replace("@", "") if TELEGRAM_CHAT_ID else "discounts4students"
 
-# 1. Золотой фонд студенческих программ и лицензий
+# Полная база студенческих программ по всем категориям
 EVERGREEN_DEALS = [
+    {
+        "id": "youtube_premium_student",
+        "title": "YouTube Premium + YouTube Music для студентов",
+        "category": "Музыка и Видео",
+        "main_tag": "подписки",
+        "benefit": "Скидка ~50% (в Украине всего ~59 грн/мес)",
+        "duration": "1 год с ежегодным продлением (до 4 лет учебы)",
+        "region": "🇺🇦 Украина, 🇪🇺 ЕС, 🇺🇸 США и др.",
+        "requirements": "Студенческий билет или справка (верификация через SheerID)",
+        "description": "YouTube и YouTube Music без рекламы, фоновое воспроизведение при заблокированном экране и скачивание любых треков и роликов офлайн.",
+        "how_to": "1. Перейдите по ссылке на страницу студенческой подписки.\n2. Нажмите «Попробовать бесплатно / Оформить».\n3. Введите данные вуза и прикрепите фото студенческого в форме SheerID (проверка занимает от 15 минут).",
+        "link": "https://www.youtube.com/premium/student",
+        "extra_tags": ["музыка", "youtube", "украина"]
+    },
+    {
+        "id": "spotify_student",
+        "title": "Spotify Premium Student",
+        "category": "Музыка и Аудио",
+        "main_tag": "подписки",
+        "benefit": "Скидка 50% + 1 месяц бесплатно",
+        "duration": "До 4 лет (подтверждение раз в 12 месяцев)",
+        "region": "🇺🇦 Украина, 🇪🇺 ЕС, 🇺🇸 США",
+        "requirements": "Студенческий билет (верификация SheerID)",
+        "description": "Премиум-доступ к Spotify: прослушивание музыки без ограничений и рекламы в максимальном качестве, скачивание альбомов на телефон.",
+        "how_to": "1. Откройте страницу Spotify Student.\n2. Авторизуйтесь и пройдите быструю проверку статуса учащегося через SheerID.",
+        "link": "https://www.spotify.com/student/",
+        "extra_tags": ["музыка", "spotify", "украина"]
+    },
+    {
+        "id": "apple_music_tv",
+        "title": "Apple Music + Apple TV+ для студентов",
+        "category": "Музыка и Кино",
+        "main_tag": "подписки",
+        "benefit": "Скидка ~50% + бесплатный Apple TV+",
+        "duration": "До 48 месяцев (4 года учебы)",
+        "region": "🇺🇦 Украина, 🇪🇺 ЕС, 🇺🇸 США",
+        "requirements": "Верификация через сервис UNiDAYS",
+        "description": "Студенческая подписка на Apple Music со скидкой 50%, в которую автоматически бесплатно входит доступ к фильмам и сериалам Apple TV+.",
+        "how_to": "1. Откройте приложение «Музыка» на телефоне или сайте Apple.\n2. Выберите тариф «Студенческая подписка».\n3. Подтвердите статус через встроенную форму UNiDAYS.",
+        "link": "https://www.apple.com/apple-music/",
+        "extra_tags": ["музыка", "кино", "apple"]
+    },
     {
         "id": "fusion_360_edu",
         "title": "Autodesk Fusion 360",
@@ -21,8 +63,8 @@ EVERGREEN_DEALS = [
         "duration": "1 год с ежегодным продлением на весь период учебы",
         "region": "🌍 Global (Украина, ЕС, США и др.)",
         "requirements": "Студенческий билет или справка из учебного заведения",
-        "description": "Полнофункциональный профессиональный пакет для 3D-моделирования, инженерного проектирования, симуляций механики и подготовки моделей к ЧПУ/3D-печати без ограничений.",
-        "how_to": "1. Зайдите на портал Autodesk Education.\n2. Укажите свой университет/колледж.\n3. Загрузите фото студенческого билета (почта .edu не обязательна, модерация длится от 15 минут).",
+        "description": "Профессиональный пакет для 3D-моделирования, инженерных расчетов, симуляций и подготовки к ЧПУ/3D-печати без ограничений.",
+        "how_to": "1. Зайдите на портал Autodesk Education.\n2. Укажите свой университет и прикрепите фото студенческого (почта .edu не обязательна).",
         "link": "https://www.autodesk.com/education/edu-software/overview",
         "extra_tags": ["инженерия", "3d", "global"]
     },
@@ -35,8 +77,8 @@ EVERGREEN_DEALS = [
         "duration": "На весь период обучения (до 2 лет с продлением)",
         "region": "🌍 Global",
         "requirements": "Студенческая почта (.edu) или студенческий билет с датой",
-        "description": "Крупнейший набор для разработчиков: бесплатный доступ к ИИ-ассистенту GitHub Copilot, бесплатные домены (.me) от Namecheap, облачные кредиты DigitalOcean, Canva Pro, премиум в Datadog и еще более 100 сервисов.",
-        "how_to": "1. Перейдите на GitHub Education.\n2. Привяжите студенческую почту или загрузите фото документа.\n3. Включите геолокацию в браузере при отправке заявки (важное требование GitHub).",
+        "description": "Бесплатный доступ к ИИ-ассистенту GitHub Copilot, бесплатные домены от Namecheap, облачные кредиты DigitalOcean, Canva Pro и более 100 сервисов.",
+        "how_to": "1. Перейдите на GitHub Education.\n2. Загрузите фото студенческого и обязательно разрешите геолокацию в браузере при отправке.",
         "link": "https://education.github.com/pack",
         "extra_tags": ["разработка", "copilot", "global"]
     },
@@ -49,8 +91,8 @@ EVERGREEN_DEALS = [
         "duration": "1 год с ежегодным продлением",
         "region": "🌍 Global",
         "requirements": "Студенческая почта, ISIC или студенческий билет",
-        "description": "Профессиональные лицензии на все флагманские среды разработки: IntelliJ IDEA Ultimate, PyCharm Professional, WebStorm, CLion, GoLand, DataGrip и Rider.",
-        "how_to": "1. Откройте страницу JetBrains Free Educational Licenses.\n2. Заполните заявку через университетскую почту или карту ISIC (верификация мгновенная).",
+        "description": "Лицензии на все топовые среды разработки: IntelliJ IDEA Ultimate, PyCharm Professional, WebStorm, CLion, GoLand, DataGrip и Rider.",
+        "how_to": "1. Откройте страницу JetBrains Free Educational Licenses.\n2. Подайте заявку через университетскую почту или студенческий билет.",
         "link": "https://www.jetbrains.com/community/education/#students",
         "extra_tags": ["программирование", "софт", "global"]
     },
@@ -59,26 +101,26 @@ EVERGREEN_DEALS = [
         "title": "Figma Professional",
         "category": "Дизайн и UI/UX",
         "main_tag": "дизайн",
-        "benefit": "Бесплатно (обычная цена: $15/месяц за место)",
-        "duration": "До 2 лет с возможностью повторной верификации",
+        "benefit": "Бесплатно (обычная цена: $15/месяц)",
+        "duration": "До 2 лет с продлением",
         "region": "🌍 Global",
-        "requirements": "Указание учебного заведения и студенческий",
-        "description": "Полный доступ к тарифу Figma Professional: неограниченное число проектов, общие библиотеки стилей и компонентов, командная работа и Figma Slides.",
-        "how_to": "1. Зайдите в аккаунт Figma.\n2. Перейдите на figma.com/education и нажмите «Apply for free». Выберите «Student» и укажите специальность.",
+        "requirements": "Указание учебного заведения и студенческий билет",
+        "description": "Полный тариф Figma Professional: неограниченное число файлов, командная работа, общие дизайн-системы и Figma Slides.",
+        "how_to": "1. Зайдите на figma.com/education и нажмите «Apply for free».\n2. Выберите статус «Student» и отправьте форму.",
         "link": "https://www.figma.com/education/",
         "extra_tags": ["figma", "uiux", "global"]
     },
     {
         "id": "notion_education",
         "title": "Notion Plus Plan for Education",
-        "category": "Продуктивность и Заметки",
+        "category": "Продуктивность и Учёба",
         "main_tag": "продуктивность",
         "benefit": "Бесплатно (обычная цена: $10/месяц)",
         "duration": "На весь период владения студенческой почтой",
         "region": "🌍 Global",
         "requirements": "Студенческая почта любого аккредитованного вуза",
-        "description": "Тариф Plus без лимита на загрузку файлов, с неограниченной историей версий страниц и командными пространствами для учебы и конспектов.",
-        "how_to": "1. Смените основной email в Notion на студенческий.\n2. Зайдите в «Settings & members» → «Upgrade» → активируйте бесплатный план для студентов.",
+        "description": "Тариф Plus без лимита на размер загружаемых файлов, с бесконечной историей правок и совместными рабочими пространствами.",
+        "how_to": "Укажите студенческий email в настройках Notion → перейдите в «Upgrade» и выберите бесплатный студенческий тариф.",
         "link": "https://www.notion.so/product/notion-for-education",
         "extra_tags": ["notion", "заметки", "global"]
     },
@@ -91,24 +133,10 @@ EVERGREEN_DEALS = [
         "duration": "12 месяцев (возобновляемый)",
         "region": "🌍 Global",
         "requirements": "Студенческая почта вуза",
-        "description": "$100 на запуск виртуальных машин, баз данных и моделей искусственного интеллекта в облаке Microsoft. НЕ требуется ввод банковской карты!",
-        "how_to": "1. Перейдите на страницу Azure for Students.\n2. Войдите под своей учебной учетной записью Microsoft.\n3. Кредиты активируются мгновенно.",
+        "description": "$100 на запуск серверов, баз данных и ИИ-моделей в облаке Microsoft. Главное преимущество: банковская карта НЕ нужна!",
+        "how_to": "Войдите на страницу Azure for Students под своей учебной учетной записью Microsoft.",
         "link": "https://azure.microsoft.com/free/students/",
         "extra_tags": ["облако", "azure", "global"]
-    },
-    {
-        "id": "apple_music_tv",
-        "title": "Apple Music + Apple TV+ для студентов",
-        "category": "Музыка и Кино",
-        "main_tag": "подписки",
-        "benefit": "Скидка ~50% + бесплатный Apple TV+",
-        "duration": "До 48 месяцев (4 года учебы)",
-        "region": "🇺🇦 Украина, 🇪🇺 ЕС, 🇺🇸 США",
-        "requirements": "Верификация через сервис UNiDAYS",
-        "description": "Студенческая подписка на Apple Music со скидкой 50%, в которую автоматически бесплатно входит доступ к онлайн-кинотеатру Apple TV+.",
-        "how_to": "1. Откройте приложение «Музыка» на iPhone/Mac или в браузере.\n2. Выберите тариф «Студенческая подписка».\n3. Подтвердите статус студента через встроенную форму UNiDAYS.",
-        "link": "https://www.apple.com/apple-music/",
-        "extra_tags": ["музыка", "кино", "украина"]
     },
     {
         "id": "isic_card",
@@ -117,10 +145,10 @@ EVERGREEN_DEALS = [
         "main_tag": "isic",
         "benefit": "Скидки до 50% на билеты, хостелы, музеи и сервисы",
         "duration": "1 календарный год",
-        "region": "🌍 Global (более 130 стран, включая Украину и ЕС)",
+        "region": "🌍 Global (более 130 стран)",
         "requirements": "Студенческий билет дневной формы обучения",
-        "description": "Международное удостоверение студента: дает скидки на автобусы FlixBus (10-15%), бронирование Booking/Hostelworld, музеи Европы и авиабилеты.",
-        "how_to": "Оформляется онлайн через сайт ISIC вашей страны или в профкомах вузов.",
+        "description": "Международное удостоверение студента: скидки на автобусы FlixBus (10-15%), бронирование отелей Booking/Hostelworld, музеи Европы и авиабилеты.",
+        "how_to": "Оформляется онлайн через сайт ISIC или в студенческих профкомах.",
         "link": "https://www.isic.org/",
         "extra_tags": ["путешествия", "билеты", "транспорт"]
     },
@@ -133,8 +161,8 @@ EVERGREEN_DEALS = [
         "duration": "На весь период действия студенческого билета",
         "region": "🇺🇦 Украина",
         "requirements": "Студенческий билет, внесенный в базу ЕГЭБО (Дія)",
-        "description": "Скидка 50% на проезд во всех внутренних поездах Украины (плацкартные вагоны, общие вагоны, 2-3 класс скоростных Интерсити).",
-        "how_to": "При покупке билета в приложении «Укрзалізниця» выберите тип пассажира «Студент» и введите номер студенческого билета.",
+        "description": "Скидка 50% на проезд во всех внутренних поездах Украины (плацкарт, общие вагоны, 2-3 класс скоростных поездов Интерсити).",
+        "how_to": "В приложении «Укрзалізниця» выберите пассажира «Студент» и введите номер студенческого билета.",
         "link": "https://booking.uz.gov.ua/",
         "extra_tags": ["билеты", "поезда", "украина"]
     }
@@ -180,7 +208,6 @@ def send_telegram_card(deal):
     how_to = escape_html(deal.get("how_to"))
     link = deal.get("link")
     
-    # Формируем внутриканальные теги: #tag@discounts4students
     main_tag = deal.get("main_tag", "скидки")
     extra_tags = deal.get("extra_tags", [])
     
@@ -200,7 +227,6 @@ def send_telegram_card(deal):
         f"{tags_string}"
     )
 
-    # Интерактивные кнопки под постом
     reply_markup = {
         "inline_keyboard": [
             [
@@ -226,10 +252,12 @@ def send_telegram_card(deal):
 
     try:
         response = requests.post(url, json=payload, timeout=15)
-        print(f"Отправка поста '{title}': HTTP {response.status_code}")
+        print(f"Отправка '{title}': HTTP {response.status_code}")
+        # Пауза 1.5 секунды между сообщениями для соблюдения лимитов Telegram
+        time.sleep(1.5)
         return response.status_code == 200
     except Exception as e:
-        print(f"Ошибка при отправке в Telegram: {e}")
+        print(f"Ошибка при отправке: {e}")
         return False
 
 def main():
@@ -237,27 +265,23 @@ def main():
         print("ОШИБКА: Не заданы TELEGRAM_BOT_TOKEN или TELEGRAM_CHAT_ID.")
         return
 
-    print(f"Запуск скрипта. Канал: {TELEGRAM_CHAT_ID}")
+    print(f"Запуск скрипта. Целевой канал: {TELEGRAM_CHAT_ID}")
     processed_ids = load_processed_ids()
     new_processed = set(processed_ids)
 
-    # 1. Публикуем 1-2 карточки из фундаментального каталога
-    published_from_catalog = 0
+    # Публикуем ВСЕ оставшиеся предложения из каталога без ограничений
     for deal in EVERGREEN_DEALS:
         deal_id = deal["id"]
         if deal_id not in processed_ids:
-            print(f"Публикуем из каталога: {deal['title']}")
+            print(f"Публикация: {deal['title']}")
             if send_telegram_card(deal):
                 new_processed.add(deal_id)
-                published_from_catalog += 1
-                if published_from_catalog >= 2:
-                    break
 
-    # 2. Проверяем свежие акции
+    # Проверяем свежие внешние акции
     for feed_info in DYNAMIC_FEEDS:
         try:
             feed = feedparser.parse(feed_info["url"], agent="Mozilla/5.0")
-            for entry in feed.entries[:2]:
+            for entry in feed.entries[:3]:
                 post_id = entry.get("id") or entry.get("link")
                 if not post_id or post_id in processed_ids:
                     continue
@@ -280,10 +304,10 @@ def main():
                 if send_telegram_card(card):
                     new_processed.add(post_id)
         except Exception as e:
-            print(f"Ошибка при чтении RSS {feed_info['url']}: {e}")
+            print(f"Ошибка RSS: {e}")
 
     save_processed_ids(new_processed)
-    print("Работа скрипта успешно завершена.")
+    print("Готово! Все доступные предложения опубликованы.")
 
 if __name__ == "__main__":
     main()
