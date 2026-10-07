@@ -1,15 +1,16 @@
 [
-  "github_student_pack",
-  "jetbrains_all_products",
-  "youtube_premium_student",
-  "ms_student_ambassadors",
   "figma_education",
-  "azure_students",
-  "uz_student_discount",
-  "isic_card",
-  "fusion_360_edu",
-  "apple_music_tv",
   "github_campus_experts",
+  "ms_student_ambassadors",
+  "jetbrains_all_products",
+  "uz_student_discount",
   "spotify_student",
-  "notion_education"
+  "apple_music_tv",
+  "fusion_360_edu",
+  "notion_education",
+  "gdsc_google",
+  "azure_students",
+  "youtube_premium_student",
+  "github_student_pack",
+  "isic_card"
 ]
