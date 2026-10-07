@@ -263,7 +263,7 @@ def main():
             if send_telegram_card(deal):
                 new_processed.add(deal_id)
                 published_from_catalog += 1
-                if published_from_catalog >= 2:
+                if published_from_catalog >= 10:
                     break
 
     # 2. Проверяем до 10 свежих записей в каждой динамической ленте
