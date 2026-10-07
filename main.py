@@ -52,7 +52,7 @@ EVERGREEN_DEALS = [
         "requirements": "Карта ISIC дневной формы обучения",
         "description": "Государство в Словакии субсидирует питание студентов. В студенческих столовых (študentské jedálne на Jedlíkova, Němcovej, Medická) по карте ISIC можно полноценно пообедать (первое, второе и напиток) всего за пару евро.",
         "how_to": "Пополните свой счет питания через систему университета (MAIS / AiS2) и прикладывайте ISIC на кассе столовой.",
-        "link": "https://www.tuke.sk/wps/portal/tuke/life/catering",
+        "link": "https://jedalen.tuke.sk/",
         "extra_tags": ["словакия", "еда", "isic"]
     },
     {
