@@ -11,7 +11,7 @@ HISTORY_FILE = "data/processed_ids.json"
 
 CHANNEL_USERNAME = TELEGRAM_CHAT_ID.replace("@", "") if TELEGRAM_CHAT_ID else "discounts4students"
 
-# Золотой фонд студенческих программ: Кошице, Словакия, Европа и глобальный софт
+# 20 выверенных программ: Кошице, Словакия, Европа и глобальный софт
 EVERGREEN_DEALS = [
     {
         "id": "sk_trains_free",
@@ -24,7 +24,7 @@ EVERGREEN_DEALS = [
         "requirements": "Студенческий билет с чипом ISIC (вузы TUKE, UPJŠ и др.)",
         "description": "Легендарная льгота в Словакии: бесплатный проезд во всех поездах государственной железной дороги по всей стране. Поездки из Кошице в горы Высокие Татры, Братиславу или к границам не стоят ни цента.",
         "how_to": "1. Оформите студенческий ISIC в вашем вузе (TUKE, UPJŠ).\n2. В кассе ŽSSK на вокзале Кошице оформите регистрацию (Preukaz pre študenta).\n3. Оформляйте бесплатные нулевые билеты на сайте zssk.sk или в приложении Ideme vlakom.",
-        "link": "https://www.zssk.sk/bezplatna-preprava/",
+        "link": "https://www.zssk.sk/bezplatna-preprava/studenti/",
         "extra_tags": ["кошице", "поезда", "isic"]
     },
     {
@@ -38,7 +38,7 @@ EVERGREEN_DEALS = [
         "requirements": "Студенческая карта ISIC с активированным транспортным чипом",
         "description": "Городской транспорт Кошице (трамваи и автобусы DPMK) для студентов стоит ровно вполовину дешевле. Выгоднее всего оформить электронный проездной (Mesačník) прямо на карту ISIC.",
         "how_to": "1. Активируйте транспортный чип ISIC в университетском терминале.\n2. В приложении DPMK или в кассах на Bardejovská / Rooseveltova пополните студенческий проездной.",
-        "link": "https://www.dpmk.sk/prepravne-podmienky-a-tarifa",
+        "link": "https://www.dpmk.sk/prepravny-poriadok/vybavovanie-studentskych-zliav",
         "extra_tags": ["словакия", "транспорт", "dpmk"]
     },
     {
@@ -92,9 +92,9 @@ EVERGREEN_DEALS = [
         "duration": "Круглый год",
         "region": "🇪🇺 Европа (маршруты из Кошице в Чехию, Польшу, Австрию)",
         "requirements": "Карта ISIC",
-        "description": "Из Кошице удобно путешествовать в Краков, Будапешт, Прагу и Вену. Автобусы FlixBus и желтые поезда RegioJet дают официальные студенческие скидки по промокодам ISIC.",
-        "how_to": "1. Зайдите в приложение ISIC и сгенерируйте персональный купон FlixBus на 10-15%.\n2. В RegioJet выберите тариф «Študent do 26 rokov» при покупке билета.",
-        "link": "https://www.flixbus.sk/isic",
+        "description": "Из Кошице удобно путешествовать в Краков, Будапешт, Прагу и Вену. Автобусы FlixBus и поезда RegioJet дают официальные студенческие скидки по купонам ISIC.",
+        "how_to": "1. Авторизуйтесь на словацком портале ISIC (isic.sk) или в приложении.\n2. Сгенерируйте персональный купон FlixBus на 10-15%.\n3. Примените код в корзине при покупке билета на flixbus.sk.",
+        "link": "https://isic.sk/zlavy-na-slovensku/",
         "extra_tags": ["европа", "поезда", "flixbus"]
     },
     {
@@ -108,7 +108,7 @@ EVERGREEN_DEALS = [
         "requirements": "Пластиковая или цифровая карта ISIC",
         "description": "Карта студента открывает двери во все государственные музеи и достопримечательности ЕС с огромными льготами (в Вене и Париже многие музеи для студентов ЕС до 26 лет бесплатны).",
         "how_to": "Всегда держите карту ISIC при себе и проверяйте раздел скидок на официальном сайте ISIC перед поездкой.",
-        "link": "https://www.isic.org/",
+        "link": "https://www.isic.org/discounts/",
         "extra_tags": ["путешествия", "isic", "скидки"]
     },
     {
@@ -289,13 +289,13 @@ EVERGREEN_DEALS = [
         "region": "🇸🇰 Словакия, 🇪🇺 ЕС",
         "requirements": "Студенческая почта или верификация через UNiDAYS",
         "description": "Брендовые кроссовки (Nike, New Balance, adidas) и базовый гардероб. Студенческий код действует постоянно и суммируется со многими распродажами.",
-        "how_to": "Перейдите на страницу ASOS Student, введите учебную почту и получите личный промокод на скидку.",
-        "link": "https://www.asos.com/discover/students/asosteam/",
+        "how_to": "Перейдите на официальный портал UNiDAYS ASOS, подтвердите статус и получите личный промокод.",
+        "link": "https://www.myunidays.com/partners/asos/view",
         "extra_tags": ["одежда", "стиль", "кроссовки"]
     }
 ]
 
-# Динамические потоки горячих акций (игры, курсы)
+# Динамические потоки акций (курсы, игры)
 DYNAMIC_FEEDS = [
     {
         "url": "https://www.reddit.com/r/udemyfreebies/new/.rss",
@@ -340,6 +340,7 @@ def escape_html(text):
     return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 def extract_direct_link(summary_html, fallback_url):
+    """Извлекает прямую целевую ссылку из описания Reddit"""
     if not summary_html:
         return fallback_url
     found_links = re.findall(r'href=[\"\']([^\"\']+)[\"\']', summary_html)
@@ -347,6 +348,50 @@ def extract_direct_link(summary_html, fallback_url):
         if "reddit.com" not in link and not link.startswith("/"):
             return link
     return fallback_url
+
+def validate_link(url, fallback_url=None):
+    """
+    Умная валидация ссылки:
+    - 200..399: ссылка жива -> публикуем
+    - 401, 403: сайт защищён от ботов (Cloudflare WAF) -> человек откроет, публикуем
+    - 500..504, Timeout: сервер перегружен -> откладываем на след. запуск (не удаляем)
+    - 404, 410: страница удалена -> заменяем на fallback или отменяем
+    """
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+    }
+    try:
+        resp = requests.get(url, timeout=7, headers=headers, allow_redirects=True, stream=True)
+        status = resp.status_code
+
+        if 200 <= status < 400:
+            return "OK", url
+
+        if status in [401, 403]:
+            # Защита Cloudflare от датацентров. Для людей в браузере работает
+            print(f"[WAF/Защита {status}] Ссылка {url} активна для обычных браузеров.")
+            return "OK", url
+
+        if 500 <= status < 600:
+            print(f"[Сервер перегружен {status}] Ссылка {url} временно недоступна. Откладываем.")
+            return "RETRY", None
+
+        if status in [404, 410]:
+            if fallback_url and fallback_url != url:
+                print(f"[404 Замена] Ссылка {url} вернула 404. Подменяем на {fallback_url}")
+                return "OK", fallback_url
+            print(f"[404 Отмена] Ссылка {url} не существует. Пост отменён.")
+            return "DROP", None
+
+        return "OK", url
+
+    except requests.exceptions.Timeout:
+        print(f"[Таймаут] Сайт {url} не ответил вовремя. Откладываем на следующий цикл.")
+        return "RETRY", None
+    except Exception as e:
+        print(f"[Предупреждение] Ошибка проверки {url}: {e}. Оставляем без изменений.")
+        return "OK", url
 
 def send_telegram_card(deal):
     title = escape_html(deal.get("title"))
@@ -415,10 +460,18 @@ def main():
     processed_ids = load_processed_ids()
     new_processed = set(processed_ids)
 
-    # 1. При первом старте (когда память пустая) отправятся все 20 постов
+    # 1. Каталог постоянных программ (20 проверенных ссылок)
     for deal in EVERGREEN_DEALS:
         deal_id = deal["id"]
         if deal_id not in processed_ids:
+            status, final_url = validate_link(deal["link"])
+            if status == "DROP":
+                new_processed.add(deal_id)
+                continue
+            elif status == "RETRY":
+                continue
+
+            deal["link"] = final_url
             print(f"Публикация из каталога: {deal['title']}")
             if send_telegram_card(deal):
                 new_processed.add(deal_id)
@@ -432,7 +485,14 @@ def main():
                 if not post_id or post_id in processed_ids:
                     continue
 
-                target_link = extract_direct_link(entry.get("summary", ""), entry.link)
+                direct_link = extract_direct_link(entry.get("summary", ""), entry.link)
+                status, final_url = validate_link(direct_link, fallback_url=entry.link)
+
+                if status == "DROP":
+                    new_processed.add(post_id)
+                    continue
+                elif status == "RETRY":
+                    continue
 
                 card = {
                     "id": post_id,
@@ -446,7 +506,7 @@ def main():
                     "requirements": "Учётная запись платформы / купон",
                     "description": "Свежее предложение, обнаруженное в сообществе.",
                     "how_to": feed_info["how_to_tip"],
-                    "link": target_link,
+                    "link": final_url,
                     "extra_tags": ["горящее", "акция"]
                 }
 
