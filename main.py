@@ -354,29 +354,12 @@ EVERGREEN_DEALS = [
     }
 ]
 
-# Добавляем для всех постоянных предложений гарантированный статус
+# Статус «Постоянная льгота» добавляется ТОЛЬКО для базового каталога
 for deal in EVERGREEN_DEALS:
     deal["status_line"] = "📌 <b>Статус:</b> Постоянная льгота (бессрочно)"
 
 # Динамические источники: вакансии в Кошице, игры, курсы и горящие скидки
 DYNAMIC_FEEDS = [
-    {
-        "url": "https://www.profesia.sk/praca/kosice/na-dohodu-brigady/?format=rss",
-        "format": "rss",
-        "type": "vacancy",
-        "category": "Работа и Доход",
-        "badge": "💼 [Студенческая вакансия: Кошице]",
-        "main_tag": "работа",
-        "default_status": "🟢 <b>Статус:</b> Набор открыт (актуально)",
-        "default_benefit": "Оплата от €6 до €10 в час (Dohoda)",
-        "default_duration": "Приём заявок открыт (24-72 часа)",
-        "default_region": "🇸🇰 Кошице (Словакия)",
-        "how_to_tip": "Нажмите на кнопку ниже и отправьте отклик / резюме работодателю.",
-        "max_ttl_seconds": 432000,
-        "expired_badge": "🔴 [Набор закрыт]",
-        "expired_status": "🔴 <b>Статус:</b> Набор закрыт работодателем",
-        "expired_button": "🔒 Набор закрыт ➔ Свежие вакансии"
-    },
     {
         "url": "https://www.gamerpower.com/api/giveaways?platform=pc&type=game",
         "format": "gamerpower_json",
@@ -384,15 +367,24 @@ DYNAMIC_FEEDS = [
         "category": "Раздача недели (Игры)",
         "badge": "🎮 [100% Бесплатная раздача]",
         "main_tag": "игры",
-        "default_status": "🟢 <b>Статус:</b> Раздача активна",
         "default_benefit": "Бесплатно навсегда (вместо $15–$40)",
         "default_duration": "Ограниченное время акции",
         "default_region": "🌍 Global / Онлайн",
         "how_to_tip": "Нажмите кнопку ниже, перейдите на страницу раздачи и добавьте игру в библиотеку.",
-        "max_ttl_seconds": 604800,
-        "expired_badge": "⌛️ [Раздача завершена]",
-        "expired_status": "⌛️ <b>Статус:</b> Раздача завершена",
-        "expired_button": "🔒 Раздача закрыта ➔ Свежие игры"
+        "max_ttl_seconds": 604800
+    },
+    {
+        "url": "https://www.profesia.sk/praca/kosice/na-dohodu-brigady/?format=rss",
+        "format": "rss",
+        "type": "vacancy",
+        "category": "Работа и Доход",
+        "badge": "💼 [Студенческая вакансия: Кошице]",
+        "main_tag": "работа",
+        "default_benefit": "Оплата от €6 до €10 в час (Dohoda)",
+        "default_duration": "Приём заявок открыт (24-72 часа)",
+        "default_region": "🇸🇰 Кошице (Словакия)",
+        "how_to_tip": "Нажмите на кнопку ниже и отправьте отклик / резюме работодателю.",
+        "max_ttl_seconds": 432000
     },
     {
         "url": "https://www.discudemy.com/feed",
@@ -401,15 +393,11 @@ DYNAMIC_FEEDS = [
         "category": "Бесплатные курсы",
         "badge": "🔥 [Ограничено по времени]",
         "main_tag": "курсы",
-        "default_status": "🟢 <b>Статус:</b> Бесплатный купон активен",
         "default_benefit": "100% скидка (Бесплатно вместо $40–$90)",
         "default_duration": "Временный промокод (в профиле навсегда)",
         "default_region": "🌍 Global / Онлайн",
         "how_to_tip": "Нажмите кнопку ниже ➔ перейдите к курсу ➔ нажмите «Enroll now» за $0.",
-        "max_ttl_seconds": 172800,
-        "expired_badge": "⌛️ [Промокод исчерпан]",
-        "expired_status": "⌛️ <b>Статус:</b> Промокод или бесплатный купон истёк",
-        "expired_button": "🔒 Промокод истёк ➔ Свежие курсы"
+        "max_ttl_seconds": 172800
     },
     {
         "url": "https://www.reddit.com/r/FreeGameFindings/hot/.rss",
@@ -418,15 +406,11 @@ DYNAMIC_FEEDS = [
         "category": "Раздача недели (Игры)",
         "badge": "🎮 [100% Бесплатная раздача]",
         "main_tag": "игры",
-        "default_status": "🟢 <b>Статус:</b> Раздача активна",
         "default_benefit": "Бесплатно (навсегда в библиотеку)",
         "default_duration": "Ограниченное время акции",
         "default_region": "🌍 Global / Онлайн",
         "how_to_tip": "Войдите в аккаунт платформы (Steam, Epic Games, GOG) и нажмите «Добавить в библиотеку».",
-        "max_ttl_seconds": 604800,
-        "expired_badge": "⌛️ [Раздача завершена]",
-        "expired_status": "⌛️ <b>Статус:</b> Раздача завершена",
-        "expired_button": "🔒 Раздача закрыта ➔ Свежие игры"
+        "max_ttl_seconds": 604800
     },
     {
         "url": "https://www.reddit.com/r/eFreebies/hot/.rss",
@@ -435,15 +419,24 @@ DYNAMIC_FEEDS = [
         "category": "Софт и Полезности",
         "badge": "🎁 [Бесплатный софт / сервис]",
         "main_tag": "горящее",
-        "default_status": "🟢 <b>Статус:</b> Акция действует",
         "default_benefit": "Бесплатная лицензия / Доступ",
         "default_duration": "Временная промо-акция",
         "default_region": "🌍 Global / Онлайн",
         "how_to_tip": "Перейдите по ссылке и активируйте промокод или зарегистрируйте бесплатную лицензию.",
-        "max_ttl_seconds": 259200,
-        "expired_badge": "⌛️ [Акция завершена]",
-        "expired_status": "⌛️ <b>Статус:</b> Срок действия акции истёк",
-        "expired_button": "🔒 Срок истёк ➔ Все скидки"
+        "max_ttl_seconds": 259200
+    },
+    {
+        "url": "https://www.reddit.com/r/frugalmalefashion/hot/.rss",
+        "format": "rss",
+        "type": "clothing",
+        "category": "Одежда и Шопинг",
+        "badge": "👟 [Временная скидка / Распродажа]",
+        "main_tag": "одежда",
+        "default_benefit": "Скидки до 40–60% на брендовые вещи",
+        "default_duration": "Ограниченное время распродажи",
+        "default_region": "🇪🇺 ЕС / 🌍 Global",
+        "how_to_tip": "Перейдите на сайт магазина и используйте скидочный код при оформлении.",
+        "max_ttl_seconds": 259200
     }
 ]
 
@@ -473,6 +466,78 @@ def is_expired_title(title):
     markers = ["[expired]", "(expired)", "expired", "[ended]", "ended", "oos", "out of stock", "dead deal"]
     return any(m in lower_t for m in markers)
 
+def is_allowed_language(text):
+    """
+    Фильтр языков: РАЗРЕШЕНЫ только English, Русский, Українська, Slovenčina.
+    БЛОКИРУЮТСЯ: Français, Deutsch, Español, Italiano, Português и др.
+    """
+    if not text:
+        return True, "Empty text"
+
+    lower_t = text.lower()
+
+    # 1. Запрещённые языковые метки в заголовках
+    disallowed_tags = [
+        '[fr]', '(fr)', '[french]', '(french)', '[français]', '(français)',
+        '[es]', '(es)', '[spanish]', '(spanish)', '[español]', '(español)',
+        '[de]', '(de)', '[german]', '(german)', '[deutsch]', '(deutsch)',
+        '[pt]', '(pt)', '[portuguese]', '(portuguese)',
+        '[it]', '(it)', '[italian]', '(italian)',
+        '[ar]', '(ar)', '[arabic]', '(arabic)',
+        '[tr]', '(tr)', '[turkish]', '(turkish)',
+        '[pl]', '(pl)', '[polish]', '(polish)'
+    ]
+    for tag in disallowed_tags:
+        if tag in lower_t:
+            return False, f"Запрещённый языковой тег {tag}"
+
+    # 2. Кириллица: русский или украинский язык -> РАЗРЕШЕНО
+    cyrillic_chars = re.findall(r'[а-яА-ЯёЁіІїЇєЄґҐ]', text)
+    if len(cyrillic_chars) >= 4:
+        return True, "Русский / Украинский язык"
+
+    # 3. Символы, специфичные для французского, немецкого, испанского, польского языков
+    forbidden_chars = set('çœèêàâîïûùöüßñ¿¡ąęłśźż')
+    matched_forbidden = set(c for c in lower_t if c in forbidden_chars)
+    if len(matched_forbidden) >= 1:
+        return False, f"Недопустимые символы языка: {matched_forbidden}"
+
+    # 4. Словацкие диакритические знаки (если нет запрещённых символов) -> РАЗРЕШЕНО
+    slovak_diacritics = set('ľĺŕčšžťďňôä')
+    if any(c in slovak_diacritics for c in lower_t):
+        return True, "Словацкий язык"
+
+    # 5. Специфические слова запрещённых языков (французский, испанский, немецкий)
+    tokens = set(re.findall(r'[a-zA-Z]+', lower_t))
+
+    french_words = {
+        'le', 'la', 'les', 'des', 'du', 'pour', 'avec', 'dans', 'sur', 'une', 'sont',
+        'formation', 'formations', 'apprendre', 'debutant', 'debutants', 'gratuit',
+        'gratuite', 'francais', 'francaise', 'cours', 'cette', 'votre', 'notre',
+        'tous', 'chez', 'faire', 'maitriser', 'gestion', 'projet', 'guide'
+    }
+    spanish_words = {
+        'el', 'los', 'las', 'del', 'para', 'con', 'por', 'curso', 'cursos',
+        'aprender', 'aprende', 'gratis', 'espanol', 'desde', 'principiantes',
+        'hacer', 'todos', 'desarrollo', 'completo'
+    }
+    german_words = {
+        'der', 'die', 'das', 'den', 'dem', 'des', 'fuer', 'mit', 'und',
+        'kostenlos', 'lernen', 'deutsch', 'anfaenger', 'kurs', 'entwicklung',
+        'vollstaendige', 'einstieg'
+    }
+
+    if len(tokens.intersection(french_words)) >= 2 or any(w in tokens for w in ('formation', 'formations', 'apprendre', 'francais', 'gratuite')):
+        return False, f"Французские слова: {tokens.intersection(french_words)}"
+
+    if len(tokens.intersection(spanish_words)) >= 2 or any(w in tokens for w in ('espanol', 'principiantes', 'aprende')):
+        return False, f"Испанские слова: {tokens.intersection(spanish_words)}"
+
+    if len(tokens.intersection(german_words)) >= 2 or any(w in tokens for w in ('kostenlos', 'anfaenger', 'deutsch')):
+        return False, f"Немецкие слова: {tokens.intersection(german_words)}"
+
+    return True, "Английский или Словацкий язык"
+
 def extract_direct_link(summary, default_link):
     clean_default = default_link.split("?")[0].rstrip("/")
     urls = re.findall(r'https?://[^\s<>"]+[a-zA-Z0-9/]', summary)
@@ -481,6 +546,21 @@ def extract_direct_link(summary, default_link):
         if "reddit.com" not in u and clean_u != clean_default and "preview.redd.it" not in u:
             return u
     return default_link
+
+def clean_summary_text(raw_text):
+    if not raw_text:
+        return ""
+    clean = re.sub(r'<[^>]+>', ' ', raw_text)
+    clean = html.unescape(clean)
+    clean = re.sub(r'submitted by\s+.*?to\s+r/\w+', '', clean, flags=re.IGNORECASE)
+    clean = re.sub(r'\[link\]|\[comments\]', '', clean, flags=re.IGNORECASE)
+    clean = re.sub(r'https?://\S+', '', clean)
+    clean = ' '.join(clean.split()).strip()
+    if len(clean) < 20:
+        return ""
+    if len(clean) > 280:
+        clean = clean[:277] + "..."
+    return clean
 
 def get_base_domain(url):
     try:
@@ -587,7 +667,7 @@ def send_telegram_card(deal, is_fallback=False):
     title = escape_html(deal.get("title"))
     category = escape_html(deal.get("category"))
     badge = escape_html(deal.get("badge", f"🎓 [{category}]"))
-    status_line = deal.get("status_line", "🟢 <b>Статус:</b> Актуально")
+    status_line = deal.get("status_line", "")
     benefit = escape_html(deal.get("benefit"))
     duration = escape_html(deal.get("duration"))
     region = escape_html(deal.get("region"))
@@ -604,9 +684,10 @@ def send_telegram_card(deal, is_fallback=False):
         tags_list.append(f"#{t}@{CHANNEL_USERNAME}")
     tags_string = " ".join(tags_list)
 
-    text = (
-        f"{badge} — <b>{title}</b>\n\n"
-        f"{status_line}\n"
+    text = f"{badge} — <b>{title}</b>\n\n"
+    if status_line:
+        text += f"{status_line}\n"
+    text += (
         f"💰 <b>Выгода:</b> {benefit}\n"
         f"⏳ <b>Срок:</b> {duration}\n"
         f"🌍 <b>Регион:</b> {region}\n"
@@ -717,7 +798,7 @@ def check_is_deal_still_active(info):
 
     return True, "Активно"
 
-def update_expired_posts(active_posts):
+def cleanup_expired_posts(active_posts):
     remaining_posts = {}
 
     for post_id, info in active_posts.items():
@@ -725,46 +806,24 @@ def update_expired_posts(active_posts):
         if not is_alive:
             message_id = info.get("message_id")
             title = escape_html(info.get("title", ""))
-            category = escape_html(info.get("category", ""))
-            main_tag = info.get("main_tag", "скидки")
-            
-            expired_badge = info.get("expired_badge", "⌛️ [Акция завершена]")
-            expired_status = info.get("expired_status", "⌛️ <b>Статус:</b> Предложение больше не активно")
-            button_label = info.get("expired_button", "🔒 Завершено ➔ Все посты")
 
-            print(f"[ЖИВАЯ ПРОВЕРКА] Пост {message_id} ('{title}') закрывается: {reason}")
+            print(f"[ЧИСТКА КАНАЛА] Пост {message_id} ('{title}') больше не актуален ({reason}). Удаление...")
 
-            updated_text = (
-                f"{expired_badge} — <b><s>{title}</s></b>\n\n"
-                f"{expired_status} ({reason}).\n\n"
-                f"📂 <b>Категория:</b> {category}\n"
-                f"ℹ️ <i>Следите за новыми предложениями в канале по тегу ниже или в закрепленном сообщении!</i>\n\n"
-                f"#{main_tag}@{CHANNEL_USERNAME}"
-            )
-
-            reply_markup = {
-                "inline_keyboard": [
-                    [
-                        {"text": button_label, "url": f"https://t.me/{CHANNEL_USERNAME}?q=%23{main_tag}"}
-                    ]
-                ]
-            }
-
-            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/editMessageText"
+            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/deleteMessage"
             payload = {
                 "chat_id": TELEGRAM_CHAT_ID,
-                "message_id": message_id,
-                "text": updated_text,
-                "parse_mode": "HTML",
-                "disable_web_page_preview": True,
-                "reply_markup": reply_markup
+                "message_id": message_id
             }
 
             try:
-                requests.post(url, json=payload, timeout=10)
+                resp = requests.post(url, json=payload, timeout=10)
+                if resp.status_code == 200:
+                    print(f"  Пост {message_id} успешно удалён из канала.")
+                else:
+                    print(f"  Не удалось удалить сообщение {message_id}: HTTP {resp.status_code} ({resp.text})")
                 time.sleep(1.0)
             except Exception as e:
-                print(f"Ошибка обновления сообщения {message_id}: {e}")
+                print(f"Ошибка при удалении сообщения {message_id}: {e}")
         else:
             remaining_posts[post_id] = info
 
@@ -787,8 +846,8 @@ def main():
 
     print(f"Запуск бота. Режим первичного наполнения: {is_initial_fill} (Лимит динамических постов: {max_dynamic_allowed})")
 
-    # Шаг 1: Проверяем актуальность ранее опубликованных динамических постов
-    active_posts = update_expired_posts(active_posts)
+    # Шаг 1: Автоматическая чистка канала от неактуальных постов
+    active_posts = cleanup_expired_posts(active_posts)
 
     # Шаг 2: Каталог постоянных программ (все 24 выверенные программы)
     for deal in EVERGREEN_DEALS:
@@ -807,7 +866,7 @@ def main():
             if success:
                 new_processed.add(deal_id)
 
-    # Шаг 3: Мониторинг динамических источников (вакансии, игры, курсы, софт)
+    # Шаг 3: Мониторинг динамических источников (вакансии, игры, курсы, софт, одежда)
     dynamic_published = 0
     now = time.time()
 
@@ -832,6 +891,14 @@ def main():
 
                 raw_link = entry.get("link", "")
                 summary = entry.get("summary", "")
+
+                # Фильтрация по языкам: разрешены только EN, RU, UK, SK
+                is_ok_lang, lang_reason = is_allowed_language(f"{title} {summary}")
+                if not is_ok_lang:
+                    print(f"[Языковой фильтр] Пропущен пост '{title[:45]}...': {lang_reason}")
+                    new_processed.add(post_id)
+                    continue
+
                 direct_link = extract_direct_link(summary, raw_link) if "reddit.com" in raw_link else raw_link
                 status, final_url, is_fallback = validate_link(direct_link, fallback_url=raw_link)
 
@@ -847,12 +914,11 @@ def main():
                     "category": feed_info["category"],
                     "badge": feed_info["badge"],
                     "main_tag": feed_info["main_tag"],
-                    "status_line": feed_info["default_status"],
                     "benefit": feed_info["default_benefit"],
                     "duration": feed_info["default_duration"],
                     "region": feed_info["default_region"],
                     "requirements": "Учётная запись платформы / студенческий",
-                    "description": "Свежее предложение, проверенное ботом.",
+                    "description": clean_summary_text(summary),
                     "how_to": feed_info["how_to_tip"],
                     "link": final_url,
                     "extra_tags": ["горящее"]
@@ -874,10 +940,7 @@ def main():
                             "source_link": raw_link,
                             "type": feed_info.get("type", "promo"),
                             "posted_at": now,
-                            "max_ttl": max_ttl,
-                            "expired_badge": feed_info.get("expired_badge", "⌛️ [Акция завершена]"),
-                            "expired_status": feed_info.get("expired_status", "⌛️ <b>Статус:</b> Предложение больше не активно"),
-                            "expired_button": feed_info.get("expired_button", "🔒 Завершено ➔ Все посты")
+                            "max_ttl": max_ttl
                         }
         except Exception as e:
             print(f"Ошибка при обработке {feed_info['url']}: {e}")
