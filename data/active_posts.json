@@ -328,5 +328,93 @@
     "type": "game",
     "posted_at": 1791470776.1614103,
     "max_ttl": 1792075576.1614103
+  },
+  "3809": {
+    "message_id": 463,
+    "title": "Pony Island (Steam) Giveaway",
+    "category": "Раздача недели (Игры)",
+    "main_tag": "игры",
+    "target_link": "https://www.gamerpower.com/open/pony-island-steam-giveaway",
+    "source_link": "https://www.gamerpower.com/open/pony-island-steam-giveaway",
+    "type": "game",
+    "posted_at": 1791482641.3841672,
+    "max_ttl": 1792087441.3841672
+  },
+  "3807": {
+    "message_id": 464,
+    "title": "TerraScape (Epic Games) Giveaway",
+    "category": "Раздача недели (Игры)",
+    "main_tag": "игры",
+    "target_link": "https://www.gamerpower.com/open/terrascape-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/terrascape-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1791482641.3841672,
+    "max_ttl": 1792087441.3841672
+  },
+  "3806": {
+    "message_id": 465,
+    "title": "Out of Sight (Epic Games) Giveaway",
+    "category": "Раздача недели (Игры)",
+    "main_tag": "игры",
+    "target_link": "https://www.gamerpower.com/open/out-of-sight-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/out-of-sight-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1791482641.3841672,
+    "max_ttl": 1792087441.3841672
+  },
+  "3719": {
+    "message_id": 466,
+    "title": "Fantasy Grounds Dragons NPC Dice Pack Volume 1 Steam Key Giveaway",
+    "category": "Раздача недели (Игры)",
+    "main_tag": "игры",
+    "target_link": "https://www.gamerpower.com/open/fantasy-grounds-dragons-npc-dice-pack-volume-1-steam-key-giveaway",
+    "source_link": "https://www.gamerpower.com/open/fantasy-grounds-dragons-npc-dice-pack-volume-1-steam-key-giveaway",
+    "type": "game",
+    "posted_at": 1791482641.3841672,
+    "max_ttl": 1792087441.3841672
+  },
+  "t3_1x0wcfc": {
+    "message_id": 467,
+    "title": "Pony Island",
+    "category": "Раздача недели (Игры)",
+    "main_tag": "игры",
+    "target_link": "https://store.steampowered.com/app/405640/",
+    "source_link": "https://www.reddit.com/r/FreeGamesOnSteam/comments/1x0wcfc/pony_island/",
+    "type": "game",
+    "posted_at": 1791482641.3841672,
+    "max_ttl": 1791828241.3841672
+  },
+  "t3_1x0vnyr": {
+    "message_id": 468,
+    "title": "World of Warships — Ning Hai",
+    "category": "Раздача недели (Игры)",
+    "main_tag": "игры",
+    "target_link": "https://store.steampowered.com/app/2283211/World_of_Warships__Ning_Hai/",
+    "source_link": "https://www.reddit.com/r/FreeGamesOnSteam/comments/1x0vnyr/world_of_warships_ning_hai/",
+    "type": "game",
+    "posted_at": 1791482641.3841672,
+    "max_ttl": 1791828241.3841672
+  },
+  "t3_1wt63mq": {
+    "message_id": 469,
+    "title": "Grid Tactics: Duel",
+    "category": "Раздача недели (Игры)",
+    "main_tag": "игры",
+    "target_link": "https://store.steampowered.com/app/3294170/Grid_Tactics_Duel/",
+    "source_link": "https://www.reddit.com/r/FreeGamesOnSteam/comments/1wt63mq/grid_tactics_duel/",
+    "type": "game",
+    "posted_at": 1791482641.3841672,
+    "max_ttl": 1791828241.3841672
+  },
+  "t3_1ws42dp": {
+    "message_id": 470,
+    "title": "Explosive Odds - Supporter Pack",
+    "category": "Раздача недели (Игры)",
+    "main_tag": "игры",
+    "target_link": "https://store.steampowered.com/app/4059370/Explosive_Odds__Supporter_Pack/",
+    "source_link": "https://www.reddit.com/r/FreeGamesOnSteam/comments/1ws42dp/explosive_odds_supporter_pack/",
+    "type": "game",
+    "posted_at": 1791482641.3841672,
+    "max_ttl": 1791828241.3841672
   }
 }
