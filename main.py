@@ -309,7 +309,7 @@ DYNAMIC_FEEDS = [
         "default_duration": "Приём заявок открыт (24-72 часа)",
         "default_region": "🇸🇰 Кошице (Словакия)",
         "how_to_tip": "Нажмите на кнопку ниже и отправьте отклик / резюме работодателю.",
-        "max_ttl_seconds": 432000,  # 5 дней максимальный потолок
+        "max_ttl_seconds": 432000,
         "expired_badge": "🔴 [Набор закрыт]",
         "expired_button": "🔒 Набор закрыт ➔ Свежие вакансии"
     },
@@ -323,7 +323,7 @@ DYNAMIC_FEEDS = [
         "default_duration": "Временный промокод (в профиле навсегда)",
         "default_region": "🌍 Global / Онлайн",
         "how_to_tip": "Нажмите кнопку ниже ➔ убедитесь, что цена $0 (Free) ➔ нажмите «Enroll now». Привязка карты не нужна!",
-        "max_ttl_seconds": 172800,  # 2 дня
+        "max_ttl_seconds": 172800,
         "expired_badge": "⌛️ [Промокод исчерпан]",
         "expired_button": "🔒 Промокод истёк ➔ Свежие курсы"
     },
@@ -337,7 +337,7 @@ DYNAMIC_FEEDS = [
         "default_duration": "Ограниченное время акции",
         "default_region": "🌍 Global / Онлайн",
         "how_to_tip": "Войдите в аккаунт платформы (Steam, Epic Games, GOG) и нажмите «Добавить в библиотеку».",
-        "max_ttl_seconds": 604800,  # 7 дней
+        "max_ttl_seconds": 604800,
         "expired_badge": "⌛️ [Раздача завершена]",
         "expired_button": "🔒 Раздача закрыта ➔ Свежие игры"
     },
@@ -351,7 +351,7 @@ DYNAMIC_FEEDS = [
         "default_duration": "Временная промо-акция",
         "default_region": "🌍 Global / Онлайн",
         "how_to_tip": "Перейдите по ссылке и активируйте промокод или зарегистрируйте бесплатную лицензию.",
-        "max_ttl_seconds": 259200,  # 3 дня
+        "max_ttl_seconds": 259200,
         "expired_badge": "⌛️ [Акция завершена]",
         "expired_button": "🔒 Срок истёк ➔ Все скидки"
     },
@@ -365,13 +365,11 @@ DYNAMIC_FEEDS = [
         "default_duration": "Ограниченное время распродажи",
         "default_region": "🇪🇺 ЕС / 🌍 Global",
         "how_to_tip": "Перейдите на сайт магазина и используйте скидочный код при оформлении.",
-        "max_ttl_seconds": 259200,  # 3 дня
+        "max_ttl_seconds": 259200,
         "expired_badge": "⌛️ [Скидка завершена]",
         "expired_button": "🔒 Скидка завершена ➔ Свежие купоны"
     }
 ]
-
-MAX_DYNAMIC_POSTS_PER_RUN = 3
 
 def load_json_file(filename):
     if os.path.exists(filename):
@@ -383,7 +381,7 @@ def load_json_file(filename):
     return {} if "active" in filename else []
 
 def save_json_file(filename, data):
-    os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
@@ -517,8 +515,15 @@ def send_telegram_card(deal, is_fallback=False):
 
     try:
         response = requests.post(url, json=payload, timeout=15)
+        # Автоматическая защита от лимитов Telegram (HTTP 429)
+        if response.status_code == 429:
+            retry_after = response.json().get("parameters", {}).get("retry_after", 10)
+            print(f"[Лимит Telegram 429] Ожидание {retry_after} секунд...")
+            time.sleep(retry_after + 1)
+            response = requests.post(url, json=payload, timeout=15)
+
         print(f"Отправка '{title[:35]}...': HTTP {response.status_code}")
-        time.sleep(1.5)
+        time.sleep(2.5)  # Безопасная пауза между отправками
         if response.status_code == 200:
             res_data = response.json()
             message_id = res_data.get("result", {}).get("message_id")
@@ -655,10 +660,18 @@ def main():
     active_posts_raw = load_json_file(ACTIVE_POSTS_FILE)
     active_posts = active_posts_raw if isinstance(active_posts_raw, dict) else {}
 
+    # ДЕТЕКТОР СТАРТОВОГО НАПОЛНЕНИЯ:
+    # Если processed_ids пуст (канал только что очищен), включается режим ПОЛНОГО НАПОЛНЕНИЯ.
+    # В этом режиме выгружается ВСЯ база постоянных программ (20 постов) И ВСЕ доступные динамические предложения (до 35 шт).
+    is_initial_fill = (len(processed_ids) == 0)
+    max_dynamic_allowed = 35 if is_initial_fill else 3
+
+    print(f"Запуск бота. Режим первичного наполнения: {is_initial_fill} (Лимит динамических постов: {max_dynamic_allowed})")
+
     # 1. ЖИВАЯ ПРОВЕРКА И ОБНОВЛЕНИЕ СТАТУСОВ РАНЕЕ ОПУБЛИКОВАННЫХ ПОСТОВ
     active_posts = update_expired_posts(active_posts)
 
-    # 2. КАТАЛОГ ПОСТОЯННЫХ ПРОГРАММ (все 20 проверенных ссылок)
+    # 2. КАТАЛОГ ПОСТОЯННЫХ ПРОГРАММ (все 20 проверенных ссылок выгружаются разом)
     for deal in EVERGREEN_DEALS:
         deal_id = deal["id"]
         if deal_id not in processed_ids:
@@ -679,13 +692,13 @@ def main():
     dynamic_published = 0
     now = time.time()
     for feed_info in DYNAMIC_FEEDS:
-        if dynamic_published >= MAX_DYNAMIC_POSTS_PER_RUN:
+        if dynamic_published >= max_dynamic_allowed:
             break
 
         try:
             feed = feedparser.parse(feed_info["url"], agent="Mozilla/5.0")
             for entry in feed.entries:
-                if dynamic_published >= MAX_DYNAMIC_POSTS_PER_RUN:
+                if dynamic_published >= max_dynamic_allowed:
                     break
 
                 post_id = entry.get("id") or entry.get("link")
@@ -749,7 +762,7 @@ def main():
     # Сохраняем состояние
     save_json_file(HISTORY_FILE, list(new_processed)[-1500:])
     save_json_file(ACTIVE_POSTS_FILE, active_posts)
-    print(f"Сбор завершён. Активных отслеживаемых постов: {len(active_posts)}")
+    print(f"Сбор завершён. Опубликовано динамических постов: {dynamic_published}. Активных на мониторинге: {len(active_posts)}")
 
 if __name__ == "__main__":
     main()
