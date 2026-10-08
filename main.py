@@ -358,7 +358,6 @@ EVERGREEN_DEALS = [
 for deal in EVERGREEN_DEALS:
     deal["status_line"] = "📌 <b>Статус:</b> Постоянная льгота (бессрочно)"
 
-# Динамические источники: вакансии в Кошице, игры, курсы и горящие скидки
 # Динамические источники: игры, вакансии в Кошице, курсы и горящие скидки
 DYNAMIC_FEEDS = [
     {
@@ -441,7 +440,58 @@ DYNAMIC_FEEDS = [
     }
 ]
 
-# Правила автоматического определения тем (сквозное тегирование)
+# Кнопочная сетка для закреплённого навигатора (Вариант 2)
+NAVIGATOR_BUTTONS = [
+    [
+        {"text": "🚆 Поезда ŽSSK", "id": "sk_trains_free"},
+        {"text": "🚌 DPMK Кошице", "id": "kosice_dpmk_transport"}
+    ],
+    [
+        {"text": "🍽 Обеды в столовых", "id": "sk_isic_jedalne"},
+        {"text": "🎭 Кино и Досуг", "id": "kosice_tabacka_usmev"}
+    ],
+    [
+        {"text": "💼 Контракт Dohoda", "id": "sk_student_brigady"},
+        {"text": "🚌 FlixBus & RegioJet", "id": "flixbus_regiojet_discounts"}
+    ],
+    [
+        {"text": "🏛 Музеи Европы", "id": "europe_isic_benefits"},
+        {"text": "✈️ Лоукостеры Кошице", "id": "lowcost_flights_kosice"}
+    ],
+    [
+        {"text": "🤖 GitHub Copilot", "id": "github_student_pack"},
+        {"text": "☁️ Azure $100", "id": "azure_students"}
+    ],
+    [
+        {"text": "💻 JetBrains IDE", "id": "jetbrains_all_products"},
+        {"text": "📐 Fusion 360 CAD", "id": "fusion_360_edu"}
+    ],
+    [
+        {"text": "🎨 Figma Pro", "id": "figma_education"},
+        {"text": "🖌 Canva Pro", "id": "canva_pro_student"}
+    ],
+    [
+        {"text": "📝 Notion Education", "id": "notion_education"},
+        {"text": "🎓 Coursera Campus", "id": "coursera_student"}
+    ],
+    [
+        {"text": "🎧 Spotify Student", "id": "spotify_student"},
+        {"text": "📺 YouTube Premium", "id": "youtube_premium_student"}
+    ],
+    [
+        {"text": "🍏 Apple Music + TV", "id": "apple_music_tv"},
+        {"text": "👟 Одежда ASOS 10%", "id": "asos_student_discount"}
+    ],
+    [
+        {"text": "🎮 Epic Games Раздачи", "id": "epic_games_weekly"},
+        {"text": "🕹 Steam Free to Play", "id": "steam_free_to_play"}
+    ],
+    [
+        {"text": "🔥 Скидки месяца ISIC", "id": "isic_extra_hot_deals"},
+        {"text": "🌐 Серверы $200", "id": "github_perks_hot_credits"}
+    ]
+]
+
 TOPIC_RULES = {
     'ИИ': [
         r'\bai\b', r'artificial intelligence', r'gemini', r'chatgpt', r'gpt',
@@ -516,7 +566,6 @@ def is_expired_title(title):
     return any(m in lower_t for m in markers)
 
 def is_allowed_language(text):
-    """Строгий фильтр языков: разрешены только EN, RU, UK, SK"""
     if not text:
         return True, "Empty text"
     lower_t = text.lower()
@@ -703,6 +752,7 @@ def fetch_feed_entries(feed_info):
         return []
 
 def send_telegram_card(deal, is_fallback=False):
+    """Отправляет карточку предложения без хэштегов"""
     title = escape_html(deal.get("title"))
     category = escape_html(deal.get("category"))
     badge = escape_html(deal.get("badge", f"🎓 [{category}]"))
@@ -714,19 +764,6 @@ def send_telegram_card(deal, is_fallback=False):
     desc = escape_html(deal.get("description", ""))
     how_to = escape_html(deal.get("how_to", ""))
     link = deal.get("link")
-
-    main_tag = deal.get("main_tag", "скидки")
-    extra_tags = deal.get("extra_tags", [])
-
-    # Убираем дублирование тегов
-    seen_tags = set()
-    all_tags = []
-    for t in [main_tag] + extra_tags:
-        if t and t not in seen_tags:
-            seen_tags.add(t)
-            all_tags.append(t)
-
-    tags_string = " ".join(f"#{t}@{CHANNEL_USERNAME}" for t in all_tags)
 
     text = f"{badge} — <b>{title}</b>\n\n"
     if status_line:
@@ -743,7 +780,6 @@ def send_telegram_card(deal, is_fallback=False):
         text += f"💡 <b>Как оформить / забрать:</b>\n{how_to}\n\n"
     if is_fallback:
         text += "ℹ️ <i>Прямая страница акции перемещена. Предложение доступно на главной странице или через поиск на сайте сервиса.</i>\n\n"
-    text += f"{tags_string}"
 
     button_text = "🔗 Перейти на сайт сервиса" if is_fallback else "🔗 Забрать предложение"
     reply_markup = {
@@ -782,6 +818,66 @@ def send_telegram_card(deal, is_fallback=False):
     except Exception as e:
         print(f"Ошибка отправки: {e}")
         return False, None
+
+def send_pinned_navigator(deal_to_msg_id):
+    """Публикует пост-навигатор с кнопочной сеткой прямых ссылок на посты канала"""
+    keyboard = []
+    for row in NAVIGATOR_BUTTONS:
+        btn_row = []
+        for btn in row:
+            msg_id = deal_to_msg_id.get(btn["id"])
+            if msg_id:
+                btn_row.append({
+                    "text": btn["text"],
+                    "url": f"https://t.me/{CHANNEL_USERNAME}/{msg_id}"
+                })
+        if btn_row:
+            keyboard.append(btn_row)
+
+    text = (
+        "🎓 <b>Студенческий гид: Кошице, Словакия и Европа</b>\n\n"
+        "Сохраните этот пост: здесь собрана постоянная база официальных студенческих льгот, бесплатных лицензий и удобная кнопочная навигация по каналу.\n\n"
+        "⚡️ <i>Нажмите на интересующую кнопку ниже, чтобы мгновенно перейти к подробному описанию:</i>"
+    )
+
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": text,
+        "parse_mode": "HTML",
+        "disable_web_page_preview": True,
+        "reply_markup": {"inline_keyboard": keyboard}
+    }
+
+    try:
+        resp = requests.post(url, json=payload, timeout=15)
+        if resp.status_code == 200:
+            nav_msg_id = resp.json().get("result", {}).get("message_id")
+            print(f"Пост-навигатор успешно опубликован: ID {nav_msg_id}")
+            return nav_msg_id
+        else:
+            print(f"Ошибка публикации навигатора: HTTP {resp.status_code} ({resp.text})")
+            return None
+    except Exception as e:
+        print(f"Ошибка отправки навигатора: {e}")
+        return None
+
+def pin_telegram_message(message_id):
+    """Закрепляет пост-навигатор в канале"""
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/pinChatMessage"
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID,
+        "message_id": message_id,
+        "disable_notification": True
+    }
+    try:
+        resp = requests.post(url, json=payload, timeout=10)
+        if resp.status_code == 200:
+            print(f"Пост-навигатор {message_id} успешно закреплён в канале.")
+        else:
+            print(f"Не удалось закрепить навигатор: HTTP {resp.status_code} ({resp.text})")
+    except Exception as e:
+        print(f"Ошибка закрепления навигатора: {e}")
 
 def check_is_deal_still_active(info):
     now = time.time()
@@ -893,6 +989,9 @@ def main():
     active_posts = cleanup_expired_posts(active_posts)
 
     # Шаг 2: Каталог постоянных программ (все 24 выверенные программы)
+    evergreen_posts_file = "data/evergreen_posts.json"
+    deal_to_msg_id = load_json_file(evergreen_posts_file) or {}
+
     for deal in EVERGREEN_DEALS:
         deal_id = deal["id"]
         if deal_id not in processed_ids:
@@ -908,6 +1007,19 @@ def main():
             success, message_id = send_telegram_card(deal, is_fallback=is_fallback)
             if success:
                 new_processed.add(deal_id)
+                if message_id:
+                    deal_to_msg_id[deal_id] = message_id
+
+    save_json_file(evergreen_posts_file, deal_to_msg_id)
+
+    # Публикуем и закрепляем кнопочный навигатор (Вариант 2), если ещё не закреплён
+    nav_file = "data/navigator_info.json"
+    nav_info = load_json_file(nav_file) or {}
+    if not nav_info.get("pinned") and len(deal_to_msg_id) >= len(EVERGREEN_DEALS):
+        nav_msg_id = send_pinned_navigator(deal_to_msg_id)
+        if nav_msg_id:
+            pin_telegram_message(nav_msg_id)
+            save_json_file(nav_file, {"pinned": True, "message_id": nav_msg_id})
 
     # Шаг 3: Мониторинг динамических источников (игры, вакансии, курсы, софт, одежда)
     dynamic_published = 0
@@ -1001,3 +1113,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
