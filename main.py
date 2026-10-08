@@ -359,6 +359,7 @@ for deal in EVERGREEN_DEALS:
     deal["status_line"] = "📌 <b>Статус:</b> Постоянная льгота (бессрочно)"
 
 # Динамические источники: вакансии в Кошице, игры, курсы и горящие скидки
+# Динамические источники: игры, вакансии в Кошице, курсы и горящие скидки
 DYNAMIC_FEEDS = [
     {
         "url": "https://www.gamerpower.com/api/giveaways?platform=pc&type=game",
@@ -409,7 +410,7 @@ DYNAMIC_FEEDS = [
         "default_benefit": "Бесплатно (навсегда в библиотеку)",
         "default_duration": "Ограниченное время акции",
         "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Войдите в аккаунт платформы (Steam, Epic Games, GOG) и нажмите «Добавить в библиотеку».",
+        "how_to_tip": "Войдите в аккаунт платформы (Steam, Epic Games, GOG) и добавьте игру в библиотеку.",
         "max_ttl_seconds": 604800
     },
     {
@@ -440,6 +441,54 @@ DYNAMIC_FEEDS = [
     }
 ]
 
+# Правила автоматического определения тем (сквозное тегирование)
+TOPIC_RULES = {
+    'ИИ': [
+        r'\bai\b', r'artificial intelligence', r'gemini', r'chatgpt', r'gpt',
+        r'copilot', r'machine learning', r'deep learning', r'нейросеть', r'нейросети',
+        r'llm', r'prompting', r'prompt engineering', r'midjourney', r'stable diffusion',
+        r'claude', r'openai'
+    ],
+    'dev': [
+        r'python', r'javascript', r'typescript', r'react', r'node\.?js', r'\bjava\b',
+        r'c\+\+', r'c#', r'golang', r'\brust\b', r'html', r'css', r'frontend',
+        r'backend', r'fullstack', r'developer', r'programming', r'\bgit\b', r'github',
+        r'docker', r'kubernetes', r'\bsql\b', r'web development', r'coding',
+        r'django', r'flask', r'angular', r'vue'
+    ],
+    'дизайн': [
+        r'figma', r'photoshop', r'illustrator', r'ui/ux', r'\bui\b', r'\bux\b',
+        r'graphic design', r'blender', r'canva', r'web design', r'animation',
+        r'after effects', r'premiere'
+    ],
+    'cad': [
+        r'\bcad\b', r'autocad', r'fusion 360', r'solidworks', r'3d model', r'3d print', r'revit'
+    ],
+    'продуктивность': [
+        r'notion', r'\bexcel\b', r'productivity', r'time management', r'project management',
+        r'scrum', r'agile', r'powerpoint'
+    ],
+    'работа': [
+        r'práca', r'brigáda', r'brigady', r'job', r'internship', r'stáž', r'dohoda', r'mzda'
+    ],
+    'кошице': [
+        r'košice', r'kosice', r'tuke', r'upjš', r'upjs'
+    ],
+    'игры': [
+        r'\bgame\b', r'gaming', r'steam', r'epic games', r'gog'
+    ]
+}
+
+def extract_topic_tags(title, summary):
+    combined = f"{title} {summary}".lower()
+    matched_tags = []
+    for tag, patterns in TOPIC_RULES.items():
+        for pat in patterns:
+            if re.search(pat, combined, re.IGNORECASE):
+                matched_tags.append(tag)
+                break
+    return matched_tags
+
 def load_json_file(filepath):
     try:
         if os.path.exists(filepath):
@@ -467,16 +516,11 @@ def is_expired_title(title):
     return any(m in lower_t for m in markers)
 
 def is_allowed_language(text):
-    """
-    Фильтр языков: РАЗРЕШЕНЫ только English, Русский, Українська, Slovenčina.
-    БЛОКИРУЮТСЯ: Français, Deutsch, Español, Italiano, Português и др.
-    """
+    """Строгий фильтр языков: разрешены только EN, RU, UK, SK"""
     if not text:
         return True, "Empty text"
-
     lower_t = text.lower()
 
-    # 1. Запрещённые языковые метки в заголовках
     disallowed_tags = [
         '[fr]', '(fr)', '[french]', '(french)', '[français]', '(français)',
         '[es]', '(es)', '[spanish]', '(spanish)', '[español]', '(español)',
@@ -491,25 +535,20 @@ def is_allowed_language(text):
         if tag in lower_t:
             return False, f"Запрещённый языковой тег {tag}"
 
-    # 2. Кириллица: русский или украинский язык -> РАЗРЕШЕНО
     cyrillic_chars = re.findall(r'[а-яА-ЯёЁіІїЇєЄґҐ]', text)
     if len(cyrillic_chars) >= 4:
         return True, "Русский / Украинский язык"
 
-    # 3. Символы, специфичные для французского, немецкого, испанского, польского языков
     forbidden_chars = set('çœèêàâîïûùöüßñ¿¡ąęłśźż')
     matched_forbidden = set(c for c in lower_t if c in forbidden_chars)
     if len(matched_forbidden) >= 1:
         return False, f"Недопустимые символы языка: {matched_forbidden}"
 
-    # 4. Словацкие диакритические знаки (если нет запрещённых символов) -> РАЗРЕШЕНО
     slovak_diacritics = set('ľĺŕčšžťďňôä')
     if any(c in slovak_diacritics for c in lower_t):
         return True, "Словацкий язык"
 
-    # 5. Специфические слова запрещённых языков (французский, испанский, немецкий)
     tokens = set(re.findall(r'[a-zA-Z]+', lower_t))
-
     french_words = {
         'le', 'la', 'les', 'des', 'du', 'pour', 'avec', 'dans', 'sur', 'une', 'sont',
         'formation', 'formations', 'apprendre', 'debutant', 'debutants', 'gratuit',
@@ -679,10 +718,15 @@ def send_telegram_card(deal, is_fallback=False):
     main_tag = deal.get("main_tag", "скидки")
     extra_tags = deal.get("extra_tags", [])
 
-    tags_list = [f"#{main_tag}@{CHANNEL_USERNAME}"]
-    for t in extra_tags:
-        tags_list.append(f"#{t}@{CHANNEL_USERNAME}")
-    tags_string = " ".join(tags_list)
+    # Убираем дублирование тегов
+    seen_tags = set()
+    all_tags = []
+    for t in [main_tag] + extra_tags:
+        if t and t not in seen_tags:
+            seen_tags.add(t)
+            all_tags.append(t)
+
+    tags_string = " ".join(f"#{t}@{CHANNEL_USERNAME}" for t in all_tags)
 
     text = f"{badge} — <b>{title}</b>\n\n"
     if status_line:
@@ -754,7 +798,6 @@ def check_is_deal_still_active(info):
     source_link = info.get("source_link")
     post_type = info.get("type", "promo")
 
-    # 1. Живая проверка целевого сайта
     if target_link:
         try:
             resp = requests.get(target_link, timeout=7, headers=headers, allow_redirects=True, stream=True)
@@ -777,7 +820,6 @@ def check_is_deal_still_active(info):
         except Exception:
             pass
 
-    # 2. Живая проверка Reddit (если первоисточник — Reddit)
     if source_link and "reddit.com" in source_link:
         try:
             reddit_json_url = source_link.rstrip("/") + ".json"
@@ -799,6 +841,7 @@ def check_is_deal_still_active(info):
     return True, "Активно"
 
 def cleanup_expired_posts(active_posts):
+    """Удаляет неактуальные сообщения из Telegram через deleteMessage"""
     remaining_posts = {}
 
     for post_id, info in active_posts.items():
@@ -866,7 +909,7 @@ def main():
             if success:
                 new_processed.add(deal_id)
 
-    # Шаг 3: Мониторинг динамических источников (вакансии, игры, курсы, софт, одежда)
+    # Шаг 3: Мониторинг динамических источников (игры, вакансии, курсы, софт, одежда)
     dynamic_published = 0
     now = time.time()
 
@@ -908,6 +951,13 @@ def main():
                 elif status == "RETRY":
                     continue
 
+                # Сквозное тематическое тегирование по смыслу контента (ИИ, dev, дизайн, cad и т.д.)
+                topic_tags = extract_topic_tags(title, summary)
+                extra_tags = ["горящее"]
+                for t in topic_tags:
+                    if t != feed_info["main_tag"] and t not in extra_tags:
+                        extra_tags.append(t)
+
                 card = {
                     "id": post_id,
                     "title": title,
@@ -921,7 +971,7 @@ def main():
                     "description": clean_summary_text(summary),
                     "how_to": feed_info["how_to_tip"],
                     "link": final_url,
-                    "extra_tags": ["горящее"]
+                    "extra_tags": extra_tags
                 }
 
                 success, message_id = send_telegram_card(card, is_fallback=is_fallback)
