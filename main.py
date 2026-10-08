@@ -285,13 +285,13 @@ EVERGREEN_DEALS = [
         "title": "Скидка 10% на одежду и обувь в ASOS (доставка в ЕС)",
         "category": "Одежда и Стиль",
         "main_tag": "одежда",
-        "benefit": "Постоянная скидка 10% на все заказы",
+        "benefit": "Постоянная скидка 10% на весь ассортимент",
         "duration": "Круглый год на весь период учёбы",
         "region": "🇸🇰 Словакия, 🇪🇺 ЕС",
-        "requirements": "Студенческая почта или верификация через UNiDAYS",
+        "requirements": "Студенческая почта или аккаунт ASOS",
         "description": "Брендовые кроссовки (Nike, New Balance, adidas) и базовый гардероб. Студенческий код действует постоянно и суммируется со многими распродажами.",
-        "how_to": "Перейдите на официальный портал UNiDAYS ASOS, подтвердите статус и получите личный промокод.",
-        "link": "https://www.myunidays.com/partners/asos/view",
+        "how_to": "Перейдите на официальную страницу валидации ASOS, укажите страну учёбы и подтвердите статус студента для получения персонального кода.",
+        "link": "https://www.asos.com/student-validation",
         "extra_tags": ["одежда", "стиль", "кроссовки"]
     }
 ]
@@ -350,7 +350,6 @@ DYNAMIC_FEEDS = [
     }
 ]
 
-# Максимальное количество динамических постов за один 4-часовой запуск
 MAX_DYNAMIC_POSTS_PER_RUN = 3
 
 def load_processed_ids():
@@ -487,6 +486,7 @@ def send_telegram_card(deal, is_fallback=False):
     if how_to:
         text += f"💡 <b>Как оформить / забрать:</b>\n{how_to}\n\n"
 
+    # Если прямая ссылка переехала на главную страницу
     if is_fallback:
         text += "ℹ️ <i>Прямая страница акции перемещена. Предложение доступно на главной странице или через поиск на сайте сервиса.</i>\n\n"
 
@@ -551,7 +551,6 @@ def main():
 
         try:
             feed = feedparser.parse(feed_info["url"], agent="Mozilla/5.0")
-            # Сканируем ВСЕ доступные записи ленты, а не только первые две
             for entry in feed.entries:
                 if dynamic_published >= MAX_DYNAMIC_POSTS_PER_RUN:
                     break
@@ -560,7 +559,6 @@ def main():
                 if not post_id or post_id in processed_ids:
                     continue
 
-                # Отсекаем неактуальные / завершённые акции
                 if is_expired(entry.title):
                     new_processed.add(post_id)
                     continue
