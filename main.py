@@ -358,216 +358,176 @@ EVERGREEN_DEALS = [
 for deal in EVERGREEN_DEALS:
     deal["status_line"] = "📌 <b>Статус:</b> Постоянная льгота (бессрочно)"
 
-# Динамические источники: игры, вакансии в Кошице, курсы и горящие скидки
 DYNAMIC_FEEDS = [
+    # 1. Раздачи ПК-игр: СТРОГО Steam и Epic Games
     {
-        "url": "https://www.gamerpower.com/api/giveaways?platform=pc&type=game",
-        "format": "gamerpower_json",
+        "url": "https://www.gamerpower.com/api/giveaways?platform=pc&sort-by=date",
         "type": "game",
         "category": "Раздача недели (Игры)",
-        "badge": "🎮 [100% Бесплатная раздача]",
+        "badge": "🎮 [Игры: Steam & Epic]",
         "main_tag": "игры",
-        "default_benefit": "Бесплатно навсегда (вместо $15–$40)",
-        "default_duration": "Ограниченное время акции",
-        "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Нажмите кнопку ниже, перейдите на страницу раздачи и добавьте игру в библиотеку.",
+        "default_benefit": "Бесплатно 100% (Вместо полной цены)",
+        "default_duration": "Ограничено по времени (до окончания раздачи)",
+        "default_region": "Global (ПК)",
+        "how_to_tip": "Перейдите на страницу раздачи платформы и добавьте игру в свою библиотеку навсегда.",
         "max_ttl_seconds": 604800
     },
     {
-        "url": "https://www.profesia.sk/praca/kosice/na-dohodu-brigady/?format=rss",
-        "format": "rss",
+        "url": "https://www.reddit.com/r/FreeGamesOnSteam/new.rss",
+        "type": "game",
+        "category": "Раздача недели (Игры)",
+        "badge": "🎮 [Steam]",
+        "main_tag": "игры",
+        "default_benefit": "Бесплатно 100% (Лицензия Steam)",
+        "default_duration": "Ограничено по времени",
+        "default_region": "Global (Steam)",
+        "how_to_tip": "Активируйте ключ или заберите игру через страницу акции в магазине Steam.",
+        "max_ttl_seconds": 345600
+    },
+    {
+        "url": "https://www.reddit.com/r/EpicGamesPC/new.rss",
+        "type": "game",
+        "category": "Раздача недели (Игры)",
+        "badge": "🎮 [Epic Games]",
+        "main_tag": "игры",
+        "default_benefit": "Бесплатная раздача Epic Games",
+        "default_duration": "Еженедельная акция EGS",
+        "default_region": "Global (Epic Games)",
+        "how_to_tip": "Войдите в аккаунт Epic Games и нажмите «Оформить заказ» за 0€.",
+        "max_ttl_seconds": 604800
+    },
+    # 2. Подработка и стажировки для студентов в Словакии / Кошице
+    {
+        "url": "https://www.profesia.sk/praca/kosice/?format=rss&employment_type=brigada",
         "type": "vacancy",
         "category": "Работа и Доход",
-        "badge": "💼 [Студенческая вакансия: Кошице]",
+        "badge": "💼 [Бригада в Кошице]",
         "main_tag": "работа",
-        "default_benefit": "Оплата от €6 до €10 в час (Dohoda)",
-        "default_duration": "Приём заявок открыт (24-72 часа)",
+        "default_benefit": "Почасовая оплата для студентов (Dohoda)",
+        "default_duration": "Актуально до закрытия вакансии работодателем",
         "default_region": "🇸🇰 Кошице (Словакия)",
-        "how_to_tip": "Нажмите на кнопку ниже и отправьте отклик / резюме работодателю.",
-        "max_ttl_seconds": 432000
-    },
-    {
-        "url": "https://www.discudemy.com/feed",
-        "format": "rss",
-        "type": "course",
-        "category": "Бесплатные курсы",
-        "badge": "🔥 [Ограничено по времени]",
-        "main_tag": "курсы",
-        "default_benefit": "100% скидка (Бесплатно вместо $40–$90)",
-        "default_duration": "Временный промокод (в профиле навсегда)",
-        "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Нажмите кнопку ниже ➔ перейдите к курсу ➔ нажмите «Enroll now» за $0.",
-        "max_ttl_seconds": 172800
-    },
-    {
-        "url": "https://www.reddit.com/r/FreeGameFindings/hot/.rss",
-        "format": "rss",
-        "type": "game",
-        "category": "Раздача недели (Игры)",
-        "badge": "🎮 [100% Бесплатная раздача]",
-        "main_tag": "игры",
-        "default_benefit": "Бесплатно (навсегда в библиотеку)",
-        "default_duration": "Ограниченное время акции",
-        "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Войдите в аккаунт платформы (Steam, Epic Games, GOG) и добавьте игру в библиотеку.",
+        "how_to_tip": "Отправьте резюме через форму Profesia.sk или свяжитесь с работодателем.",
         "max_ttl_seconds": 604800
     },
     {
-        "url": "https://www.reddit.com/r/eFreebies/hot/.rss",
-        "format": "rss",
-        "type": "software",
-        "category": "Софт и Полезности",
-        "badge": "🎁 [Бесплатный софт / сервис]",
-        "main_tag": "горящее",
-        "default_benefit": "Бесплатная лицензия / Доступ",
-        "default_duration": "Временная промо-акция",
-        "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Перейдите по ссылке и активируйте промокод или зарегистрируйте бесплатную лицензию.",
+        "url": "https://www.brigada.sk/rss.php",
+        "type": "vacancy",
+        "category": "Работа и Доход",
+        "badge": "💼 [Студенческая подработка]",
+        "main_tag": "работа",
+        "default_benefit": "Гибкий график для студентов вузов",
+        "default_duration": "До набора кандидатов",
+        "default_region": "🇸🇰 Словакия",
+        "how_to_tip": "Откликнитесь на вакансию на сайте Brigada.sk, указав студенческий статус.",
+        "max_ttl_seconds": 604800
+    },
+    # 3. Бесплатные курсы и сертификаты с промокодами
+    {
+        "url": "https://www.reddit.com/r/udemyfreebies/new.rss",
+        "type": "promo",
+        "category": "Бесплатные курсы",
+        "badge": "🎓 [Курсы с купонами]",
+        "main_tag": "курсы",
+        "default_benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+        "default_duration": "Купон на 1–2 дня или первые 1000 активаций",
+        "default_region": "Online (Глобально)",
+        "how_to_tip": "Перейдите по ссылке с примененным промокодом и нажмите «Enroll Now» за $0.",
+        "max_ttl_seconds": 172800
+    },
+    # 4. Студенческий гардероб и стиль
+    {
+        "url": "https://www.reddit.com/r/frugalmalefashion/new.rss",
+        "type": "promo",
+        "category": "Одежда и Шопинг",
+        "badge": "👟 [Одежда и Обувь]",
+        "main_tag": "одежда",
+        "default_benefit": "Скидки до 60–70% в европейских магазинах",
+        "default_duration": "Пока товар есть в наличии (Распродажа)",
+        "default_region": "Европа / Доставка в Словакию",
+        "how_to_tip": "Используйте промокод на корзине или заказывайте товары из раздела сейла.",
         "max_ttl_seconds": 259200
     },
+    # 5. Горящие скидки на технику, софт и сервисы
     {
-        "url": "https://www.reddit.com/r/frugalmalefashion/hot/.rss",
-        "format": "rss",
-        "type": "clothing",
-        "category": "Одежда и Шопинг",
-        "badge": "👟 [Временная скидка / Распродажа]",
-        "main_tag": "одежда",
-        "default_benefit": "Скидки до 40–60% на брендовые вещи",
-        "default_duration": "Ограниченное время распродажи",
-        "default_region": "🇪🇺 ЕС / 🌍 Global",
-        "how_to_tip": "Перейдите на сайт магазина и используйте скидочный код при оформлении.",
+        "url": "https://www.pepper.it/rss/nuove",
+        "type": "promo",
+        "category": "Софт и Полезности",
+        "badge": "🔥 [Горящее предложение]",
+        "main_tag": "горящее",
+        "default_benefit": "Крупная скидка на электронику / софт",
+        "default_duration": "Ограниченная акция",
+        "default_region": "Евросоюз",
+        "how_to_tip": "Проверьте условия акции на сайте продавца перед покупкой.",
         "max_ttl_seconds": 259200
     }
 ]
 
-# Кнопочная сетка для закреплённого навигатора (Вариант 2)
-NAVIGATOR_BUTTONS = [
-    [
-        {"text": "🚆 Поезда ŽSSK", "id": "sk_trains_free"},
-        {"text": "🚌 DPMK Кошице", "id": "kosice_dpmk_transport"}
-    ],
-    [
-        {"text": "🍽 Обеды в столовых", "id": "sk_isic_jedalne"},
-        {"text": "🎭 Кино и Досуг", "id": "kosice_tabacka_usmev"}
-    ],
-    [
-        {"text": "💼 Контракт Dohoda", "id": "sk_student_brigady"},
-        {"text": "🚌 FlixBus & RegioJet", "id": "flixbus_regiojet_discounts"}
-    ],
-    [
-        {"text": "🏛 Музеи Европы", "id": "europe_isic_benefits"},
-        {"text": "✈️ Лоукостеры Кошице", "id": "lowcost_flights_kosice"}
-    ],
-    [
-        {"text": "🤖 GitHub Copilot", "id": "github_student_pack"},
-        {"text": "☁️ Azure $100", "id": "azure_students"}
-    ],
-    [
-        {"text": "💻 JetBrains IDE", "id": "jetbrains_all_products"},
-        {"text": "📐 Fusion 360 CAD", "id": "fusion_360_edu"}
-    ],
-    [
-        {"text": "🎨 Figma Pro", "id": "figma_education"},
-        {"text": "🖌 Canva Pro", "id": "canva_pro_student"}
-    ],
-    [
-        {"text": "📝 Notion Education", "id": "notion_education"},
-        {"text": "🎓 Coursera Campus", "id": "coursera_student"}
-    ],
-    [
-        {"text": "🎧 Spotify Student", "id": "spotify_student"},
-        {"text": "📺 YouTube Premium", "id": "youtube_premium_student"}
-    ],
-    [
-        {"text": "🍏 Apple Music + TV", "id": "apple_music_tv"},
-        {"text": "👟 Одежда ASOS 10%", "id": "asos_student_discount"}
-    ],
-    [
-        {"text": "🎮 Epic Games Раздачи", "id": "epic_games_weekly"},
-        {"text": "🕹 Steam Free to Play", "id": "steam_free_to_play"}
-    ],
-    [
-        {"text": "🔥 Скидки месяца ISIC", "id": "isic_extra_hot_deals"},
-        {"text": "🌐 Серверы $200", "id": "github_perks_hot_credits"}
-    ]
+TOPIC_RULES = [
+    ("ИИ", ["ai", "copilot", "chatgpt", "openai", "claude", "gemini", "нейросеть", "llm"]),
+    ("dev", ["github", "jetbrains", "azure", "docker", "python", "developer", "код", "git", "api", "ide", "vscode"]),
+    ("дизайн", ["figma", "canva", "adobe", "дизайн", "ui/ux", "graphics", "3d", "blender"]),
+    ("cad", ["fusion 360", "autocad", "autodesk", "cad", "solidworks", "инженерия"]),
+    ("продуктивность", ["notion", "office 365", "excel", "obsidian", "учеба", "конспекты"]),
+    ("подписки", ["spotify", "apple music", "youtube premium", "музыка", "стриминг", "подписка"]),
+    ("курсы", ["coursera", "udemy", "сертификат", "обучение", "лекции"]),
+    ("одежда", ["asos", "nike", "adidas", "кроссовки", "гардероб", "одежда"]),
+    ("игры", ["steam", "epic games", "раздача", "игры", "гейминг", "бесплатно игра"]),
+    ("словакия", ["словакия", "slovensko", "slovakia", "bratislava", "zssk", "isic"]),
+    ("кошице", ["кошице", "košice", "kosice", "dpmk", "tuke", "upjs"]),
+    ("путешествия", ["поезд", "flixbus", "regiojet", "ryanair", "wizz", "лоукостер", "билеты", "музей"])
 ]
 
-TOPIC_RULES = {
-    'ИИ': [
-        r'\bai\b', r'artificial intelligence', r'gemini', r'chatgpt', r'gpt',
-        r'copilot', r'machine learning', r'deep learning', r'нейросеть', r'нейросети',
-        r'llm', r'prompting', r'prompt engineering', r'midjourney', r'stable diffusion',
-        r'claude', r'openai'
-    ],
-    'dev': [
-        r'python', r'javascript', r'typescript', r'react', r'node\.?js', r'\bjava\b',
-        r'c\+\+', r'c#', r'golang', r'\brust\b', r'html', r'css', r'frontend',
-        r'backend', r'fullstack', r'developer', r'programming', r'\bgit\b', r'github',
-        r'docker', r'kubernetes', r'\bsql\b', r'web development', r'coding',
-        r'django', r'flask', r'angular', r'vue'
-    ],
-    'дизайн': [
-        r'figma', r'photoshop', r'illustrator', r'ui/ux', r'\bui\b', r'\bux\b',
-        r'graphic design', r'blender', r'canva', r'web design', r'animation',
-        r'after effects', r'premiere'
-    ],
-    'cad': [
-        r'\bcad\b', r'autocad', r'fusion 360', r'solidworks', r'3d model', r'3d print', r'revit'
-    ],
-    'продуктивность': [
-        r'notion', r'\bexcel\b', r'productivity', r'time management', r'project management',
-        r'scrum', r'agile', r'powerpoint'
-    ],
-    'работа': [
-        r'práca', r'brigáda', r'brigady', r'job', r'internship', r'stáž', r'dohoda', r'mzda'
-    ],
-    'кошице': [
-        r'košice', r'kosice', r'tuke', r'upjš', r'upjs'
-    ],
-    'игры': [
-        r'\bgame\b', r'gaming', r'steam', r'epic games', r'gog'
-    ]
-}
-
-def extract_topic_tags(title, summary):
-    combined = f"{title} {summary}".lower()
-    matched_tags = []
-    for tag, patterns in TOPIC_RULES.items():
-        for pat in patterns:
-            if re.search(pat, combined, re.IGNORECASE):
-                matched_tags.append(tag)
+def extract_topic_tags(title, text):
+    combined = f"{title} {text}".lower()
+    matched = []
+    for tag_name, keywords in TOPIC_RULES:
+        for kw in keywords:
+            if re.search(r'\b' + re.escape(kw) + r'\b', combined):
+                if tag_name not in matched:
+                    matched.append(tag_name)
                 break
-    return matched_tags
+    return matched
 
-def load_json_file(filepath):
-    try:
-        if os.path.exists(filepath):
-            with open(filepath, "r", encoding="utf-8") as f:
+def load_json_file(filename):
+    if os.path.exists(filename):
+        try:
+            with open(filename, "r", encoding="utf-8") as f:
                 return json.load(f)
-    except Exception as e:
-        print(f"Ошибка чтения {filepath}: {e}")
+        except Exception as e:
+            print(f"Ошибка чтения {filename}: {e}")
     return None
 
-def save_json_file(filepath, data):
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    with open(filepath, "w", encoding="utf-8") as f:
+def save_json_file(filename, data):
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 def escape_html(text):
     if not text:
         return ""
-    return html.escape(str(text))
+    return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 def is_expired_title(title):
-    if not title:
-        return False
-    lower_t = title.lower()
-    markers = ["[expired]", "(expired)", "expired", "[ended]", "ended", "oos", "out of stock", "dead deal"]
-    return any(m in lower_t for m in markers)
+    t = title.lower()
+    markers = ["[expired]", "(expired)", "ended", "oos", "out of stock", "завершено", "истекло", "неактуально"]
+    return any(m in t for m in markers)
 
 def is_allowed_language(text):
     if not text:
         return True, "Empty text"
+
+    non_allowed_scripts = re.compile(
+        r'[가-힯ᄀ-ᇿ㄰-㆏'  # Корейский
+        r'一-鿿㐀-䶿'                # Китайский / Японский (CJK)
+        r'぀-ゟ゠-ヿ'                # Хирагана / Катакана
+        r'؀-ۿݐ-ݿ'                # Арабский
+        r'֐-׿'                            # Иврит
+        r'ऀ-ॿ'                            # Деванагари
+        r'฀-๿]'                           # Тайский
+    )
+    if non_allowed_scripts.search(text):
+        return False, "Неразрешённая письменность (Корейский, Китайский, Арабский и др.)"
+
     lower_t = text.lower()
 
     disallowed_tags = [
@@ -601,59 +561,54 @@ def is_allowed_language(text):
     french_words = {
         'le', 'la', 'les', 'des', 'du', 'pour', 'avec', 'dans', 'sur', 'une', 'sont',
         'formation', 'formations', 'apprendre', 'debutant', 'debutants', 'gratuit',
-        'gratuite', 'francais', 'francaise', 'cours', 'cette', 'votre', 'notre',
-        'tous', 'chez', 'faire', 'maitriser', 'gestion', 'projet', 'guide'
+        'gratuite', 'francais', 'francaise', 'cours', 'cette', 'votre', 'notre'
     }
     spanish_words = {
         'el', 'los', 'las', 'del', 'para', 'con', 'por', 'curso', 'cursos',
-        'aprender', 'aprende', 'gratis', 'espanol', 'desde', 'principiantes',
-        'hacer', 'todos', 'desarrollo', 'completo'
+        'aprender', 'aprende', 'gratis', 'espanol', 'desde', 'principiantes'
     }
     german_words = {
         'der', 'die', 'das', 'den', 'dem', 'des', 'fuer', 'mit', 'und',
-        'kostenlos', 'lernen', 'deutsch', 'anfaenger', 'kurs', 'entwicklung',
-        'vollstaendige', 'einstieg'
+        'kostenlos', 'lernen', 'deutsch', 'anfaenger', 'kurs'
     }
 
-    if len(tokens.intersection(french_words)) >= 2 or any(w in tokens for w in ('formation', 'formations', 'apprendre', 'francais', 'gratuite')):
-        return False, f"Французские слова: {tokens.intersection(french_words)}"
-
-    if len(tokens.intersection(spanish_words)) >= 2 or any(w in tokens for w in ('espanol', 'principiantes', 'aprende')):
-        return False, f"Испанские слова: {tokens.intersection(spanish_words)}"
-
-    if len(tokens.intersection(german_words)) >= 2 or any(w in tokens for w in ('kostenlos', 'anfaenger', 'deutsch')):
-        return False, f"Немецкие слова: {tokens.intersection(german_words)}"
+    if len(tokens.intersection(french_words)) >= 2:
+        return False, "Французский язык"
+    if len(tokens.intersection(spanish_words)) >= 2:
+        return False, "Испанский язык"
+    if len(tokens.intersection(german_words)) >= 2:
+        return False, "Немецкий язык"
 
     return True, "Английский или Словацкий язык"
 
-def extract_direct_link(summary, default_link):
-    clean_default = default_link.split("?")[0].rstrip("/")
-    urls = re.findall(r'https?://[^\s<>"]+[a-zA-Z0-9/]', summary)
+def extract_direct_link(summary_html, default_link):
+    if not summary_html:
+        return default_link
+    match = re.search(r'<a\s+href="([^"]+)">\[link\]</a>', summary_html, re.IGNORECASE)
+    if match:
+        return match.group(1)
+    urls = re.findall(r'https?://[^\s<>"]+|www\.[^\s<>"]+', summary_html)
     for u in urls:
-        clean_u = u.split("?")[0].rstrip("/")
-        if "reddit.com" not in u and clean_u != clean_default and "preview.redd.it" not in u:
+        if "reddit.com" not in u and "redd.it" not in u:
             return u
     return default_link
 
-def clean_summary_text(raw_text):
-    if not raw_text:
+def clean_summary_text(summary_html):
+    if not summary_html:
         return ""
-    clean = re.sub(r'<[^>]+>', ' ', raw_text)
-    clean = html.unescape(clean)
-    clean = re.sub(r'submitted by\s+.*?to\s+r/\w+', '', clean, flags=re.IGNORECASE)
-    clean = re.sub(r'\[link\]|\[comments\]', '', clean, flags=re.IGNORECASE)
-    clean = re.sub(r'https?://\S+', '', clean)
-    clean = ' '.join(clean.split()).strip()
-    if len(clean) < 20:
-        return ""
-    if len(clean) > 280:
-        clean = clean[:277] + "..."
-    return clean
+    text = re.sub(r'<[^>]+>', ' ', summary_html)
+    text = re.sub(r'submitted by.*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\[link\].*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'https?://\S+', '', text)
+    text = ' '.join(text.split())
+    if len(text) > 280:
+        text = text[:277].rsplit(' ', 1)[0] + '...'
+    return text
 
 def get_base_domain(url):
     try:
         parsed = urlparse(url)
-        return f"{parsed.scheme}://{parsed.netloc}/"
+        return f"{parsed.scheme}://{parsed.netloc}"
     except Exception:
         return url
 
@@ -662,101 +617,124 @@ def validate_link(url, fallback_url=None):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
     }
-
     try:
-        resp = requests.get(url, timeout=7, headers=headers, allow_redirects=True, stream=True)
-        status = resp.status_code
+        resp = requests.head(url, timeout=7, headers=headers, allow_redirects=True)
+        if resp.status_code in (405, 501):
+            resp = requests.get(url, timeout=7, headers=headers, allow_redirects=True, stream=True)
 
-        if 200 <= status < 400:
-            return "OK", url, False
-
-        if status in [401, 403]:
-            return "OK", url, False
-
-        if 500 <= status < 600:
-            print(f"[Сервер перегружен {status}] Ссылка {url} временно недоступна. Откладываем.")
+        if resp.status_code in (404, 410):
+            print(f"Ссылка {url} вернула статус {resp.status_code}. Пропуск публикации.")
+            return "DROP", None, False
+        if resp.status_code in (500, 502, 503, 504):
+            print(f"Сервер временно недоступен ({resp.status_code}). Повтор позже.")
             return "RETRY", None, False
 
-        if status in [404, 410]:
-            if fallback_url and fallback_url != url:
-                print(f"[404 Замена] Ссылка {url} вернула 404. Подменяем на {fallback_url}")
-                return "OK", fallback_url, True
+        final_url = resp.url
+        base_original = get_base_domain(url).lower()
+        base_final = get_base_domain(final_url).lower()
 
-            base_url = get_base_domain(url)
-            if base_url != url:
-                print(f"[404 ➔ Главная] Ссылка {url} не найдена. Пробуем главную страницу: {base_url}")
-                try:
-                    base_resp = requests.get(base_url, timeout=7, headers=headers, allow_redirects=True, stream=True)
-                    if base_resp.status_code < 400 or base_resp.status_code in [401, 403]:
-                        return "OK", base_url, True
-                except Exception:
-                    pass
+        if base_original == base_final and final_url.rstrip("/") == base_final.rstrip("/"):
+            if url.rstrip("/") != base_original.rstrip("/"):
+                print(f"Редирект на главную страницу сервиса: {url} -> {final_url}. Публикуем с пометкой.")
+                return "OK", final_url, True
 
-            print(f"[404 Отмена] Ссылка {url} и её домен недоступны. Пост отменён.")
-            return "DROP", None, False
-
-        return "OK", url, False
-
+        return "OK", final_url, False
     except requests.exceptions.Timeout:
-        print(f"[Таймаут] Сайт {url} не ответил вовремя. Откладываем на следующий цикл.")
+        print(f"Таймаут проверки ссылки {url}. Повтор в следующем цикле.")
         return "RETRY", None, False
-    except Exception as e:
-        print(f"[Предупреждение] Ошибка проверки {url}: {e}. Оставляем без изменений.")
-        return "OK", url, False
+    except requests.exceptions.RequestException as e:
+        print(f"Ошибка проверки ссылки ({e}). Используем резервную ссылку.")
+        return "OK", fallback_url or url, False
 
 def fetch_feed_entries(feed_info):
     url = feed_info["url"]
-    feed_format = feed_info.get("format", "rss")
-
+    feed_type = feed_info.get("type", "promo")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "sk,cs,en;q=0.9"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     }
-    if "reddit.com" in url:
-        headers["User-Agent"] = "telegram:discounts4students_bot:v2.0 (by /u/studentdealsbot)"
 
-    try:
-        resp = requests.get(url, headers=headers, timeout=12)
-        if resp.status_code != 200:
-            print(f"[{feed_info['category']}] HTTP {resp.status_code} при запросе {url}")
-            return []
-
-        if feed_format == "gamerpower_json":
-            items = resp.json()
+    if "gamerpower.com" in url:
+        resp = requests.get(url, timeout=10, headers=headers)
+        if resp.status_code == 200:
+            data = resp.json()
             entries = []
-            for item in items[:15]:
-                entries.append({
-                    "id": f"gamerpower_{item.get('id')}",
-                    "title": item.get("title", ""),
-                    "summary": item.get("description", ""),
-                    "link": item.get("open_giveaway_url") or item.get("open_giveaway") or url,
-                    "worth": item.get("worth", "")
-                })
-            print(f"[{feed_info['category']}] Найдено {len(entries)} активных раздач (JSON API)")
-            return entries
+            for item in data[:10]:
+                open_giveaway_url = item.get("open_giveaway_url") or item.get("open_giveaway") or item.get("gamerpower_url") or ""
+                platforms_str = str(item.get("platforms", "")).lower()
+                combined_text = f"{item.get('title', '')} {open_giveaway_url} {platforms_str}".lower()
 
-        feed = feedparser.parse(resp.content)
-        entries = []
-        for entry in feed.entries:
-            entries.append({
-                "id": entry.get("id") or entry.get("link"),
-                "title": entry.get("title", ""),
-                "summary": entry.get("summary", ""),
-                "link": entry.get("link", "")
-            })
-        print(f"[{feed_info['category']}] Найдено {len(entries)} записей в ленте")
-        return entries
-    except Exception as e:
-        print(f"[{feed_info['category']}] Ошибка загрузки ленты {url}: {e}")
+                # СТРОГО: только Steam и Epic Games
+                if not any(plat in combined_text for plat in ("steam", "epic", "epicgames")):
+                    continue
+
+                entries.append({
+                    "id": str(item.get("id")),
+                    "title": item.get("title"),
+                    "link": open_giveaway_url,
+                    "summary": item.get("description", "")
+                })
+            return entries
         return []
 
+    # RSS-ленты
+    req_headers = {"User-Agent": "telegram:discounts4students_bot:v2.0 (by /u/studentdealsbot)"} if "reddit.com" in url else headers
+    try:
+        resp = requests.get(url, timeout=10, headers=req_headers)
+        if resp.status_code == 200:
+            feed = feedparser.parse(resp.content)
+            entries = []
+            for e in feed.entries[:10]:
+                entries.append({
+                    "id": getattr(e, "id", getattr(e, "link", None)),
+                    "title": getattr(e, "title", ""),
+                    "link": getattr(e, "link", ""),
+                    "summary": getattr(e, "summary", "")
+                })
+            return entries
+    except Exception as err:
+        print(f"Ошибка загрузки RSS {url}: {err}")
+    return []
+
+TAG_MAP = {
+    "кошице": "kosice",
+    "словакия": "slovakia",
+    "транспорт": "transport",
+    "поезда": "transport",
+    "работа": "jobs",
+    "стажировки": "jobs",
+    "путешествия": "travel",
+    "европа": "travel",
+    "авиа": "flights",
+    "cad": "cad",
+    "dev": "dev",
+    "программирование": "dev",
+    "ии": "ai",
+    "дизайн": "design",
+    "продуктивность": "productivity",
+    "учеба": "productivity",
+    "курсы": "courses",
+    "подписки": "subscriptions",
+    "музыка": "subscriptions",
+    "одежда": "fashion",
+    "игры": "games",
+    "горящее": "hot"
+}
+
+def get_clean_tags(deal):
+    raw_tags = [deal.get("main_tag")] + deal.get("extra_tags", [])
+    clean = []
+    for t in raw_tags:
+        if not t:
+            continue
+        mapped = TAG_MAP.get(str(t).lower())
+        if mapped and mapped not in clean:
+            clean.append(mapped)
+    return clean[:3] if clean else ["hot"]
+
 def send_telegram_card(deal, is_fallback=False):
-    """Отправляет карточку предложения без хэштегов"""
     title = escape_html(deal.get("title"))
     category = escape_html(deal.get("category"))
     badge = escape_html(deal.get("badge", f"🎓 [{category}]"))
-    status_line = deal.get("status_line", "")
     benefit = escape_html(deal.get("benefit"))
     duration = escape_html(deal.get("duration"))
     region = escape_html(deal.get("region"))
@@ -765,21 +743,27 @@ def send_telegram_card(deal, is_fallback=False):
     how_to = escape_html(deal.get("how_to", ""))
     link = deal.get("link")
 
-    text = f"{badge} — <b>{title}</b>\n\n"
-    if status_line:
-        text += f"{status_line}\n"
-    text += (
-        f"💰 <b>Выгода:</b> {benefit}\n"
-        f"⏳ <b>Срок:</b> {duration}\n"
-        f"🌍 <b>Регион:</b> {region}\n"
-        f"📋 <b>Что нужно:</b> {reqs}\n\n"
-    )
+    clean_tags = get_clean_tags(deal)
+    tag_str = " ".join(f"#{t}" for t in clean_tags)
+
+    parts = [
+        f"{badge} — <b>{title}</b>",
+        "",
+        f"💰 <b>Выгода:</b> {benefit}",
+        f"⏳ <b>Срок:</b> {duration}",
+        f"🌍 <b>Регион:</b> {region}",
+        f"📋 <b>Что нужно:</b> {reqs}",
+        ""
+    ]
     if desc:
-        text += f"{desc}\n\n"
+        parts.extend([desc, ""])
     if how_to:
-        text += f"💡 <b>Как оформить / забрать:</b>\n{how_to}\n\n"
+        parts.extend(["💡 <b>Как оформить / забрать:</b>", how_to, ""])
     if is_fallback:
-        text += "ℹ️ <i>Прямая страница акции перемещена. Предложение доступно на главной странице или через поиск на сайте сервиса.</i>\n\n"
+        parts.extend(["ℹ️ <i>Прямая страница акции перемещена. Предложение доступно на главной странице или через поиск на сайте сервиса.</i>", ""])
+
+    parts.append(f"🏷 {tag_str}")
+    text = "\n".join(parts)
 
     button_text = "🔗 Перейти на сайт сервиса" if is_fallback else "🔗 Забрать предложение"
     reply_markup = {
@@ -819,25 +803,56 @@ def send_telegram_card(deal, is_fallback=False):
         print(f"Ошибка отправки: {e}")
         return False, None
 
-def send_pinned_navigator(deal_to_msg_id):
-    """Публикует пост-навигатор с кнопочной сеткой прямых ссылок на посты канала"""
+NAVIGATOR_BUTTONS = [
+    [
+        {"text": "🇸🇰 Льготы в Словакии", "tag": "slovakia"},
+        {"text": "📍 Кошице (Транспорт/Лайф)", "tag": "kosice"}
+    ],
+    [
+        {"text": "🚆 Поезда и Билеты", "tag": "transport"},
+        {"text": "💼 Работа и Стажировки", "tag": "jobs"}
+    ],
+    [
+        {"text": "🌍 Путешествия по Европе", "tag": "travel"},
+        {"text": "✈️ Лоукостеры и Авиа", "tag": "flights"}
+    ],
+    [
+        {"text": "🤖 ИИ и Нейросети", "tag": "ai"},
+        {"text": "💻 Софт для разработки", "tag": "dev"}
+    ],
+    [
+        {"text": "🎨 Дизайн и Графика", "tag": "design"},
+        {"text": "📐 CAD и 3D Моделирование", "tag": "cad"}
+    ],
+    [
+        {"text": "📝 Продуктивность и Учёба", "tag": "productivity"},
+        {"text": "🎓 Бесплатные курсы", "tag": "courses"}
+    ],
+    [
+        {"text": "🎧 Музыка и Кино", "tag": "subscriptions"},
+        {"text": "👟 Одежда и Стиль", "tag": "fashion"}
+    ],
+    [
+        {"text": "🎮 Игры (Steam / Epic)", "tag": "games"},
+        {"text": "🔥 Горящие скидки недели", "tag": "hot"}
+    ]
+]
+
+def send_pinned_navigator():
     keyboard = []
     for row in NAVIGATOR_BUTTONS:
         btn_row = []
         for btn in row:
-            msg_id = deal_to_msg_id.get(btn["id"])
-            if msg_id:
-                btn_row.append({
-                    "text": btn["text"],
-                    "url": f"https://t.me/{CHANNEL_USERNAME}/{msg_id}"
-                })
-        if btn_row:
-            keyboard.append(btn_row)
+            btn_row.append({
+                "text": btn["text"],
+                "url": f"https://t.me/{CHANNEL_USERNAME}?q=%23{btn['tag']}"
+            })
+        keyboard.append(btn_row)
 
     text = (
-        "🎓 <b>Студенческий гид: Кошице, Словакия и Европа</b>\n\n"
-        "Сохраните этот пост: здесь собрана постоянная база официальных студенческих льгот, бесплатных лицензий и удобная кнопочная навигация по каналу.\n\n"
-        "⚡️ <i>Нажмите на интересующую кнопку ниже, чтобы мгновенно перейти к подробному описанию:</i>"
+        "🎓 <b>Навигатор по студенческим льготам и скидкам</b>\n\n"
+        "Добро пожаловать в гид по скидкам для студентов в Словакии (Кошице) и онлайн!\n\n"
+        "⚡️ <i>Нажмите на любую кнопку ниже, чтобы открыть выборку всех актуальных постов по теме:</i>"
     )
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -863,7 +878,6 @@ def send_pinned_navigator(deal_to_msg_id):
         return None
 
 def pin_telegram_message(message_id):
-    """Закрепляет пост-навигатор в канале"""
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/pinChatMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
@@ -937,7 +951,6 @@ def check_is_deal_still_active(info):
     return True, "Активно"
 
 def cleanup_expired_posts(active_posts):
-    """Удаляет неактуальные сообщения из Telegram через deleteMessage"""
     remaining_posts = {}
 
     for post_id, info in active_posts.items():
@@ -962,7 +975,7 @@ def cleanup_expired_posts(active_posts):
                     print(f"  Не удалось удалить сообщение {message_id}: HTTP {resp.status_code} ({resp.text})")
                 time.sleep(1.0)
             except Exception as e:
-                print(f"Ошибка при удалении сообщения {message_id}: {e}")
+                print(f"  Ошибка при удалении {message_id}: {e}")
         else:
             remaining_posts[post_id] = info
 
@@ -1012,11 +1025,13 @@ def main():
 
     save_json_file(evergreen_posts_file, deal_to_msg_id)
 
-    # Публикуем и закрепляем кнопочный навигатор (Вариант 2), если ещё не закреплён
+    # Публикуем и закрепляем кнопочный навигатор (Способ 1 - поиск по категориям)
     nav_file = "data/navigator_info.json"
     nav_info = load_json_file(nav_file) or {}
-    if not nav_info.get("pinned") and len(deal_to_msg_id) >= len(EVERGREEN_DEALS):
-        nav_msg_id = send_pinned_navigator(deal_to_msg_id)
+
+    if is_initial_fill or not nav_info.get("pinned"):
+        print("[Навигатор] Публикация закреплённого сообщения с кнопками-поиском...")
+        nav_msg_id = send_pinned_navigator()
         if nav_msg_id:
             pin_telegram_message(nav_msg_id)
             save_json_file(nav_file, {"pinned": True, "message_id": nav_msg_id})
@@ -1044,6 +1059,13 @@ def main():
                     new_processed.add(post_id)
                     continue
 
+                # Игры: разрешены СТРОГО только Steam и Epic Games
+                if feed_info.get("type") == "game":
+                    comb_game = f"{title} {entry.get('link', '')}".lower()
+                    if not any(p in comb_game for p in ("steam", "epic", "epicgames")):
+                        new_processed.add(post_id)
+                        continue
+
                 raw_link = entry.get("link", "")
                 summary = entry.get("summary", "")
 
@@ -1063,7 +1085,6 @@ def main():
                 elif status == "RETRY":
                     continue
 
-                # Сквозное тематическое тегирование по смыслу контента (ИИ, dev, дизайн, cad и т.д.)
                 topic_tags = extract_topic_tags(title, summary)
                 extra_tags = ["горящее"]
                 for t in topic_tags:
@@ -1071,7 +1092,6 @@ def main():
                         extra_tags.append(t)
 
                 card = {
-                    "id": post_id,
                     "title": title,
                     "category": feed_info["category"],
                     "badge": feed_info["badge"],
@@ -1113,4 +1133,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
