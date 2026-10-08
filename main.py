@@ -9,6 +9,7 @@ import requests
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 HISTORY_FILE = "data/processed_ids.json"
+ACTIVE_POSTS_FILE = "data/active_posts.json"
 
 CHANNEL_USERNAME = TELEGRAM_CHAT_ID.replace("@", "") if TELEGRAM_CHAT_ID else "discounts4students"
 
@@ -296,90 +297,107 @@ EVERGREEN_DEALS = [
     }
 ]
 
-# Динамические потоки актуальных скидок и раздач (HOT / проверенные сообществом)
+# Динамические потоки: вакансии (Кошице), курсы, игры, софт, одежда
 DYNAMIC_FEEDS = [
     {
+        "url": "https://www.profesia.sk/praca/kosice/brigady/?format=rss",
+        "type": "vacancy",
+        "category": "Работа и Доход",
+        "badge": "💼 [Студенческая вакансия: Кошице]",
+        "main_tag": "работа",
+        "default_benefit": "Оплата от €6 до €10 в час (Dohoda)",
+        "default_duration": "Приём заявок открыт (24-72 часа)",
+        "default_region": "🇸🇰 Кошице (Словакия)",
+        "how_to_tip": "Нажмите на кнопку ниже и отправьте отклик / резюме работодателю.",
+        "max_ttl_seconds": 432000,  # 5 дней максимальный потолок
+        "expired_badge": "🔴 [Набор закрыт]",
+        "expired_button": "🔒 Набор закрыт ➔ Свежие вакансии"
+    },
+    {
         "url": "https://www.reddit.com/r/udemyfreebies/hot/.rss",
-        "category": "🔥 Бесплатные курсы",
+        "type": "course",
+        "category": "Бесплатные курсы",
         "badge": "🔥 [Ограничено по времени]",
         "main_tag": "курсы",
         "default_benefit": "100% скидка (Бесплатно вместо $40–$90)",
         "default_duration": "Временный промокод (в профиле навсегда)",
         "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Нажмите кнопку ниже ➔ убедитесь, что цена $0 (Free) ➔ нажмите «Enroll now». Привязка карты не нужна!"
+        "how_to_tip": "Нажмите кнопку ниже ➔ убедитесь, что цена $0 (Free) ➔ нажмите «Enroll now». Привязка карты не нужна!",
+        "max_ttl_seconds": 172800,  # 2 дня
+        "expired_badge": "⌛️ [Промокод исчерпан]",
+        "expired_button": "🔒 Промокод истёк ➔ Свежие курсы"
     },
     {
         "url": "https://www.reddit.com/r/FreeGameFindings/hot/.rss",
-        "category": "🎮 Раздача недели (Игры)",
+        "type": "game",
+        "category": "Раздача недели (Игры)",
         "badge": "🎮 [100% Бесплатная раздача]",
         "main_tag": "игры",
         "default_benefit": "Бесплатно (навсегда в библиотеку)",
         "default_duration": "Ограниченное время акции",
         "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Войдите в аккаунт платформы (Steam, Epic Games, GOG) и нажмите «Добавить в библиотеку»."
+        "how_to_tip": "Войдите в аккаунт платформы (Steam, Epic Games, GOG) и нажмите «Добавить в библиотеку».",
+        "max_ttl_seconds": 604800,  # 7 дней
+        "expired_badge": "⌛️ [Раздача завершена]",
+        "expired_button": "🔒 Раздача закрыта ➔ Свежие игры"
     },
     {
         "url": "https://www.reddit.com/r/eFreebies/hot/.rss",
-        "category": "🎁 Софт и Полезности",
+        "type": "software",
+        "category": "Софт и Полезности",
         "badge": "🎁 [Бесплатный софт / сервис]",
         "main_tag": "софт",
         "default_benefit": "Бесплатная лицензия / Доступ",
         "default_duration": "Временная промо-акция",
         "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Перейдите по ссылке и активируйте промокод или зарегистрируйте бесплатную лицензию."
+        "how_to_tip": "Перейдите по ссылке и активируйте промокод или зарегистрируйте бесплатную лицензию.",
+        "max_ttl_seconds": 259200,  # 3 дня
+        "expired_badge": "⌛️ [Акция завершена]",
+        "expired_button": "🔒 Срок истёк ➔ Все скидки"
     },
     {
-        "url": "https://www.reddit.com/r/studentdeals/hot/.rss",
-        "category": "🎓 Студенческие акции",
-        "badge": "🎓 [Студенческая скидка]",
-        "main_tag": "акции",
-        "default_benefit": "Сниженная цена для студентов",
-        "default_duration": "Период действия акции",
-        "default_region": "🌍 Global / 🇪🇺 ЕС / 🇺🇸 US",
-        "how_to_tip": "Используйте студенческую почту или промокод при заказе."
-    },
-    {
-        "url": "https://www.reddit.com/r/GameDeals/hot/.rss",
-        "category": "🎮 Крупные распродажи",
-        "badge": "🎮 [Топовая скидка]",
-        "main_tag": "игры",
-        "default_benefit": "Скидки до 90% / Бесплатно",
+        "url": "https://www.reddit.com/r/frugalmalefashion/hot/.rss",
+        "type": "clothing",
+        "category": "Одежда и Шопинг",
+        "badge": "👟 [Временная скидка / Распродажа]",
+        "main_tag": "одежда",
+        "default_benefit": "Скидки до 40–60% на брендовые вещи",
         "default_duration": "Ограниченное время распродажи",
-        "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Перейдите на страницу официального магазина и оформите игру со скидкой."
+        "default_region": "🇪🇺 ЕС / 🌍 Global",
+        "how_to_tip": "Перейдите на сайт магазина и используйте скидочный код при оформлении.",
+        "max_ttl_seconds": 259200,  # 3 дня
+        "expired_badge": "⌛️ [Скидка завершена]",
+        "expired_button": "🔒 Скидка завершена ➔ Свежие купоны"
     }
 ]
 
 MAX_DYNAMIC_POSTS_PER_RUN = 3
 
-def load_processed_ids():
-    if os.path.exists(HISTORY_FILE):
-        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+def load_json_file(filename):
+    if os.path.exists(filename):
+        with open(filename, "r", encoding="utf-8") as f:
             try:
-                return set(json.load(f))
+                return json.load(f)
             except json.JSONDecodeError:
-                return set()
-    return set()
+                return {} if "active" in filename else []
+    return {} if "active" in filename else []
 
-def save_processed_ids(ids):
+def save_json_file(filename, data):
     os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
-    recent_ids = list(ids)[-1500:]
-    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-        json.dump(recent_ids, f, indent=2, ensure_ascii=False)
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 def escape_html(text):
     if not text:
         return ""
     return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
-def is_expired(title):
-    """Проверяет, не помечена ли акция как завершённая сообществом"""
+def is_expired_title(title):
     lower = title.lower()
     expired_markers = ["[expired]", "(expired)", "[ended]", "(ended)", "[closed]", "[oos]", "out of stock"]
     return any(marker in lower for marker in expired_markers)
 
 def extract_direct_link(summary_html, fallback_url):
-    """Извлекает прямую целевую ссылку из описания Reddit"""
     if not summary_html:
         return fallback_url
     found_links = re.findall(r'href=[\"\']([^\"\']+)[\"\']', summary_html)
@@ -389,7 +407,6 @@ def extract_direct_link(summary_html, fallback_url):
     return fallback_url
 
 def get_base_domain(url):
-    """Срезает ссылку до главной страницы домена: https://site.com/deep/path -> https://site.com/"""
     try:
         parsed = urlparse(url)
         return f"{parsed.scheme}://{parsed.netloc}/"
@@ -397,21 +414,10 @@ def get_base_domain(url):
         return url
 
 def validate_link(url, fallback_url=None):
-    """
-    Умная валидация ссылки:
-    - 200..399: ссылка жива -> публикуем (OK)
-    - 401, 403: сайт защищён WAF/Cloudflare -> для людей работает, публикуем (OK)
-    - 500..504, Timeout: сервер перегружен -> откладываем на след. запуск (RETRY)
-    - 404, 410: страница удалена ->
-        1. Если есть явный fallback_url (например, пост на Reddit) -> используем его
-        2. Иначе срезаем до главной страницы домена -> публикуем главную страницу
-        3. Если даже главная страница мертва -> отменяем пост (DROP)
-    """
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
     }
-
     try:
         resp = requests.get(url, timeout=7, headers=headers, allow_redirects=True, stream=True)
         status = resp.status_code
@@ -486,7 +492,6 @@ def send_telegram_card(deal, is_fallback=False):
     if how_to:
         text += f"💡 <b>Как оформить / забрать:</b>\n{how_to}\n\n"
 
-    # Если прямая ссылка переехала на главную страницу
     if is_fallback:
         text += "ℹ️ <i>Прямая страница акции перемещена. Предложение доступно на главной странице или через поиск на сайте сервиса.</i>\n\n"
 
@@ -513,21 +518,147 @@ def send_telegram_card(deal, is_fallback=False):
     try:
         response = requests.post(url, json=payload, timeout=15)
         print(f"Отправка '{title[:35]}...': HTTP {response.status_code}")
-        time.sleep(1.5)  # Лимит Telegram
-        return response.status_code == 200
+        time.sleep(1.5)
+        if response.status_code == 200:
+            res_data = response.json()
+            message_id = res_data.get("result", {}).get("message_id")
+            return True, message_id
+        return False, None
     except Exception as e:
         print(f"Ошибка отправки: {e}")
-        return False
+        return False, None
+
+def check_is_deal_still_active(info):
+    """
+    ДЕЙСТВИТЕЛЬНАЯ ЖИВАЯ ПРОВЕРКА АКТУАЛЬНОСТИ:
+    1. Проверяет реальную страницу на маркеры закрытия ('nie je aktuálna', 404)
+    2. Проверяет Reddit-пост на наличие флейра 'Expired'
+    3. Применяет страховочный таймер (max_ttl), если сайт не вернул явных маркеров
+    """
+    now = time.time()
+    max_ttl = info.get("max_ttl", now + 604800)
+    
+    if now >= max_ttl:
+        return False, "Истёк максимальный срок публикации (Safety TTL)"
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+    }
+
+    target_link = info.get("target_link")
+    source_link = info.get("source_link")
+    post_type = info.get("type", "promo")
+
+    # 1. Живая проверка целевой страницы (вакансии Profesia.sk)
+    if target_link:
+        try:
+            resp = requests.get(target_link, timeout=7, headers=headers, allow_redirects=True, stream=True)
+            if resp.status_code in [404, 410]:
+                return False, f"Страница удалена (HTTP {resp.status_code})"
+
+            content_snippet = resp.text[:80000].lower()
+            if post_type == "vacancy":
+                slovak_expired = [
+                    "ponuka už nie je aktuálna",
+                    "pracovná ponuka bola archivovaná",
+                    "ponuka bola ukončená",
+                    "ľutujeme, ale pracovná ponuka už nie je aktuálna",
+                    "pracovná ponuka už bola obsadená"
+                ]
+                for marker in slovak_expired:
+                    if marker in content_snippet:
+                        return False, f"Работодатель закрыл вакансию ({marker})"
+        except Exception:
+            pass
+
+    # 2. Живая проверка первоисточника (Reddit flairs для курсов и игр)
+    if source_link and "reddit.com" in source_link:
+        try:
+            reddit_json_url = source_link.rstrip("/") + ".json"
+            r_resp = requests.get(reddit_json_url, timeout=7, headers=headers)
+            if r_resp.status_code == 200:
+                data = r_resp.json()
+                if isinstance(data, list) and len(data) > 0:
+                    post_data = data[0].get("data", {}).get("children", [{}])[0].get("data", {})
+                    flair = str(post_data.get("link_flair_text", "")).lower()
+                    title = str(post_data.get("title", "")).lower()
+                    if any(m in flair or m in title for m in ["expired", "ended", "closed", "oos", "dead"]):
+                        return False, "Сообщество пометило акцию как завершённую (Expired)"
+        except Exception:
+            pass
+
+    return True, "Активно"
+
+def update_expired_posts(active_posts):
+    """Обновляет статус устаревших постов в Telegram на основе живой проверки"""
+    remaining_posts = {}
+
+    for post_id, info in active_posts.items():
+        is_alive, reason = check_is_deal_still_active(info)
+        
+        if not is_alive:
+            message_id = info.get("message_id")
+            title = escape_html(info.get("title", ""))
+            category = escape_html(info.get("category", ""))
+            main_tag = info.get("main_tag", "скидки")
+            badge = info.get("expired_badge", "⌛️ [Акция завершена]")
+            button_label = info.get("expired_button", "🔒 Завершено ➔ Все посты")
+
+            print(f"[ЖИВАЯ ПРОВЕРКА] Пост {message_id} ('{title}') закрывается: {reason}")
+
+            updated_text = (
+                f"{badge} — <b>{title}</b>\n\n"
+                f"📂 <b>Категория:</b> {category}\n"
+                f"⚠️ <b>Статус:</b> Предложение больше не активно ({reason}).\n\n"
+                f"<i>Следите за новыми актуальными предложениями на канале!</i>\n\n"
+                f"#{main_tag}@{CHANNEL_USERNAME}"
+            )
+
+            reply_markup = {
+                "inline_keyboard": [
+                    [
+                        {"text": button_label, "url": f"https://t.me/{CHANNEL_USERNAME}?q=%23{main_tag}"}
+                    ]
+                ]
+            }
+
+            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/editMessageText"
+            payload = {
+                "chat_id": TELEGRAM_CHAT_ID,
+                "message_id": message_id,
+                "text": updated_text,
+                "parse_mode": "HTML",
+                "disable_web_page_preview": True,
+                "reply_markup": reply_markup
+            }
+
+            try:
+                requests.post(url, json=payload, timeout=10)
+                time.sleep(1.0)
+            except Exception as e:
+                print(f"Ошибка обновления сообщения {message_id}: {e}")
+        else:
+            remaining_posts[post_id] = info
+
+    return remaining_posts
 
 def main():
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         print("ОШИБКА: Токен или ID канала не заданы.")
         return
 
-    processed_ids = load_processed_ids()
+    processed_ids_raw = load_json_file(HISTORY_FILE)
+    processed_ids = set(processed_ids_raw if isinstance(processed_ids_raw, list) else [])
     new_processed = set(processed_ids)
 
-    # 1. Каталог постоянных программ (все 20 проверенных ссылок)
+    active_posts_raw = load_json_file(ACTIVE_POSTS_FILE)
+    active_posts = active_posts_raw if isinstance(active_posts_raw, dict) else {}
+
+    # 1. ЖИВАЯ ПРОВЕРКА И ОБНОВЛЕНИЕ СТАТУСОВ РАНЕЕ ОПУБЛИКОВАННЫХ ПОСТОВ
+    active_posts = update_expired_posts(active_posts)
+
+    # 2. КАТАЛОГ ПОСТОЯННЫХ ПРОГРАММ (все 20 проверенных ссылок)
     for deal in EVERGREEN_DEALS:
         deal_id = deal["id"]
         if deal_id not in processed_ids:
@@ -540,11 +671,13 @@ def main():
 
             deal["link"] = final_url
             print(f"Публикация из каталога: {deal['title']}")
-            if send_telegram_card(deal, is_fallback=is_fallback):
+            success, message_id = send_telegram_card(deal, is_fallback=is_fallback)
+            if success:
                 new_processed.add(deal_id)
 
-    # 2. Сканирование динамических лент на ВСЮ глубину фида
+    # 3. ДИНАМИЧЕСКИЕ ПОТОКИ: ВАКАНСИИ (Кошице), КУРСЫ, ИГРЫ, ОДЕЖДА
     dynamic_published = 0
+    now = time.time()
     for feed_info in DYNAMIC_FEEDS:
         if dynamic_published >= MAX_DYNAMIC_POSTS_PER_RUN:
             break
@@ -559,7 +692,7 @@ def main():
                 if not post_id or post_id in processed_ids:
                     continue
 
-                if is_expired(entry.title):
+                if is_expired_title(entry.title):
                     new_processed.add(post_id)
                     continue
 
@@ -581,22 +714,42 @@ def main():
                     "benefit": feed_info["default_benefit"],
                     "duration": feed_info["default_duration"],
                     "region": feed_info["default_region"],
-                    "requirements": "Учётная запись платформы / купон",
-                    "description": "Актуальное предложение, проверенное студенческим сообществом.",
+                    "requirements": "Учётная запись платформы / студенческий",
+                    "description": "Свежее предложение, обнаруженное в сообществе.",
                     "how_to": feed_info["how_to_tip"],
                     "link": final_url,
-                    "extra_tags": ["горящее", "акция"]
+                    "extra_tags": ["горящее"]
                 }
 
-                if send_telegram_card(card, is_fallback=is_fallback):
+                success, message_id = send_telegram_card(card, is_fallback=is_fallback)
+                if success:
                     new_processed.add(post_id)
                     dynamic_published += 1
+
+                    # Регистрируем пост для живого мониторинга актуальности
+                    max_ttl = now + feed_info.get("max_ttl_seconds", 345600)
+                    if message_id:
+                        active_posts[post_id] = {
+                            "message_id": message_id,
+                            "title": entry.title,
+                            "category": feed_info["category"],
+                            "main_tag": feed_info["main_tag"],
+                            "target_link": final_url,
+                            "source_link": entry.link,
+                            "type": feed_info.get("type", "promo"),
+                            "posted_at": now,
+                            "max_ttl": max_ttl,
+                            "expired_badge": feed_info.get("expired_badge", "⌛️ [Акция завершена]"),
+                            "expired_button": feed_info.get("expired_button", "🔒 Завершено ➔ Все посты")
+                        }
 
         except Exception as e:
             print(f"Ошибка при обработке {feed_info['url']}: {e}")
 
-    save_processed_ids(new_processed)
-    print(f"Сбор завершён. Опубликовано динамических постов: {dynamic_published}")
+    # Сохраняем состояние
+    save_json_file(HISTORY_FILE, list(new_processed)[-1500:])
+    save_json_file(ACTIVE_POSTS_FILE, active_posts)
+    print(f"Сбор завершён. Активных отслеживаемых постов: {len(active_posts)}")
 
 if __name__ == "__main__":
     main()
