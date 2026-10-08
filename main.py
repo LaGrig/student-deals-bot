@@ -2,6 +2,7 @@ import os
 import json
 import time
 import re
+from urllib.parse import urlparse
 import feedparser
 import requests
 
@@ -11,7 +12,7 @@ HISTORY_FILE = "data/processed_ids.json"
 
 CHANNEL_USERNAME = TELEGRAM_CHAT_ID.replace("@", "") if TELEGRAM_CHAT_ID else "discounts4students"
 
-# 20 выверенных программ: Кошице, Словакия, Европа и глобальный софт
+# 20 выверенных студенческих программ: Кошице, Словакия, Европа и софт
 EVERGREEN_DEALS = [
     {
         "id": "sk_trains_free",
@@ -295,29 +296,62 @@ EVERGREEN_DEALS = [
     }
 ]
 
-# Динамические потоки акций (курсы, игры)
+# Динамические потоки актуальных скидок и раздач (HOT / проверенные сообществом)
 DYNAMIC_FEEDS = [
     {
-        "url": "https://www.reddit.com/r/udemyfreebies/new/.rss",
+        "url": "https://www.reddit.com/r/udemyfreebies/hot/.rss",
         "category": "🔥 Бесплатные курсы",
-        "badge": "🔥 [Ограничено по времени: 24–48ч]",
+        "badge": "🔥 [Ограничено по времени]",
         "main_tag": "курсы",
         "default_benefit": "100% скидка (Бесплатно вместо $40–$90)",
-        "default_duration": "24–48 часов по промокоду (в профиле навсегда)",
+        "default_duration": "Временный промокод (в профиле навсегда)",
         "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Нажмите кнопку «Забрать предложение» ➔ убедитесь, что цена $0 ➔ нажмите «Записаться». Привязка карты не нужна!"
+        "how_to_tip": "Нажмите кнопку ниже ➔ убедитесь, что цена $0 (Free) ➔ нажмите «Enroll now». Привязка карты не нужна!"
     },
     {
-        "url": "https://www.reddit.com/r/FreeGameFindings/new/.rss",
+        "url": "https://www.reddit.com/r/FreeGameFindings/hot/.rss",
         "category": "🎮 Раздача недели (Игры)",
         "badge": "🎮 [100% Бесплатная раздача]",
         "main_tag": "игры",
         "default_benefit": "Бесплатно (навсегда в библиотеку)",
-        "default_duration": "Ограниченное время (обычно до четверга)",
+        "default_duration": "Ограниченное время акции",
         "default_region": "🌍 Global / Онлайн",
-        "how_to_tip": "Войдите в аккаунт платформы (Steam, Epic Games, GOG) и нажмите «Забрать / Добавить в библиотеку»."
+        "how_to_tip": "Войдите в аккаунт платформы (Steam, Epic Games, GOG) и нажмите «Добавить в библиотеку»."
+    },
+    {
+        "url": "https://www.reddit.com/r/eFreebies/hot/.rss",
+        "category": "🎁 Софт и Полезности",
+        "badge": "🎁 [Бесплатный софт / сервис]",
+        "main_tag": "софт",
+        "default_benefit": "Бесплатная лицензия / Доступ",
+        "default_duration": "Временная промо-акция",
+        "default_region": "🌍 Global / Онлайн",
+        "how_to_tip": "Перейдите по ссылке и активируйте промокод или зарегистрируйте бесплатную лицензию."
+    },
+    {
+        "url": "https://www.reddit.com/r/studentdeals/hot/.rss",
+        "category": "🎓 Студенческие акции",
+        "badge": "🎓 [Студенческая скидка]",
+        "main_tag": "акции",
+        "default_benefit": "Сниженная цена для студентов",
+        "default_duration": "Период действия акции",
+        "default_region": "🌍 Global / 🇪🇺 ЕС / 🇺🇸 US",
+        "how_to_tip": "Используйте студенческую почту или промокод при заказе."
+    },
+    {
+        "url": "https://www.reddit.com/r/GameDeals/hot/.rss",
+        "category": "🎮 Крупные распродажи",
+        "badge": "🎮 [Топовая скидка]",
+        "main_tag": "игры",
+        "default_benefit": "Скидки до 90% / Бесплатно",
+        "default_duration": "Ограниченное время распродажи",
+        "default_region": "🌍 Global / Онлайн",
+        "how_to_tip": "Перейдите на страницу официального магазина и оформите игру со скидкой."
     }
 ]
+
+# Максимальное количество динамических постов за один 4-часовой запуск
+MAX_DYNAMIC_POSTS_PER_RUN = 3
 
 def load_processed_ids():
     if os.path.exists(HISTORY_FILE):
@@ -330,7 +364,7 @@ def load_processed_ids():
 
 def save_processed_ids(ids):
     os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
-    recent_ids = list(ids)[-1000:]
+    recent_ids = list(ids)[-1500:]
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(recent_ids, f, indent=2, ensure_ascii=False)
 
@@ -338,6 +372,12 @@ def escape_html(text):
     if not text:
         return ""
     return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+def is_expired(title):
+    """Проверяет, не помечена ли акция как завершённая сообществом"""
+    lower = title.lower()
+    expired_markers = ["[expired]", "(expired)", "[ended]", "(ended)", "[closed]", "[oos]", "out of stock"]
+    return any(marker in lower for marker in expired_markers)
 
 def extract_direct_link(summary_html, fallback_url):
     """Извлекает прямую целевую ссылку из описания Reddit"""
@@ -349,51 +389,73 @@ def extract_direct_link(summary_html, fallback_url):
             return link
     return fallback_url
 
+def get_base_domain(url):
+    """Срезает ссылку до главной страницы домена: https://site.com/deep/path -> https://site.com/"""
+    try:
+        parsed = urlparse(url)
+        return f"{parsed.scheme}://{parsed.netloc}/"
+    except Exception:
+        return url
+
 def validate_link(url, fallback_url=None):
     """
     Умная валидация ссылки:
-    - 200..399: ссылка жива -> публикуем
-    - 401, 403: сайт защищён от ботов (Cloudflare WAF) -> человек откроет, публикуем
-    - 500..504, Timeout: сервер перегружен -> откладываем на след. запуск (не удаляем)
-    - 404, 410: страница удалена -> заменяем на fallback или отменяем
+    - 200..399: ссылка жива -> публикуем (OK)
+    - 401, 403: сайт защищён WAF/Cloudflare -> для людей работает, публикуем (OK)
+    - 500..504, Timeout: сервер перегружен -> откладываем на след. запуск (RETRY)
+    - 404, 410: страница удалена ->
+        1. Если есть явный fallback_url (например, пост на Reddit) -> используем его
+        2. Иначе срезаем до главной страницы домена -> публикуем главную страницу
+        3. Если даже главная страница мертва -> отменяем пост (DROP)
     """
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
     }
+
     try:
         resp = requests.get(url, timeout=7, headers=headers, allow_redirects=True, stream=True)
         status = resp.status_code
 
         if 200 <= status < 400:
-            return "OK", url
+            return "OK", url, False
 
         if status in [401, 403]:
-            # Защита Cloudflare от датацентров. Для людей в браузере работает
             print(f"[WAF/Защита {status}] Ссылка {url} активна для обычных браузеров.")
-            return "OK", url
+            return "OK", url, False
 
         if 500 <= status < 600:
             print(f"[Сервер перегружен {status}] Ссылка {url} временно недоступна. Откладываем.")
-            return "RETRY", None
+            return "RETRY", None, False
 
         if status in [404, 410]:
             if fallback_url and fallback_url != url:
-                print(f"[404 Замена] Ссылка {url} вернула 404. Подменяем на {fallback_url}")
-                return "OK", fallback_url
-            print(f"[404 Отмена] Ссылка {url} не существует. Пост отменён.")
-            return "DROP", None
+                print(f"[404 ➔ Резервная ссылка] Ссылка {url} вернула 404. Подменяем на {fallback_url}")
+                return "OK", fallback_url, True
 
-        return "OK", url
+            base_url = get_base_domain(url)
+            if base_url != url:
+                print(f"[404 ➔ Главная] Прямой адрес {url} не найден. Пробуем главную страницу: {base_url}")
+                try:
+                    base_resp = requests.get(base_url, timeout=7, headers=headers, allow_redirects=True, stream=True)
+                    if base_resp.status_code < 400 or base_resp.status_code in [401, 403]:
+                        return "OK", base_url, True
+                except Exception:
+                    pass
+
+            print(f"[404 Отмена] Ссылка {url} и её домен недоступны. Пост отменён.")
+            return "DROP", None, False
+
+        return "OK", url, False
 
     except requests.exceptions.Timeout:
         print(f"[Таймаут] Сайт {url} не ответил вовремя. Откладываем на следующий цикл.")
-        return "RETRY", None
+        return "RETRY", None, False
     except Exception as e:
         print(f"[Предупреждение] Ошибка проверки {url}: {e}. Оставляем без изменений.")
-        return "OK", url
+        return "OK", url, False
 
-def send_telegram_card(deal):
+def send_telegram_card(deal, is_fallback=False):
     title = escape_html(deal.get("title"))
     category = escape_html(deal.get("category"))
     badge = escape_html(deal.get("badge", f"🎓 [{category}]"))
@@ -424,12 +486,17 @@ def send_telegram_card(deal):
         text += f"{desc}\n\n"
     if how_to:
         text += f"💡 <b>Как оформить / забрать:</b>\n{how_to}\n\n"
+
+    if is_fallback:
+        text += "ℹ️ <i>Прямая страница акции перемещена. Предложение доступно на главной странице или через поиск на сайте сервиса.</i>\n\n"
+
     text += f"{tags_string}"
 
+    button_text = "🔗 Перейти на сайт сервиса" if is_fallback else "🔗 Забрать предложение"
     reply_markup = {
         "inline_keyboard": [
             [
-                {"text": "🔗 Забрать предложение", "url": link}
+                {"text": button_text, "url": link}
             ]
         ]
     }
@@ -460,11 +527,11 @@ def main():
     processed_ids = load_processed_ids()
     new_processed = set(processed_ids)
 
-    # 1. Каталог постоянных программ (20 проверенных ссылок)
+    # 1. Каталог постоянных программ (все 20 проверенных ссылок)
     for deal in EVERGREEN_DEALS:
         deal_id = deal["id"]
         if deal_id not in processed_ids:
-            status, final_url = validate_link(deal["link"])
+            status, final_url, is_fallback = validate_link(deal["link"])
             if status == "DROP":
                 new_processed.add(deal_id)
                 continue
@@ -473,20 +540,33 @@ def main():
 
             deal["link"] = final_url
             print(f"Публикация из каталога: {deal['title']}")
-            if send_telegram_card(deal):
+            if send_telegram_card(deal, is_fallback=is_fallback):
                 new_processed.add(deal_id)
 
-    # 2. Ненавязчивый мониторинг свежих раздач (до 2 постов за запуск)
+    # 2. Сканирование динамических лент на ВСЮ глубину фида
+    dynamic_published = 0
     for feed_info in DYNAMIC_FEEDS:
+        if dynamic_published >= MAX_DYNAMIC_POSTS_PER_RUN:
+            break
+
         try:
             feed = feedparser.parse(feed_info["url"], agent="Mozilla/5.0")
-            for entry in feed.entries[:2]:
+            # Сканируем ВСЕ доступные записи ленты, а не только первые две
+            for entry in feed.entries:
+                if dynamic_published >= MAX_DYNAMIC_POSTS_PER_RUN:
+                    break
+
                 post_id = entry.get("id") or entry.get("link")
                 if not post_id or post_id in processed_ids:
                     continue
 
+                # Отсекаем неактуальные / завершённые акции
+                if is_expired(entry.title):
+                    new_processed.add(post_id)
+                    continue
+
                 direct_link = extract_direct_link(entry.get("summary", ""), entry.link)
-                status, final_url = validate_link(direct_link, fallback_url=entry.link)
+                status, final_url, is_fallback = validate_link(direct_link, fallback_url=entry.link)
 
                 if status == "DROP":
                     new_processed.add(post_id)
@@ -504,19 +584,21 @@ def main():
                     "duration": feed_info["default_duration"],
                     "region": feed_info["default_region"],
                     "requirements": "Учётная запись платформы / купон",
-                    "description": "Свежее предложение, обнаруженное в сообществе.",
+                    "description": "Актуальное предложение, проверенное студенческим сообществом.",
                     "how_to": feed_info["how_to_tip"],
                     "link": final_url,
                     "extra_tags": ["горящее", "акция"]
                 }
 
-                if send_telegram_card(card):
+                if send_telegram_card(card, is_fallback=is_fallback):
                     new_processed.add(post_id)
+                    dynamic_published += 1
+
         except Exception as e:
             print(f"Ошибка при обработке {feed_info['url']}: {e}")
 
     save_processed_ids(new_processed)
-    print("Сбор и публикация успешно завершены.")
+    print(f"Сбор завершён. Опубликовано динамических постов: {dynamic_published}")
 
 if __name__ == "__main__":
     main()
