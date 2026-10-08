@@ -596,14 +596,19 @@ def extract_direct_link(summary_html, default_link):
 def clean_summary_text(summary_html):
     if not summary_html:
         return ""
-    text = re.sub(r'<[^>]+>', ' ', summary_html)
+    text = html.unescape(summary_html)
+    text = re.sub(r'<[^>]+>', ' ', text)
+    text = re.sub(r'&#\d+;|&[a-zA-Z]+;', ' ', text)
     text = re.sub(r'submitted by.*', '', text, flags=re.IGNORECASE)
     text = re.sub(r'\[link\].*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\[comments\].*', '', text, flags=re.IGNORECASE)
     text = re.sub(r'https?://\S+', '', text)
-    text = ' '.join(text.split())
-    if len(text) > 280:
-        text = text[:277].rsplit(' ', 1)[0] + '...'
-    return text
+    clean = ' '.join(text.split()).strip()
+    if len(clean) < 15:
+        return ""
+    if len(clean) > 280:
+        clean = clean[:277].rsplit(' ', 1)[0] + '...'
+    return clean
 
 def get_base_domain(url):
     try:
@@ -648,7 +653,6 @@ def validate_link(url, fallback_url=None):
 
 def fetch_feed_entries(feed_info):
     url = feed_info["url"]
-    feed_type = feed_info.get("type", "promo")
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     }
@@ -658,7 +662,7 @@ def fetch_feed_entries(feed_info):
         if resp.status_code == 200:
             data = resp.json()
             entries = []
-            for item in data[:10]:
+            for item in data[:25]:
                 open_giveaway_url = item.get("open_giveaway_url") or item.get("open_giveaway") or item.get("gamerpower_url") or ""
                 platforms_str = str(item.get("platforms", "")).lower()
                 combined_text = f"{item.get('title', '')} {open_giveaway_url} {platforms_str}".lower()
@@ -676,14 +680,13 @@ def fetch_feed_entries(feed_info):
             return entries
         return []
 
-    # RSS-ленты
     req_headers = {"User-Agent": "telegram:discounts4students_bot:v2.0 (by /u/studentdealsbot)"} if "reddit.com" in url else headers
     try:
         resp = requests.get(url, timeout=10, headers=req_headers)
         if resp.status_code == 200:
             feed = feedparser.parse(resp.content)
             entries = []
-            for e in feed.entries[:10]:
+            for e in feed.entries[:25]:
                 entries.append({
                     "id": getattr(e, "id", getattr(e, "link", None)),
                     "title": getattr(e, "title", ""),
@@ -694,42 +697,6 @@ def fetch_feed_entries(feed_info):
     except Exception as err:
         print(f"Ошибка загрузки RSS {url}: {err}")
     return []
-
-TAG_MAP = {
-    "кошице": "kosice",
-    "словакия": "slovakia",
-    "транспорт": "transport",
-    "поезда": "transport",
-    "работа": "jobs",
-    "стажировки": "jobs",
-    "путешествия": "travel",
-    "европа": "travel",
-    "авиа": "flights",
-    "cad": "cad",
-    "dev": "dev",
-    "программирование": "dev",
-    "ии": "ai",
-    "дизайн": "design",
-    "продуктивность": "productivity",
-    "учеба": "productivity",
-    "курсы": "courses",
-    "подписки": "subscriptions",
-    "музыка": "subscriptions",
-    "одежда": "fashion",
-    "игры": "games",
-    "горящее": "hot"
-}
-
-def get_clean_tags(deal):
-    raw_tags = [deal.get("main_tag")] + deal.get("extra_tags", [])
-    clean = []
-    for t in raw_tags:
-        if not t:
-            continue
-        mapped = TAG_MAP.get(str(t).lower())
-        if mapped and mapped not in clean:
-            clean.append(mapped)
-    return clean[:3] if clean else ["hot"]
 
 def send_telegram_card(deal, is_fallback=False):
     title = escape_html(deal.get("title"))
@@ -743,8 +710,17 @@ def send_telegram_card(deal, is_fallback=False):
     how_to = escape_html(deal.get("how_to", ""))
     link = deal.get("link")
 
-    clean_tags = get_clean_tags(deal)
-    tag_str = " ".join(f"#{t}" for t in clean_tags)
+    main_tag = deal.get("main_tag", "горящее")
+    extra_tags = deal.get("extra_tags", [])
+
+    seen_tags = set()
+    all_tags = []
+    for t in [main_tag] + extra_tags:
+        if t and t not in seen_tags:
+            seen_tags.add(t)
+            all_tags.append(t)
+
+    tags_string = " ".join(f"#{t}@{CHANNEL_USERNAME}" for t in all_tags)
 
     parts = [
         f"{badge} — <b>{title}</b>",
@@ -762,7 +738,7 @@ def send_telegram_card(deal, is_fallback=False):
     if is_fallback:
         parts.extend(["ℹ️ <i>Прямая страница акции перемещена. Предложение доступно на главной странице или через поиск на сайте сервиса.</i>", ""])
 
-    parts.append(f"🏷 {tag_str}")
+    parts.append(tags_string)
     text = "\n".join(parts)
 
     button_text = "🔗 Перейти на сайт сервиса" if is_fallback else "🔗 Забрать предложение"
@@ -803,65 +779,45 @@ def send_telegram_card(deal, is_fallback=False):
         print(f"Ошибка отправки: {e}")
         return False, None
 
-NAVIGATOR_BUTTONS = [
-    [
-        {"text": "🇸🇰 Льготы в Словакии", "tag": "slovakia"},
-        {"text": "📍 Кошице (Транспорт/Лайф)", "tag": "kosice"}
-    ],
-    [
-        {"text": "🚆 Поезда и Билеты", "tag": "transport"},
-        {"text": "💼 Работа и Стажировки", "tag": "jobs"}
-    ],
-    [
-        {"text": "🌍 Путешествия по Европе", "tag": "travel"},
-        {"text": "✈️ Лоукостеры и Авиа", "tag": "flights"}
-    ],
-    [
-        {"text": "🤖 ИИ и Нейросети", "tag": "ai"},
-        {"text": "💻 Софт для разработки", "tag": "dev"}
-    ],
-    [
-        {"text": "🎨 Дизайн и Графика", "tag": "design"},
-        {"text": "📐 CAD и 3D Моделирование", "tag": "cad"}
-    ],
-    [
-        {"text": "📝 Продуктивность и Учёба", "tag": "productivity"},
-        {"text": "🎓 Бесплатные курсы", "tag": "courses"}
-    ],
-    [
-        {"text": "🎧 Музыка и Кино", "tag": "subscriptions"},
-        {"text": "👟 Одежда и Стиль", "tag": "fashion"}
-    ],
-    [
-        {"text": "🎮 Игры (Steam / Epic)", "tag": "games"},
-        {"text": "🔥 Горящие скидки недели", "tag": "hot"}
-    ]
-]
-
-def send_pinned_navigator():
-    keyboard = []
-    for row in NAVIGATOR_BUTTONS:
-        btn_row = []
-        for btn in row:
-            btn_row.append({
-                "text": btn["text"],
-                "url": f"https://t.me/{CHANNEL_USERNAME}?q=%23{btn['tag']}"
-            })
-        keyboard.append(btn_row)
-
-    text = (
-        "🎓 <b>Навигатор по студенческим льготам и скидкам</b>\n\n"
-        "Добро пожаловать в гид по скидкам для студентов в Словакии (Кошице) и онлайн!\n\n"
-        "⚡️ <i>Нажмите на любую кнопку ниже, чтобы открыть выборку всех актуальных постов по теме:</i>"
+def get_navigator_text():
+    return (
+        "🎓 <b>Навигатор по студенческим скидкам и льготам</b>\n\n"
+        "Здесь собраны постоянные льготы, акции и бесплатный софт для студентов в Словакии (Кошице) и онлайн.\n"
+        "Нажмите на интересующий тег, чтобы открыть все посты по теме:\n\n"
+        "🇸🇰 <b>Словакия и Кошице:</b>\n"
+        f"• Бесплатные поезда и транспорт: #транспорт@{CHANNEL_USERNAME} #словакия@{CHANNEL_USERNAME}\n"
+        f"• Студенческие скидки по ISIC: #словакия@{CHANNEL_USERNAME}\n"
+        f"• Жизнь, еда и досуг в Кошице: #кошице@{CHANNEL_USERNAME}\n"
+        f"• Подработка и стажировки: #работа@{CHANNEL_USERNAME}\n\n"
+        "🌍 <b>Путешествия и Транспорт:</b>\n"
+        f"• Поездки по Европе (FlixBus, музеи): #путешествия@{CHANNEL_USERNAME} #европа@{CHANNEL_USERNAME}\n"
+        f"• Дешёвые авиабилеты из Кошице: #авиа@{CHANNEL_USERNAME}\n\n"
+        "💻 <b>ИТ, Программирование и ИИ:</b>\n"
+        f"• Нейросети и AI-ассистенты: #ИИ@{CHANNEL_USERNAME}\n"
+        f"• Лицензии для разработки (JetBrains, GitHub): #dev@{CHANNEL_USERNAME}\n"
+        f"• 3D-моделирование и САПР: #cad@{CHANNEL_USERNAME}\n\n"
+        "🎨 <b>Дизайн и Презентации:</b>\n"
+        f"• Графика, UI/UX (Figma, Canva Pro): #дизайн@{CHANNEL_USERNAME}\n\n"
+        "📝 <b>Учёба и Продуктивность:</b>\n"
+        f"• Заметки, софт и организация: #продуктивность@{CHANNEL_USERNAME}\n"
+        f"• Бесплатные онлайн-курсы и сертификаты: #курсы@{CHANNEL_USERNAME}\n\n"
+        "🎧 <b>Подписки и Развлечения:</b>\n"
+        f"• Музыка и видео (Spotify, YouTube, Apple): #подписки@{CHANNEL_USERNAME}\n"
+        f"• Раздачи лицензионных игр (Steam & Epic): #игры@{CHANNEL_USERNAME}\n"
+        f"• Одежда и студенческий гардероб: #одежда@{CHANNEL_USERNAME}\n\n"
+        "🔥 <b>Горящие предложения:</b>\n"
+        f"• Временные акции и топ-скидки недели: #горящее@{CHANNEL_USERNAME}\n\n"
+        "📌 <i>Сохраните этот пост в закладки для быстрого поиска по каналу!</i>"
     )
 
+def send_pinned_navigator():
+    text = get_navigator_text()
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text,
         "parse_mode": "HTML",
-        "disable_web_page_preview": True,
-        "reply_markup": {"inline_keyboard": keyboard}
+        "disable_web_page_preview": True
     }
 
     try:
@@ -994,9 +950,7 @@ def main():
     active_posts = active_posts_raw if isinstance(active_posts_raw, dict) else {}
 
     is_initial_fill = len(processed_ids) == 0
-    max_dynamic_allowed = 35 if is_initial_fill else 3
-
-    print(f"Запуск бота. Режим первичного наполнения: {is_initial_fill} (Лимит динамических постов: {max_dynamic_allowed})")
+    print(f"Запуск бота. Режим первичного наполнения: {is_initial_fill}")
 
     # Шаг 1: Автоматическая чистка канала от неактуальных постов
     active_posts = cleanup_expired_posts(active_posts)
@@ -1025,29 +979,34 @@ def main():
 
     save_json_file(evergreen_posts_file, deal_to_msg_id)
 
-    # Публикуем и закрепляем кнопочный навигатор (Способ 1 - поиск по категориям)
+    # Шаг 3: Публикация и закрепление текстового навигатора
     nav_file = "data/navigator_info.json"
     nav_info = load_json_file(nav_file) or {}
 
     if is_initial_fill or not nav_info.get("pinned"):
-        print("[Навигатор] Публикация закреплённого сообщения с кнопками-поиском...")
+        print("[Навигатор] Публикация закреплённого поста-навигатора...")
         nav_msg_id = send_pinned_navigator()
         if nav_msg_id:
             pin_telegram_message(nav_msg_id)
             save_json_file(nav_file, {"pinned": True, "message_id": nav_msg_id})
 
-    # Шаг 3: Мониторинг динамических источников (игры, вакансии, курсы, софт, одежда)
+    # Шаг 4: Выгрузка всех доступных новостей из КАЖДОГО источника
+    per_feed_limit = 10 if is_initial_fill else 4
     dynamic_published = 0
     now = time.time()
 
+    print(f"[Динамика] Опрос всех источников. Лимит на источник: {per_feed_limit} постов.")
+
     for feed_info in DYNAMIC_FEEDS:
-        if dynamic_published >= max_dynamic_allowed:
-            break
+        feed_cat = feed_info.get("category", "Новости")
+        feed_count = 0
 
         try:
             entries = fetch_feed_entries(feed_info)
+            print(f"[{feed_cat}] Получено {len(entries)} записей из ленты.")
+
             for entry in entries:
-                if dynamic_published >= max_dynamic_allowed:
+                if feed_count >= per_feed_limit:
                     break
 
                 post_id = entry.get("id") or entry.get("link")
@@ -1072,7 +1031,7 @@ def main():
                 # Фильтрация по языкам: разрешены только EN, RU, UK, SK
                 is_ok_lang, lang_reason = is_allowed_language(f"{title} {summary}")
                 if not is_ok_lang:
-                    print(f"[Языковой фильтр] Пропущен пост '{title[:45]}...': {lang_reason}")
+                    print(f"[Языковой фильтр] Пропущен '{title[:40]}...': {lang_reason}")
                     new_processed.add(post_id)
                     continue
 
@@ -1092,6 +1051,7 @@ def main():
                         extra_tags.append(t)
 
                 card = {
+                    "id": post_id,
                     "title": title,
                     "category": feed_info["category"],
                     "badge": feed_info["badge"],
@@ -1110,6 +1070,7 @@ def main():
                 if success:
                     new_processed.add(post_id)
                     dynamic_published += 1
+                    feed_count += 1
 
                     max_ttl = now + feed_info.get("max_ttl_seconds", 345600)
                     if message_id:
