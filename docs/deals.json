@@ -15,7 +15,7 @@
     "extra_tags": [
       "поездки"
     ],
-    "message_id": 605,
+    "message_id": 644,
     "is_evergreen": true
   },
   {
@@ -34,7 +34,7 @@
     "extra_tags": [
       "поездки"
     ],
-    "message_id": 606,
+    "message_id": 645,
     "is_evergreen": true
   },
   {
@@ -48,12 +48,50 @@
     "requirements": "Карта ISIC дневной формы обучения",
     "description": "Государство в Словакии субсидирует питание студентов. В студенческих столовых (študentské jedálne на Jedlíkova, Němcovej, Medická) по карте ISIC можно полноценно пообедать (первое, второе и напиток) всего за пару евро.",
     "how_to": "Пополните свой счет питания через систему университета (MAIS / AiS2) и прикладывайте ISIC на кассе столовой.",
-    "link": "https://jedalen.tuke.sk/",
+    "link": "https://jedalen.tuke.sk/jedalny-listok",
     "main_tag": "вкусное",
     "extra_tags": [
       "вкусное"
     ],
-    "message_id": 607,
+    "message_id": 646,
+    "is_evergreen": true
+  },
+  {
+    "id": "starbucks_student_ke",
+    "title": "Скидка 10% на кофе и напитки в Starbucks Košice",
+    "category": "вкусное",
+    "badge": "🍕 [Вкусное: Starbucks]",
+    "benefit": "Скидка 10% на все напитки по студенческому билету / ISIC",
+    "duration": "Круглый год",
+    "region": "🇸🇰 Кошице (Aupark Košice, Námestie osloboditeľov 1)",
+    "requirements": "Студенческий билет или карта ISIC",
+    "description": "Кофейня Starbucks в ТЦ Aupark Košice предоставляет официальную студенческую скидку на весь кофе, сезонные напитки и выпечку при предъявлении студенческого билета.",
+    "how_to": "Предъявите студенческий билет или карту ISIC бариста на кассе перед оплатой заказа.",
+    "link": "https://www.starbucks.sk/",
+    "main_tag": "вкусное",
+    "extra_tags": [
+      "вкусное"
+    ],
+    "message_id": 647,
+    "is_evergreen": true
+  },
+  {
+    "id": "mcdonalds_student_ke",
+    "title": "Студенческие комбо и скидки в McDonald's Košice",
+    "category": "вкусное",
+    "badge": "🍕 [Вкусное: McDonald's]",
+    "benefit": "Студенческое комбо и специальные цены на бургеры и кофе",
+    "duration": "Постоянная программа",
+    "region": "🇸🇰 Кошице (Aupark, Optima, Hlavná)",
+    "requirements": "Студенческий билет",
+    "description": "McDonalds на Protifašistických bojovníkov и в ТЦ Optima/Aupark предлагает специальные комбо-цены для студентов (McMenu по льготному тарифу) при сканировании студенческого статуса.",
+    "how_to": "Сканируйте карту студента на кассе или выберите студенческий купон в киоске самообслуживания.",
+    "link": "https://www.mcdonalds.sk/menu/",
+    "main_tag": "вкусное",
+    "extra_tags": [
+      "вкусное"
+    ],
+    "message_id": 648,
     "is_evergreen": true
   },
   {
@@ -72,7 +110,7 @@
     "extra_tags": [
       "ивенты"
     ],
-    "message_id": 608,
+    "message_id": 649,
     "is_evergreen": true
   },
   {
@@ -124,12 +162,12 @@
     "requirements": "Студенческий билет / ISIC европейского университета",
     "description": "Студенты европейских вузов имеют право на бесплатный или льготный вход в главные музеи Европы: Лувр в Париже, Бельведер в Вене, галерею Уффици во Флоренции и многие другие.",
     "how_to": "При бронировании онлайн выбирайте категорию «EU Student under 26» или покажите ISIC на кассе.",
-    "link": "https://youth.europa.eu/",
+    "link": "https://youth.europa.eu/home_en",
     "main_tag": "туризм",
     "extra_tags": [
       "туризм"
     ],
-    "message_id": 609,
+    "message_id": 650,
     "is_evergreen": true
   },
   {
@@ -148,7 +186,7 @@
     "extra_tags": [
       "поездки"
     ],
-    "message_id": 610,
+    "message_id": 651,
     "is_evergreen": true
   },
   {
@@ -167,7 +205,7 @@
     "extra_tags": [
       "софт"
     ],
-    "message_id": 611,
+    "message_id": 652,
     "is_evergreen": true
   },
   {
@@ -181,12 +219,12 @@
     "requirements": "Университетская почта (.edu / .sk) или карта ISIC",
     "description": "Полный профессиональный пакет сред разработки от JetBrains: IntelliJ IDEA Ultimate, PyCharm Pro, WebStorm, CLion, Rider, DataGrip и другие бесплатно для студентов.",
     "how_to": "Перейдите на страницу студенческой программы JetBrains и зарегистрируйтесь, указав свой университетский email (@tuke.sk, @upjs.sk) или загрузив фото ISIC.",
-    "link": "https://www.jetbrains.com/community/education/#students",
+    "link": "https://www.jetbrains.com/academy/student-pack/#students",
     "main_tag": "софт",
     "extra_tags": [
       "софт"
     ],
-    "message_id": 612,
+    "message_id": 653,
     "is_evergreen": true
   },
   {
@@ -205,7 +243,7 @@
     "extra_tags": [
       "софт"
     ],
-    "message_id": 613,
+    "message_id": 654,
     "is_evergreen": true
   },
   {
@@ -243,7 +281,7 @@
     "extra_tags": [
       "софт"
     ],
-    "message_id": 614,
+    "message_id": 655,
     "is_evergreen": true
   },
   {
@@ -262,7 +300,7 @@
     "extra_tags": [
       "софт"
     ],
-    "message_id": 615,
+    "message_id": 656,
     "is_evergreen": true
   },
   {
@@ -281,7 +319,7 @@
     "extra_tags": [
       "софт"
     ],
-    "message_id": 616,
+    "message_id": 657,
     "is_evergreen": true
   },
   {
@@ -300,7 +338,7 @@
     "extra_tags": [
       "курсы"
     ],
-    "message_id": 617,
+    "message_id": 658,
     "is_evergreen": true
   },
   {
@@ -319,7 +357,7 @@
     "extra_tags": [
       "подписки"
     ],
-    "message_id": 618,
+    "message_id": 659,
     "is_evergreen": true
   },
   {
@@ -333,12 +371,12 @@
     "requirements": "Студент дневной формы обучения",
     "description": "Миллионы треков без рекламы, прослушивание офлайн и высокое качество звука по сниженной студенческой цене.",
     "how_to": "Оформите подписку на сайте Spotify Student, пройдя быструю проверку через сервис SheerID.",
-    "link": "https://www.spotify.com/sk/student/",
+    "link": "https://www.spotify.com/sk-sk/student/",
     "main_tag": "подписки",
     "extra_tags": [
       "подписки"
     ],
-    "message_id": 619,
+    "message_id": 660,
     "is_evergreen": true
   },
   {
@@ -352,12 +390,12 @@
     "requirements": "Верификация через UNiDAYS",
     "description": "Уникальное предложение от Apple: при оформлении студенческой подписки Apple Music вы бесплатно получаете доступ к стримингу Apple TV+ без доплаты.",
     "how_to": "В приложении Apple Music или на сайте выберите план «Студенческий» и подтвердите статус через сервис UNiDAYS.",
-    "link": "https://www.apple.com/sk/apple-music/",
+    "link": "https://www.apple.com/apple-music/",
     "main_tag": "подписки",
     "extra_tags": [
       "подписки"
     ],
-    "message_id": 620,
+    "message_id": 661,
     "is_evergreen": true
   },
   {
@@ -395,7 +433,7 @@
     "extra_tags": [
       "игры"
     ],
-    "message_id": 621,
+    "message_id": 662,
     "is_evergreen": true
   },
   {
@@ -414,7 +452,7 @@
     "extra_tags": [
       "игры"
     ],
-    "message_id": 622,
+    "message_id": 663,
     "is_evergreen": true
   },
   {
@@ -433,7 +471,7 @@
     "extra_tags": [
       "подписки"
     ],
-    "message_id": 623,
+    "message_id": 664,
     "is_evergreen": true
   },
   {
@@ -452,8 +490,27 @@
     "extra_tags": [
       "софт"
     ],
-    "message_id": 624,
+    "message_id": 665,
     "is_evergreen": true
+  },
+  {
+    "id": "egs_cb733f3432db46bca94965b422c33ede",
+    "title": "Out of Sight",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо €13.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/f350878fcb5242d6851cfe2fa1316e76",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 668,
+    "is_evergreen": false
   },
   {
     "id": "egs_af6b823b8698465f9aedc3bddf2e8686",
@@ -471,7 +528,26 @@
     "extra_tags": [
       "игры"
     ],
-    "message_id": 630,
+    "message_id": 669,
+    "is_evergreen": false
+  },
+  {
+    "id": "3809",
+    "title": "Pony Island (Steam) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $4.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/pony-island-steam-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 670,
     "is_evergreen": false
   },
   {
@@ -490,7 +566,7 @@
     "extra_tags": [
       "игры"
     ],
-    "message_id": 631,
+    "message_id": 671,
     "is_evergreen": false
   },
   {
@@ -509,26 +585,7 @@
     "extra_tags": [
       "игры"
     ],
-    "message_id": 632,
-    "is_evergreen": false
-  },
-  {
-    "id": "3805",
-    "title": "Gear.Club Unlimited 3 - Gear.Club Signature Pack Steam Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $4.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/gear-club-unlimited-3-gear-club-signature-pack-steam-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 633,
+    "message_id": 672,
     "is_evergreen": false
   },
   {
@@ -547,83 +604,7 @@
     "extra_tags": [
       "игры"
     ],
-    "message_id": 634,
-    "is_evergreen": false
-  },
-  {
-    "id": "t3_1x1idkr",
-    "title": "Weekly Discussion Thread | Oct 09, 2026",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (Лицензия Steam)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://discord.com/invite/fHtVEf7",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 635,
-    "is_evergreen": false
-  },
-  {
-    "id": "t3_1x1huag",
-    "title": "Fly Over! 100KM! Mountains!",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (Лицензия Steam)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.steampowered.com/app/3943750/Fly_Over_100KM_Mountains/",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 636,
-    "is_evergreen": false
-  },
-  {
-    "id": "t3_1x0yn7y",
-    "title": "Slavistan",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (Лицензия Steam)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://givee.club/en/event/1460",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 637,
-    "is_evergreen": false
-  },
-  {
-    "id": "t3_1x0wcfc",
-    "title": "Pony Island",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (Лицензия Steam)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.steampowered.com/app/405640/",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 638,
+    "message_id": 673,
     "is_evergreen": false
   },
   {
@@ -642,83 +623,7 @@
     "extra_tags": [
       "игры"
     ],
-    "message_id": 639,
-    "is_evergreen": false
-  },
-  {
-    "id": "t3_1tq14g0",
-    "title": "Certified Online Fraud Prevention Specialist (COFPS) training",
-    "category": "курсы",
-    "badge": "🎓 [Курсы]",
-    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://academy.hackandfix.com/courses-archive/certified-online-fraud-prevention-specialist/",
-    "main_tag": "курсы",
-    "extra_tags": [
-      "курсы"
-    ],
-    "message_id": 640,
-    "is_evergreen": false
-  },
-  {
-    "id": "t3_1toyhp8",
-    "title": "is udemy page working for you on web today?",
-    "category": "курсы",
-    "badge": "🎓 [Курсы]",
-    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.reddit.com/r/udemyfreebies/comments/1toyhp8/is_udemy_page_working_for_you_on_web_today/",
-    "main_tag": "курсы",
-    "extra_tags": [
-      "курсы"
-    ],
-    "message_id": 641,
-    "is_evergreen": false
-  },
-  {
-    "id": "t3_1pwfqhp",
-    "title": "Tips for Preparing for the PSPO II Certification + Free Practice Exams Resource",
-    "category": "курсы",
-    "badge": "🎓 [Курсы]",
-    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.udemy.com/course/pspo-ii-practice-exams-fast-track-to-success-pspo-2/?couponCode=AC6BF702042D04AEB11B",
-    "main_tag": "курсы",
-    "extra_tags": [
-      "курсы"
-    ],
-    "message_id": 642,
-    "is_evergreen": false
-  },
-  {
-    "id": "t3_1lseh0y",
-    "title": "Docker, Kubernetes and Azure container services course",
-    "category": "курсы",
-    "badge": "🎓 [Курсы]",
-    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.shorturl.at/r6AA2",
-    "main_tag": "курсы",
-    "extra_tags": [
-      "курсы"
-    ],
-    "message_id": 643,
+    "message_id": 674,
     "is_evergreen": false
   }
 ]
