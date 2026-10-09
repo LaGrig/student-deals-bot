@@ -1,381 +1,38 @@
-import os
-import json
-import time
-import re
-import html
-from urllib.parse import urlparse
-import feedparser
-import requests
-
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
-TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
-HISTORY_FILE = "data/processed_ids.json"
-ACTIVE_POSTS_FILE = "data/active_posts.json"
-
-CHANNEL_USERNAME = TELEGRAM_CHAT_ID.replace("@", "") if TELEGRAM_CHAT_ID else "discounts4students"
-
-# 24 выверенные программы: полный охват всех 16 категорий из навигатора
-EVERGREEN_DEALS = [
-    {
-        'id': 'sk_trains_free',
-        'title': 'Бесплатные поезда по Словакии для студентов (ŽSSK)',
-        'category': 'Транспорт и Путешествия',
-        'main_tag': 'словакия',
-        'benefit': '100% бесплатно во 2-м классе всех поездов ŽSSK',
-        'duration': 'На весь период дневной формы обучения (до 26 лет)',
-        'region': '🇸🇰 Словакия (Кошице, Братислава, Татры)',
-        'requirements': 'Студенческий билет с чипом ISIC (вузы TUKE, UPJŠ и др.)',
-        'description': 'Легендарная льгота в Словакии: бесплатный проезд во всех поездах государственной железной дороги по всей стране. Поездки из Кошице в горы Высокие Татры, Братиславу или к границам не стоят ни цента.',
-        'how_to': '1. Оформите студенческий ISIC в вашем вузе (TUKE, UPJŠ).\n2. В кассе ŽSSK на вокзале Кошице оформите регистрацию (Preukaz pre študenta).\n3. Оформляйте бесплатные нулевые билеты на сайте zssk.sk или в приложении Ideme vlakom.',
-        'link': 'https://www.zssk.sk/bezplatna-preprava/studenti/',
-        'extra_tags': ['кошице', 'поезда', 'isic']
-    },
-    {
-        'id': 'kosice_dpmk_transport',
-        'title': 'Студенческий проездной в Кошице (DPMK) со скидкой 50%',
-        'category': 'Транспорт и Город',
-        'main_tag': 'кошице',
-        'benefit': 'Скидка 50% на все билеты и месячные проездные',
-        'duration': 'На учебный год (продление по ISIC)',
-        'region': '🇸🇰 Кошице (Словакия)',
-        'requirements': 'Студенческая карта ISIC с активированным транспортным чипом',
-        'description': 'Городской транспорт Кошице (трамваи и автобусы DPMK) для студентов стоит ровно вполовину дешевле. Выгоднее всего оформить электронный проездной (Mesačník) прямо на карту ISIC.',
-        'how_to': '1. Активируйте транспортный чип ISIC в университетском терминале.\n2. В приложении DPMK или в кассах на Bardejovská / Rooseveltova пополните студенческий проездной.',
-        'link': 'https://www.dpmk.sk/prepravny-poriadok/vybavovanie-studentskych-zliav',
-        'extra_tags': ['словакия', 'транспорт', 'dpmk']
-    },
-    {
-        'id': 'sk_isic_jedalne',
-        'title': 'Студенческие обеды в Кошице по ISIC за €2–€3',
-        'category': 'Питание и Общежития',
-        'main_tag': 'кошице',
-        'benefit': 'Государственная дотация на каждое блюдо (экономия 60%)',
-        'duration': 'Каждый учебный семестр',
-        'region': '🇸🇰 Кошице (столовые TUKE и UPJŠ)',
-        'requirements': 'Карта студента ISIC соответствующего университета',
-        'description': 'Министерство образования Словакии субсидирует горячее питание для студентов. В университетских столовых Кошице полноценный комплексный обед стоит от €2 до €3.50.',
-        'how_to': '1. Пополните баланс питания через портал jedalen.tuke.sk или в кассе столовой.\n2. Приложите карту ISIC на раздаче.',
-        'link': 'https://jedalen.tuke.sk/',
-        'extra_tags': ['словакия', 'еда', 'isic']
-    },
-    {
-        'id': 'kosice_tabacka_usmev',
-        'title': 'Студенческий досуг в Кошице: Tabačka Kulturfabrik и Kino Úsmev',
-        'category': 'Культура и Ивенты',
-        'main_tag': 'ивенты',
-        'benefit': 'Билеты в кино, на концерты и фестивали со скидкой до 40%',
-        'duration': 'Постоянно при предъявлении карты',
-        'region': '🇸🇰 Кошице (Gorkého 2 / Kasárenské námestie)',
-        'requirements': 'Студенческий билет или карта ISIC',
-        'description': 'Главные точки культурной жизни Кошице: Tabačka Kulturfabrik и Kino Úsmev предлагают специальные студенческие тарифы на европейское кино, лекции, спектакли и концерты.',
-        'how_to': 'Выбирайте тариф «Študent / ISIC» при покупке онлайн на сайтах площадок или покажите ISIC в кассе.',
-        'link': 'https://tabacka.sk/',
-        'extra_tags': ['кошице', 'словакия', 'кино']
-    },
-    {
-        'id': 'sk_student_brigady',
-        'title': 'Работа для студентов в Словакии (Dohoda o brigádnickej práci)',
-        'category': 'Работа и Карьера',
-        'main_tag': 'работа',
-        'benefit': 'Освобождение от налогов на доход до €200 в месяц (чистая зарплата)',
-        'duration': 'До 26 лет при дневной форме обучения',
-        'region': '🇸🇰 Словакия (Кошице, Прешов и др.)',
-        'requirements': 'Справка об учёбе (Potvrdenie o návšteve školy) и возраст до 26 лет',
-        'description': 'Специальный тип трудового договора для студентов (Dohoda). Позволяет легально подрабатывать до 20 часов в неделю. При подаче заявления на налоговое исключение (Odvodová úľava) с первых €200 заработка в месяц не удерживаются страховые взносы.',
-        'how_to': 'Ищите вакансии с пометкой «Brigáda» на официальном словацком портале Profesia.sk в разделе Košice.',
-        'link': 'https://www.profesia.sk/praca/kosice/brigady/',
-        'extra_tags': ['словакия', 'кошице', 'стажировки']
-    },
-    {
-        'id': 'flixbus_regiojet_discounts',
-        'title': 'Скидки 10–15% на FlixBus и поезда RegioJet по Европе',
-        'category': 'Путешествия по Европе',
-        'main_tag': 'путешествия',
-        'benefit': 'Скидка 10%–15% на автобусы и поезда по всей Европе',
-        'duration': 'Круглый год',
-        'region': '🇪🇺 Вся Европа (маршруты из Кошице в Вену, Прагу, Будапешт)',
-        'requirements': 'Действующая карта ISIC',
-        'description': 'Дешёвые путешествия по Европе прямо из Кошице. Автобусы FlixBus и поезда RegioJet соединяют Кошице с Прагой, Братиславой, Будапештом, Краковом и Веной.',
-        'how_to': '1. Авторизуйтесь на словацком портале isic.sk в разделе льгот.\n2. Сгенерируйте промокод на поездку FlixBus или привяжите ISIC в профиле RegioJet.',
-        'link': 'https://isic.sk/zlavy-na-slovensku/',
-        'extra_tags': ['европа', 'поезда', 'flixbus']
-    },
-    {
-        'id': 'europe_isic_benefits',
-        'title': 'Карта ISIC в Европе: бесплатные музеи, скидки на хостелы и паромы',
-        'category': 'Путешествия и Музеи',
-        'main_tag': 'европа',
-        'benefit': 'Скидки до 50% или бесплатный вход в 150 000 локаций',
-        'duration': 'В течение срока действия карты',
-        'region': '🇪🇺 Все страны Европейского Союза',
-        'requirements': 'Международное удостоверение студента ISIC',
-        'description': 'Ваш студенческий билет ISIC словацкого вуза — ключ к скидкам по всей Европе. Музеи, галереи и достопримечательности часто делают вход для студентов бесплатным или за полцены.',
-        'how_to': 'Перед поездкой проверяйте список скидок в конкретном городе через международную базу скидок ISIC.',
-        'link': 'https://www.isic.org/discounts/',
-        'extra_tags': ['путешествия', 'isic', 'скидки']
-    },
-    {
-        'id': 'lowcost_flights_kosice',
-        'title': 'Дешёвые перелёты по Европе из Кошице, Будапешта и Кракова',
-        'category': 'Авиабилеты и Лоукостеры',
-        'main_tag': 'авиа',
-        'benefit': 'Прямые билеты от €15 в Лондон, Милан, Рим, Вену',
-        'duration': 'Сезонные распродажи лоукостеров',
-        'region': '🇸🇰 Кошице (KSC), 🇭🇺 Будапешт (BUD), 🇵🇱 Краков (KRK)',
-        'requirements': 'Паспорт / ВНЖ студента',
-        'description': 'Из аэропорта Кошице летают прямые рейсы Wizz Air и Ryanair. Прямой автобус из Кошице доставляет прямо в аэропорт Будапешта (2.5 часа) и Кракова, откуда открывается сеть сотен рейсов по €10–€25.',
-        'how_to': 'Следите за расписанием и новыми прямыми направлениями на официальном сайте аэропорта Кошице.',
-        'link': 'https://www.airportkosice.sk/sk',
-        'extra_tags': ['путешествия', 'европа', 'билеты']
-    },
-    {
-        'id': 'fusion_360_edu',
-        'title': 'Autodesk Fusion 360 (CAD / 3D-моделирование) бесплатно',
-        'category': 'Инженерия и CAD',
-        'main_tag': 'cad',
-        'benefit': 'Бесплатная образовательная подписка (экономия $680/год)',
-        'duration': '1 год с возможностью ежегодного продления на время учёбы',
-        'region': '🌍 Global (актуально для студентов TUKE и технических вузов)',
-        'requirements': 'Университетская почта или студенческий билет ISIC',
-        'description': 'Профессиональный облачный пакет для 3D-проектирования, моделирования деталей, симуляции нагрузок и подготовки к ЧПУ-обработке.',
-        'how_to': '1. Перейдите на образовательный портал Autodesk.\n2. Зарегистрируйтесь с почтой вуза (@tuke.sk) или загрузите фото ISIC.\n3. Скачайте и активируйте лицензию.',
-        'link': 'https://www.autodesk.com/education/edu-software/overview',
-        'extra_tags': ['софт', '3d', 'инженерия']
-    },
-    {
-        'id': 'jetbrains_all_products',
-        'title': 'JetBrains All Products Pack (Профессиональные IDE)',
-        'category': 'Разработка и IT',
-        'main_tag': 'dev',
-        'benefit': 'Бесплатный доступ ко всем IDE: IntelliJ IDEA Ultimate, PyCharm Pro, WebStorm, CLion (экономия $289/год)',
-        'duration': '1 год с ежегодным продлением на весь срок учёбы',
-        'region': '🌍 Global',
-        'requirements': 'Студенческая университетская почта или карта ISIC',
-        'description': 'Полный пакет профессиональных сред разработки от JetBrains для программистов и студентов IT-специальностей без функциональных ограничений.',
-        'how_to': '1. Откройте страницу JetBrains for Students.\n2. Подайте заявку, указав университетскую почту.\n3. Получите активацию в профиле JetBrains Account.',
-        'link': 'https://www.jetbrains.com/community/education/#students',
-        'extra_tags': ['программирование', 'софт', 'jetbrains']
-    },
-    {
-        'id': 'github_student_pack',
-        'title': 'GitHub Student Developer Pack (включая Copilot Pro)',
-        'category': 'Инструменты Разработки и ИИ',
-        'main_tag': 'ИИ',
-        'benefit': 'Бесплатный доступ к GitHub Copilot, доменам .me, облачным серверам (ценность свыше $1000)',
-        'duration': 'На всё время обучения',
-        'region': '🌍 Global',
-        'requirements': 'Аккаунт GitHub + подтверждение статуса студента',
-        'description': 'Главный набор студента-разработчика: интеллектуальный ИИ-ассистент GitHub Copilot, бесплатные домены Namecheap, серверы DigitalOcean и десятки премиум-инструментов.',
-        'how_to': '1. Войдите в GitHub и перейдите в GitHub Education.\n2. Добавьте студенческую почту и загрузите фото расписания или карты ISIC.\n3. Получите одобрение и доступ к пакету преимуществ.',
-        'link': 'https://education.github.com/pack',
-        'extra_tags': ['разработка', 'copilot', 'софт']
-    },
-    {
-        'id': 'azure_students',
-        'title': 'Microsoft Azure for Students ($100 на серверы и ИИ)',
-        'category': 'Облачные Технологии и Серверы',
-        'main_tag': 'ИИ',
-        'benefit': '$100 стартового баланса на облачные сервисы + бесплатные службы без привязки банковской карты',
-        'duration': '12 месяцев с возможностью продления',
-        'region': '🌍 Global',
-        'requirements': 'Студенческий адрес электронной почты',
-        'description': 'Облачная инфраструктура для учебных проектов, развертывания веб-сайтов, баз данных и запуска моделей машинного обучения без риска списания денег.',
-        'how_to': '1. Перейдите на страницу Azure for Students.\n2. Нажмите «Start free» и пройдите верификацию через студенческий email.\n3. Создавайте виртуальные машины и тестируйте ИИ.',
-        'link': 'https://azure.microsoft.com/free/students/',
-        'extra_tags': ['облако', 'azure', 'серверы']
-    },
-    {
-        'id': 'figma_education',
-        'title': 'Figma Professional для студентов',
-        'category': 'Дизайн и Интерфейсы',
-        'main_tag': 'дизайн',
-        'benefit': 'Бесплатный профессиональный тариф Figma Pro и FigJam (экономия $144/год)',
-        'duration': 'До 2 лет с возможностью повторной верификации',
-        'region': '🌍 Global',
-        'requirements': 'Студенческий статус (название вуза и подтверждение)',
-        'description': 'Инструмент для UX/UI-дизайна, совместного прототипирования мобильных приложений, веб-сайтов и интерактивных досок FigJam для командной работы.',
-        'how_to': '1. Войдите в аккаунт Figma и перейдите на страницу Education.\n2. Заполните короткую форму с указанием вуза и загрузите студенческий.\n3. Команда получит статус Professional бесплатно.',
-        'link': 'https://www.figma.com/education/',
-        'extra_tags': ['figma', 'uiux', 'дизайн']
-    },
-    {
-        'id': 'canva_pro_student',
-        'title': 'Canva Pro для студентов',
-        'category': 'Графика и Презентации',
-        'main_tag': 'дизайн',
-        'benefit': 'Премиальные шаблоны, удаление фона, генеративный ИИ и миллионы фото бесплатно',
-        'duration': 'На период учёбы',
-        'region': '🌍 Global',
-        'requirements': 'Образовательная почта или доступ через университетский домен',
-        'description': 'Сервис для оформления рефератов, презентаций курсовых, постеров студенческих мероприятий и постов для соцсетей.',
-        'how_to': 'Перейдите на страницу Canva for Education и зарегистрируйтесь по университетскому адресу.',
-        'link': 'https://www.canva.com/education/',
-        'extra_tags': ['canva', 'графика', 'презентации']
-    },
-    {
-        'id': 'notion_education',
-        'title': 'Notion Plus Plan for Education',
-        'category': 'Продуктивность и Заметки',
-        'main_tag': 'продуктивность',
-        'benefit': 'Бесплатный тариф Plus с неограниченным хранилищем файлов (экономия $120/год)',
-        'duration': 'Бессрочно на весь период студенчества',
-        'region': '🌍 Global',
-        'requirements': 'Студенческая почта вуза',
-        'description': 'Универсальное рабочее пространство для ведения конспектов лекций, базы знаний по предметам, расписания дедлайнов и подготовки к экзаменам.',
-        'how_to': '1. Создайте аккаунт Notion.\n2. В настройках смените email на студенческий.\n3. В разделе Upgrade выберите тариф «Get free Education plan».',
-        'link': 'https://www.notion.so/product/notion-for-education',
-        'extra_tags': ['notion', 'заметки', 'учеба']
-    },
-    {
-        'id': 'coursera_student',
-        'title': 'Coursera for Campus (Студенческий доступ)',
-        'category': 'Онлайн-Обучение',
-        'main_tag': 'продуктивность',
-        'benefit': 'Бесплатный доступ к курсам ведущих мировых университетов с выдачей сертификатов',
-        'duration': 'В рамках университетских программ партнёрства',
-        'region': '🌍 Global',
-        'requirements': 'Почта аккредитованного университета',
-        'description': 'Курсы по машинному обучению, бизнесу, программированию и языкам от Google, IBM, Stanford и Yale с получением официальных сертификатов.',
-        'how_to': 'Авторизуйтесь на странице студенческой программы Coursera с вашим вузовским адресом.',
-        'link': 'https://www.coursera.org/for-university-and-college-students',
-        'extra_tags': ['курсы', 'образование', 'сертификаты']
-    },
-    {
-        'id': 'youtube_premium_student',
-        'title': 'YouTube Premium + YouTube Music для студентов',
-        'category': 'Медиа и Развлечения',
-        'main_tag': 'подписки',
-        'benefit': 'Скидка около 50% на подписку без рекламы и с фоновым воспроизведением',
-        'duration': 'До 4 лет (ежегодная проверка через SheerID)',
-        'region': '🇸🇰 Словакия и 🇪🇺 ЕС',
-        'requirements': 'Подтверждение статуса через SheerID (справка или ISIC)',
-        'description': 'Просмотр обучающих лекций и видео без рекламы, скачивание в офлайн и доступ к трекам YouTube Music по студенческой цене (€4.49 вместо €8.99).',
-        'how_to': 'Откройте страницу студенческой подписки YouTube, выберите вуз и подтвердите статус через систему SheerID.',
-        'link': 'https://www.youtube.com/premium/student',
-        'extra_tags': ['музыка', 'youtube', 'подписки']
-    },
-    {
-        'id': 'spotify_student',
-        'title': 'Spotify Premium Student',
-        'category': 'Музыка и Подкасты',
-        'main_tag': 'подписки',
-        'benefit': 'Скидка 50% на премиум-подписку без рекламы в высоком качестве',
-        'duration': 'До 4 лет с ежегодным продлением',
-        'region': '🇸🇰 Словакия (€3.49/месяц вместо €6.99)',
-        'requirements': 'Верификация через SheerID',
-        'description': 'Официальный студенческий тариф Spotify. Вся музыка мира, подкасты для изучения языков, прослушивание офлайн без рекламы.',
-        'how_to': 'Перейдите на страницу Spotify Student, войдите в аккаунт и пройдите валидацию учебного заведения.',
-        'link': 'https://www.spotify.com/student/',
-        'extra_tags': ['музыка', 'spotify', 'подписки']
-    },
-    {
-        'id': 'apple_music_tv',
-        'title': 'Apple Music + Apple TV+ для студентов',
-        'category': 'Музыка и Кино',
-        'main_tag': 'подписки',
-        'benefit': 'Apple Music со скидкой 50% + бесплатный доступ к онлайн-кинотеатру Apple TV+',
-        'duration': 'До 48 месяцев',
-        'region': '🇸🇰 Словакия и 🇪🇺 ЕС',
-        'requirements': 'Студенческая верификация через UNiDAYS',
-        'description': 'Студенческая цена на Apple Music (Spatial Audio, Lossless) плюс бесплатный полный доступ ко всем фильмам и сериалам сервиса Apple TV+.',
-        'how_to': 'В приложении «Музыка» или на сайте Apple выберите студенческую подписку и подтвердите статус через UNiDAYS.',
-        'link': 'https://www.apple.com/apple-music/',
-        'extra_tags': ['кино', 'музыка', 'apple']
-    },
-    {
-        'id': 'asos_student_discount',
-        'title': 'Скидка 10% на одежду и обувь в ASOS (доставка в ЕС)',
-        'category': 'Одежда и Стиль',
-        'main_tag': 'одежда',
-        'benefit': 'Постоянная скидка 10% на весь ассортимент',
-        'duration': 'Круглый год на весь период учёбы',
-        'region': '🇸🇰 Словакия, 🇪🇺 ЕС',
-        'requirements': 'Студенческая почта или верификация ASOS',
-        'description': 'Брендовые кроссовки (Nike, New Balance, adidas) и базовый гардероб. Студенческий код действует постоянно и суммируется со многими распродажами.',
-        'how_to': 'Перейдите на страницу валидации ASOS, укажите страну учёбы и подтвердите статус студента для получения персонального кода.',
-        'link': 'https://www.asos.com/student-validation',
-        'extra_tags': ['одежда', 'стиль', 'кроссовки']
-    },
-    {
-        'id': 'epic_games_weekly',
-        'title': 'Еженедельные бесплатные игры в Epic Games Store',
-        'category': 'Игры и Раздачи',
-        'main_tag': 'игры',
-        'benefit': '100% бесплатно (1–2 лицензионные игры каждую неделю)',
-        'duration': 'Обновление каждый четверг в 17:00 (навсегда в библиотеку)',
-        'region': '🌍 Global / Онлайн',
-        'requirements': 'Бесплатный аккаунт Epic Games Store',
-        'description': 'Каждую неделю Epic Games дарит отличные игры: от инди-хитов до крупных AAA-проектов. Добавленная игра остаётся на вашем аккаунте навсегда.',
-        'how_to': '1. Зарегистрируйтесь в Epic Games Store.\n2. Перейдите в раздел «Бесплатные игры» и нажмите «Получить».\n3. Игра навсегда привяжется к вашему аккаунту.',
-        'link': 'https://store.epicgames.com/free-games',
-        'extra_tags': ['игры', 'epicgames', 'раздача']
-    },
-    {
-        'id': 'steam_free_to_play',
-        'title': 'Постоянный каталог бесплатных игр в Steam (Free to Play)',
-        'category': 'Игры и Развлечения',
-        'main_tag': 'игры',
-        'benefit': 'Сотни топовых игр без оплаты (Dota 2, CS2, Apex Legends, Destiny 2)',
-        'duration': 'Доступно всегда',
-        'region': '🌍 Global / Онлайн',
-        'requirements': 'Аккаунт Steam',
-        'description': 'Официальный раздел бесплатных соревновательных, кооперативных и сюжетных игр в Steam. Отличный способ отвлечься от учёбы вместе с друзьями без затрат.',
-        'how_to': 'Откройте раздел Free to Play в клиенте Steam или браузере и добавьте любую игру в библиотеку.',
-        'link': 'https://store.steampowered.com/genre/Free%20to%20Play/',
-        'extra_tags': ['игры', 'steam', 'онлайн']
-    },
-    {
-        'id': 'isic_extra_hot_deals',
-        'title': 'Горящие акции и специальные купоны месяца по ISIC (Словакия)',
-        'category': 'Горящие Акции и Скидки',
-        'main_tag': 'горящее',
-        'benefit': 'Скидки до 50% на фастфуд, электронику, доставку и покупки',
-        'duration': 'Временные ежемесячные промокоды',
-        'region': '🇸🇰 Словакия (Кошице, Прешов, Братислава)',
-        'requirements': 'Карта студента ISIC',
-        'description': 'Кроме базовых льгот на поезда, держателям словацкого ISIC доступны ежемесячные горящие купоны (Extra kupóny): скидки в McDonald\'s, KFC, Martinus, Panta Rhei, Alza и спортивных магазинах.',
-        'how_to': '1. Авторизуйтесь на сайте isic.sk или в приложении ISIC Slovakia.\n2. Перейдите в раздел «Kupóny» и активируйте спецпредложения месяца.',
-        'link': 'https://isic.sk/zlavy-na-slovensku/',
-        'extra_tags': ['горящее', 'словакия', 'кошице', 'скидки']
-    },
-    {
-        'id': 'github_perks_hot_credits',
-        'title': 'Горящие кредиты и лицензии: DigitalOcean, JetBrains и Namecheap',
-        'category': 'Бонусы и Студенческие Кредиты',
-        'main_tag': 'горящее',
-        'benefit': '$200 на серверы DigitalOcean, бесплатный домен .me и SSL на 1 год',
-        'duration': 'На время учёбы',
-        'region': '🌍 Global / Онлайн',
-        'requirements': 'Студенческий статус (студенческая почта или ISIC)',
-        'description': 'Щедрые стартовые бонусы для студентов в рамках GitHub Education: поднимайте личные серверы, VPN и учебные веб-проекты с бесплатным балансом.',
-        'how_to': 'Авторизуйтесь через GitHub Education Pack и активируйте промокоды партнёров в разделе Offers.',
-        'link': 'https://education.github.com/pack',
-        'extra_tags': ['горящее', 'софт', 'it', 'серверы']
-    }
-]
-
-# Статус «Постоянная льгота» добавляется ТОЛЬКО для базового каталога
-for deal in EVERGREEN_DEALS:
-    deal["status_line"] = "📌 <b>Статус:</b> Постоянная льгота (бессрочно)"
-
 DYNAMIC_FEEDS = [
-    # 1. Раздачи ПК-игр: СТРОГО Steam и Epic Games
+    # 1. Официальный API еженедельных бесплатных раздач Epic Games Store (СТРОГО 100% бесплатно)
     {
-        "url": "https://www.gamerpower.com/api/giveaways?platform=pc&sort-by=date",
+        "url": "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=ru&country=SK&allowCountries=SK",
+        "format": "epic_api",
         "type": "game",
-        "category": "Раздача недели (Игры)",
-        "badge": "🎮 [Игры: Steam & Epic]",
+        "category": "Игры",
+        "badge": "🎮 [Epic Games]",
         "main_tag": "игры",
-        "default_benefit": "Бесплатно 100% (Вместо полной цены)",
-        "default_duration": "Ограничено по времени (до окончания раздачи)",
-        "default_region": "Global (ПК)",
-        "how_to_tip": "Перейдите на страницу раздачи платформы и добавьте игру в свою библиотеку навсегда.",
+        "default_benefit": "Бесплатно 100% (Лицензия EGS)",
+        "default_duration": "Еженедельная раздача Epic Games",
+        "default_region": "Global (Epic Games)",
+        "how_to_tip": "Войдите в аккаунт Epic Games и нажмите «Оформить заказ» за 0€.",
         "max_ttl_seconds": 604800
     },
+    # 2. Раздачи ПК-игр с GamerPower (СТРОГО Steam / Epic, отсекаем обычный Free-to-play)
+    {
+        "url": "https://www.gamerpower.com/api/giveaways?platform=pc&sort-by=date",
+        "format": "gamerpower_json",
+        "type": "game",
+        "category": "Игры",
+        "badge": "🎮 [Раздача Steam & Epic]",
+        "main_tag": "игры",
+        "default_benefit": "Бесплатно 100% (Вместо полной цены)",
+        "default_duration": "Ограниченное время раздачи",
+        "default_region": "Global (ПК)",
+        "how_to_tip": "Перейдите на страницу раздачи и добавьте игру в свою библиотеку.",
+        "max_ttl_seconds": 604800
+    },
+    # 3. Временные 100% скидки на платные игры Steam (отсекаем F2P и посты без прямой ссылки)
     {
         "url": "https://www.reddit.com/r/FreeGamesOnSteam/new.rss",
+        "format": "steam_reddit",
         "type": "game",
-        "category": "Раздача недели (Игры)",
+        "category": "Игры",
         "badge": "🎮 [Steam]",
         "main_tag": "игры",
         "default_benefit": "Бесплатно 100% (Лицензия Steam)",
@@ -384,23 +41,12 @@ DYNAMIC_FEEDS = [
         "how_to_tip": "Активируйте ключ или заберите игру через страницу акции в магазине Steam.",
         "max_ttl_seconds": 345600
     },
-    {
-        "url": "https://www.reddit.com/r/EpicGamesPC/new.rss",
-        "type": "game",
-        "category": "Раздача недели (Игры)",
-        "badge": "🎮 [Epic Games]",
-        "main_tag": "игры",
-        "default_benefit": "Бесплатная раздача Epic Games",
-        "default_duration": "Еженедельная акция EGS",
-        "default_region": "Global (Epic Games)",
-        "how_to_tip": "Войдите в аккаунт Epic Games и нажмите «Оформить заказ» за 0€.",
-        "max_ttl_seconds": 604800
-    },
-    # 2. Подработка и стажировки для студентов в Словакии / Кошице
+    # 4. Подработка и стажировки для студентов в Кошице
     {
         "url": "https://www.profesia.sk/praca/kosice/?format=rss&employment_type=brigada",
+        "format": "rss",
         "type": "vacancy",
-        "category": "Работа и Доход",
+        "category": "Работа",
         "badge": "💼 [Бригада в Кошице]",
         "main_tag": "работа",
         "default_benefit": "Почасовая оплата для студентов (Dohoda)",
@@ -411,8 +57,9 @@ DYNAMIC_FEEDS = [
     },
     {
         "url": "https://www.brigada.sk/rss.php",
+        "format": "rss",
         "type": "vacancy",
-        "category": "Работа и Доход",
+        "category": "Работа",
         "badge": "💼 [Студенческая подработка]",
         "main_tag": "работа",
         "default_benefit": "Гибкий график для студентов вузов",
@@ -421,11 +68,12 @@ DYNAMIC_FEEDS = [
         "how_to_tip": "Откликнитесь на вакансию на сайте Brigada.sk, указав студенческий статус.",
         "max_ttl_seconds": 604800
     },
-    # 3. Бесплатные курсы и сертификаты с промокодами
+    # 5. Бесплатные курсы и сертификаты с промокодами
     {
         "url": "https://www.reddit.com/r/udemyfreebies/new.rss",
+        "format": "rss",
         "type": "promo",
-        "category": "Бесплатные курсы",
+        "category": "Курсы",
         "badge": "🎓 [Курсы с купонами]",
         "main_tag": "курсы",
         "default_benefit": "Бесплатный доступ к курсу (Скидка 100%)",
@@ -434,26 +82,28 @@ DYNAMIC_FEEDS = [
         "how_to_tip": "Перейдите по ссылке с примененным промокодом и нажмите «Enroll Now» за $0.",
         "max_ttl_seconds": 172800
     },
-    # 4. Студенческий гардероб и стиль
+    # 6. Студенческий гардероб и стиль
     {
         "url": "https://www.reddit.com/r/frugalmalefashion/new.rss",
+        "format": "rss",
         "type": "promo",
-        "category": "Одежда и Шопинг",
+        "category": "Скидки",
         "badge": "👟 [Одежда и Обувь]",
-        "main_tag": "одежда",
+        "main_tag": "скидки",
         "default_benefit": "Скидки до 60–70% в европейских магазинах",
         "default_duration": "Пока товар есть в наличии (Распродажа)",
         "default_region": "Европа / Доставка в Словакию",
         "how_to_tip": "Используйте промокод на корзине или заказывайте товары из раздела сейла.",
         "max_ttl_seconds": 259200
     },
-    # 5. Горящие скидки на технику, софт и сервисы
+    # 7. Горящие скидки на технику, софт и сервисы
     {
         "url": "https://www.pepper.it/rss/nuove",
+        "format": "rss",
         "type": "promo",
-        "category": "Софт и Полезности",
-        "badge": "🔥 [Горящее предложение]",
-        "main_tag": "горящее",
+        "category": "Скидки",
+        "badge": "🛍 [Скидки на технику/софт]",
+        "main_tag": "скидки",
         "default_benefit": "Крупная скидка на электронику / софт",
         "default_duration": "Ограниченная акция",
         "default_region": "Евросоюз",
@@ -463,18 +113,14 @@ DYNAMIC_FEEDS = [
 ]
 
 TOPIC_RULES = [
-    ("ИИ", ["ai", "copilot", "chatgpt", "openai", "claude", "gemini", "нейросеть", "llm"]),
-    ("dev", ["github", "jetbrains", "azure", "docker", "python", "developer", "код", "git", "api", "ide", "vscode"]),
-    ("дизайн", ["figma", "canva", "adobe", "дизайн", "ui/ux", "graphics", "3d", "blender"]),
-    ("cad", ["fusion 360", "autocad", "autodesk", "cad", "solidworks", "инженерия"]),
-    ("продуктивность", ["notion", "office 365", "excel", "obsidian", "учеба", "конспекты"]),
-    ("подписки", ["spotify", "apple music", "youtube premium", "музыка", "стриминг", "подписка"]),
-    ("курсы", ["coursera", "udemy", "сертификат", "обучение", "лекции"]),
-    ("одежда", ["asos", "nike", "adidas", "кроссовки", "гардероб", "одежда"]),
+    ("софт", ["github", "jetbrains", "azure", "docker", "python", "developer", "код", "git", "api", "ide", "vscode", "ai", "copilot", "chatgpt", "openai", "claude", "gemini", "нейросеть", "llm", "figma", "canva", "adobe", "дизайн", "ui/ux", "graphics", "3d", "blender", "fusion 360", "autocad", "autodesk", "cad", "solidworks", "инженерия", "notion", "office 365", "excel", "obsidian", "учеба", "конспекты"]),
     ("игры", ["steam", "epic games", "раздача", "игры", "гейминг", "бесплатно игра"]),
-    ("словакия", ["словакия", "slovensko", "slovakia", "bratislava", "zssk", "isic"]),
-    ("кошице", ["кошице", "košice", "kosice", "dpmk", "tuke", "upjs"]),
-    ("путешествия", ["поезд", "flixbus", "regiojet", "ryanair", "wizz", "лоукостер", "билеты", "музей"])
+    ("курсы", ["coursera", "udemy", "сертификат", "обучение", "лекции"]),
+    ("скидки", ["spotify", "apple music", "youtube premium", "музыка", "стриминг", "подписка", "asos", "nike", "adidas", "кроссовки", "гардероб", "одежда"]),
+    ("кошице", ["кошице", "košice", "kosice", "dpmk", "tuke", "upjs", "словакия", "slovensko", "slovakia", "bratislava", "zssk", "isic", "столовая", "jedalen"]),
+    ("ивенты", ["tabacka", "usmev", "кино", "театр", "музей", "выставка", "фестиваль", "концерт"]),
+    ("работа", ["вакансия", "brigada", "бригада", "работа", "dohoda", "стажировка"]),
+    ("туризм", ["поезд", "flixbus", "regiojet", "ryanair", "wizz", "лоукостер", "билеты", "туризм", "путешествия"])
 ]
 
 def extract_topic_tags(title, text):
@@ -518,7 +164,7 @@ def is_allowed_language(text):
 
     non_allowed_scripts = re.compile(
         r'[가-힯ᄀ-ᇿ㄰-㆏'  # Корейский
-        r'一-鿿㐀-䶿'                # Китайский / Японский (CJK)
+        r'一-鿿㐀-䶿'                # CJK (Китайский / Японский)
         r'぀-ゟ゠-ヿ'                # Хирагана / Катакана
         r'؀-ۿݐ-ݿ'                # Арабский
         r'֐-׿'                            # Иврит
@@ -596,7 +242,6 @@ def extract_direct_link(summary_html, default_link):
 def clean_summary_text(summary_html):
     if not summary_html:
         return ""
-    # Декодируем HTML-сущности (&#32; превращается в обычный пробел)
     text = html.unescape(summary_html)
     text = re.sub(r'<[^>]+>', ' ', text)
     text = re.sub(r'&#\d+;|&[a-zA-Z]+;', ' ', text)
@@ -654,33 +299,90 @@ def validate_link(url, fallback_url=None):
 
 def fetch_feed_entries(feed_info):
     url = feed_info["url"]
+    feed_format = feed_info.get("format", "rss")
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     }
 
-    if "gamerpower.com" in url:
-        resp = requests.get(url, timeout=10, headers=headers)
-        if resp.status_code == 200:
-            data = resp.json()
-            entries = []
-            for item in data[:25]:
-                open_giveaway_url = item.get("open_giveaway_url") or item.get("open_giveaway") or item.get("gamerpower_url") or ""
-                platforms_str = str(item.get("platforms", "")).lower()
-                combined_text = f"{item.get('title', '')} {open_giveaway_url} {platforms_str}".lower()
+    # 1. Официальный API Epic Games Store (СТРОГО 100% бесплатные игры недели)
+    if feed_format == "epic_api":
+        try:
+            resp = requests.get(url, timeout=10, headers=headers)
+            if resp.status_code == 200:
+                data = resp.json()
+                elements = data.get("data", {}).get("Catalog", {}).get("searchStore", {}).get("elements", [])
+                entries = []
+                for el in elements:
+                    title = el.get("title")
+                    promos = el.get("promotions") or {}
+                    active_offers = promos.get("promotionalOffers", [])
 
-                # СТРОГО: только Steam и Epic Games
-                if not any(plat in combined_text for plat in ("steam", "epic", "epicgames")):
-                    continue
+                    is_free_now = False
+                    end_date = ""
+                    if active_offers:
+                        offers_list = active_offers[0].get("promotionalOffers", [])
+                        for off in offers_list:
+                            discount = off.get("discountSetting", {}).get("discountPercentage")
+                            if discount == 0:
+                                is_free_now = True
+                                end_date = off.get("endDate", "")[:10]
+                                break
 
-                entries.append({
-                    "id": str(item.get("id")),
-                    "title": item.get("title"),
-                    "link": open_giveaway_url,
-                    "summary": item.get("description", "")
-                })
-            return entries
+                    price_info = el.get("price", {}).get("totalPrice", {})
+                    if is_free_now and price_info.get("discountPrice") == 0:
+                        slug = el.get("productSlug") or el.get("urlSlug")
+                        orig = price_info.get("originalPrice", 0) / 100
+                        worth_str = f"€{orig:.2f}" if orig > 0 else "Бесплатно"
+                        link = f"https://store.epicgames.com/p/{slug}" if slug else "https://store.epicgames.com/free-games"
+                        desc = el.get("description", "")
+                        entries.append({
+                            "id": f"egs_{el.get('id')}",
+                            "title": title,
+                            "summary": desc,
+                            "link": link,
+                            "benefit": f"Бесплатно 100% (вместо {worth_str})",
+                            "duration": f"До {end_date}" if end_date else "Ограничено по времени"
+                        })
+                return entries
+        except Exception as e:
+            print(f"Ошибка загрузки Epic Games API: {e}")
         return []
 
+    # 2. GamerPower API: только Steam и Epic Games, отсекаем обычный Free-to-play
+    if feed_format == "gamerpower_json":
+        try:
+            resp = requests.get(url, timeout=10, headers=headers)
+            if resp.status_code == 200:
+                data = resp.json()
+                entries = []
+                for item in data[:25]:
+                    title = item.get("title", "")
+                    platforms = str(item.get("platforms", "")).lower()
+                    giveaway_url = str(item.get("open_giveaway_url") or item.get("open_giveaway") or item.get("gamerpower_url") or "")
+                    worth = str(item.get("worth", "")).strip()
+
+                    # Платформы: ТОЛЬКО Steam и Epic Games
+                    comb_check = f"{title} {platforms} {giveaway_url}".lower()
+                    if not any(plat in comb_check for plat in ("steam", "epic", "epicgames")):
+                        continue
+
+                    # Отсекаем мусорный Free-to-play (где изначальная цена 0 или в названии F2P)
+                    if worth in ("$0.00", "0€", "N/A", "") or any(m in title.lower() for m in ("free to play", "f2p", "[f2p]")):
+                        continue
+
+                    entries.append({
+                        "id": str(item.get("id")),
+                        "title": title,
+                        "link": giveaway_url,
+                        "summary": item.get("description", ""),
+                        "benefit": f"Бесплатно 100% (вместо {worth})" if worth else "Бесплатно 100%"
+                    })
+                return entries
+        except Exception as e:
+            print(f"Ошибка GamerPower: {e}")
+        return []
+
+    # 3. RSS ленты (Reddit Steam, вакансии, курсы, скидки)
     req_headers = {"User-Agent": "telegram:discount4studentsbot:v2.0 (by /u/studentdealsbot)"} if "reddit.com" in url else headers
     try:
         resp = requests.get(url, timeout=10, headers=req_headers)
@@ -688,16 +390,69 @@ def fetch_feed_entries(feed_info):
             feed = feedparser.parse(resp.content)
             entries = []
             for e in feed.entries[:25]:
+                title = getattr(e, "title", "")
+
+                # Для Steam отсекаем Free-to-play
+                if feed_format == "steam_reddit":
+                    if any(m in title.lower() for m in ("f2p", "free to play", "[f2p]")):
+                        continue
+
+                raw_link = getattr(e, "link", "")
+                summary = getattr(e, "summary", "")
+
+                direct = extract_direct_link(summary, raw_link) if "reddit.com" in raw_link else raw_link
+                # Если прямая ссылка ведёт на reddit тред, а не на магазин — пропускаем
+                if feed_format == "steam_reddit" and ("reddit.com" in direct or "redd.it" in direct):
+                    continue
+
                 entries.append({
                     "id": getattr(e, "id", getattr(e, "link", None)),
-                    "title": getattr(e, "title", ""),
-                    "link": getattr(e, "link", ""),
-                    "summary": getattr(e, "summary", "")
+                    "title": title,
+                    "link": direct,
+                    "summary": summary
                 })
             return entries
     except Exception as err:
         print(f"Ошибка загрузки RSS {url}: {err}")
     return []
+
+# Единая карта соответствия 8 компактным категориям
+TAG_MAP = {
+    "кошице": "кошице",
+    "словакия": "кошице",
+    "транспорт": "кошице",
+    "поезда": "кошице",
+    "ивенты": "ивенты",
+    "культура": "ивенты",
+    "работа": "работа",
+    "стажировки": "работа",
+    "туризм": "туризм",
+    "путешествия": "туризм",
+    "авиа": "туризм",
+    "софт": "софт",
+    "dev": "софт",
+    "cad": "софт",
+    "дизайн": "софт",
+    "продуктивность": "софт",
+    "ии": "софт",
+    "курсы": "курсы",
+    "игры": "игры",
+    "скидки": "скидки",
+    "подписки": "скидки",
+    "одежда": "скидки",
+    "горящее": "скидки"
+}
+
+def get_canonical_tags(deal):
+    raw_tags = [deal.get("main_tag")] + deal.get("extra_tags", [])
+    result = []
+    for t in raw_tags:
+        if not t:
+            continue
+        mapped = TAG_MAP.get(str(t).lower())
+        if mapped and mapped not in result:
+            result.append(mapped)
+    return result[:2] if result else ["скидки"]
 
 def send_telegram_card(deal, is_fallback=False):
     title = escape_html(deal.get("title"))
@@ -711,17 +466,8 @@ def send_telegram_card(deal, is_fallback=False):
     how_to = escape_html(deal.get("how_to", ""))
     link = deal.get("link")
 
-    main_tag = deal.get("main_tag", "горящее")
-    extra_tags = deal.get("extra_tags", [])
-
-    seen_tags = set()
-    all_tags = []
-    for t in [main_tag] + extra_tags:
-        if t and t not in seen_tags:
-            seen_tags.add(t)
-            all_tags.append(t)
-
-    tags_string = " ".join(f"#{t}@{CHANNEL_USERNAME}" for t in all_tags)
+    clean_tags = get_canonical_tags(deal)
+    tags_string = " ".join(f"#{t}@{CHANNEL_USERNAME}" for t in clean_tags)
 
     parts = [
         f"{badge} — <b>{title}</b>",
@@ -782,44 +528,23 @@ def send_telegram_card(deal, is_fallback=False):
 
 def get_navigator_text():
     return (
-        "🎓 <b>Навигатор по студенческим скидкам и льготам</b>\n\n"
-        "Здесь собраны постоянные льготы, акции и бесплатный софт для студентов в Словакии (Кошице) и онлайн.\n"
-        "Нажмите на интересующий тег, чтобы открыть все посты по теме:\n\n"
-        "🇸🇰 <b>Словакия и Кошице:</b>\n"
-        f"• Бесплатные поезда и транспорт: #транспорт@{CHANNEL_USERNAME} #словакия@{CHANNEL_USERNAME}\n"
-        f"• Студенческие скидки по ISIC: #словакия@{CHANNEL_USERNAME}\n"
-        f"• Жизнь, еда и досуг в Кошице: #кошице@{CHANNEL_USERNAME}\n"
-        f"• Подработка и стажировки: #работа@{CHANNEL_USERNAME}\n\n"
-        "🌍 <b>Путешествия и Транспорт:</b>\n"
-        f"• Поездки по Европе (FlixBus, музеи): #путешествия@{CHANNEL_USERNAME} #европа@{CHANNEL_USERNAME}\n"
-        f"• Дешёвые авиабилеты из Кошице: #авиа@{CHANNEL_USERNAME}\n\n"
-        "💻 <b>ИТ, Программирование и ИИ:</b>\n"
-        f"• Нейросети и AI-ассистенты: #ИИ@{CHANNEL_USERNAME}\n"
-        f"• Лицензии для разработки (JetBrains, GitHub): #dev@{CHANNEL_USERNAME}\n"
-        f"• 3D-моделирование и САПР: #cad@{CHANNEL_USERNAME}\n\n"
-        "🎨 <b>Дизайн и Презентации:</b>\n"
-        f"• Графика, UI/UX (Figma, Canva Pro): #дизайн@{CHANNEL_USERNAME}\n\n"
-        "📝 <b>Учёба и Продуктивность:</b>\n"
-        f"• Заметки, софт и организация: #продуктивность@{CHANNEL_USERNAME}\n"
-        f"• Бесплатные онлайн-курсы и сертификаты: #курсы@{CHANNEL_USERNAME}\n\n"
-        "🎧 <b>Подписки и Развлечения:</b>\n"
-        f"• Музыка и видео (Spotify, YouTube, Apple): #подписки@{CHANNEL_USERNAME}\n"
-        f"• Раздачи лицензионных игр (Steam & Epic): #игры@{CHANNEL_USERNAME}\n"
-        f"• Одежда и студенческий гардероб: #одежда@{CHANNEL_USERNAME}\n\n"
-        "🔥 <b>Горящие предложения:</b>\n"
-        f"• Временные акции и топ-скидки недели: #горящее@{CHANNEL_USERNAME}\n\n"
-        "📌 <i>Сохраните этот пост в закладки для быстрого поиска по каналу!</i>"
+        "🎓 <b>Интерактивный каталог студенческих льгот и скидок</b>\n\n"
+        "Мы собрали актуальные льготы в Кошице, бесплатные лицензии на софт, раздачи игр в Steam/Epic Games и полезные курсы.\n\n"
+        "⚡️ <i>Нажмите на хештег темы для быстрого поиска по каналу:</i>\n"
+        f"• 📍 #кошице@{CHANNEL_USERNAME} — транспорт DPMK 50%, поезда ŽSSK, столовые, ISIC\n"
+        f"• 🎭 #ивенты@{CHANNEL_USERNAME} — Tabačka, Kino Úsmev, бесплатные музеи Европы\n"
+        f"• 💼 #работа@{CHANNEL_USERNAME} — студенческие бригады в Кошице, контракт Dohoda\n"
+        f"• 🌍 #туризм@{CHANNEL_USERNAME} — автобусы FlixBus, поезда RegioJet, авиабилеты\n"
+        f"• 💻 #софт@{CHANNEL_USERNAME} — лицензии JetBrains, GitHub Pack, Figma, ИИ\n"
+        f"• 🎓 #курсы@{CHANNEL_USERNAME} — онлайн-курсы Coursera и промокоды Udemy\n"
+        f"• 🎮 #игры@{CHANNEL_USERNAME} — 100% бесплатные раздачи Steam и Epic Games\n"
+        f"• 🛍 #скидки@{CHANNEL_USERNAME} — подписки за 50% (Spotify, Apple), ASOS 10%\n\n"
+        "📱 <b>Или откройте удобный поиск прямо в Telegram:</b>\n"
+        "Нажмите на кнопку ниже, чтобы запустить Mini App с фильтрами по категориям! 👇"
     )
 
 def send_pinned_navigator():
-    text = (
-        "🎓 <b>Интерактивный каталог студенческих льгот и скидок</b>\n\n"
-        "Мы запустили удобное приложение прямо внутри Telegram!\n"
-        "Здесь собраны все актуальные скидки в Словакии (Кошице), раздачи игр в Steam/Epic Games, бесплатный софт и курсы.\n\n"
-        "⚡️ <i>Используйте фильтры по категориям и мгновенный поиск:</i>"
-    )
-
-    # Прикрепляем красивую кнопку запуска Mini App
+    text = get_navigator_text()
     reply_markup = {
         "inline_keyboard": [
             [
@@ -830,7 +555,6 @@ def send_pinned_navigator():
             ]
         ]
     }
-
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
@@ -960,6 +684,7 @@ def cleanup_expired_posts(active_posts):
 def export_deals_for_webapp(deal_to_msg_id, active_posts):
     items = []
     for d in EVERGREEN_DEALS:
+        clean_tag = get_canonical_tags(d)[0] if get_canonical_tags(d) else "софт"
         items.append({
             "id": d.get("id"),
             "title": d.get("title"),
@@ -972,27 +697,28 @@ def export_deals_for_webapp(deal_to_msg_id, active_posts):
             "description": d.get("description"),
             "how_to": d.get("how_to"),
             "link": d.get("link"),
-            "main_tag": d.get("main_tag", "скидки"),
-            "extra_tags": d.get("extra_tags", []),
+            "main_tag": clean_tag,
+            "extra_tags": get_canonical_tags(d),
             "message_id": deal_to_msg_id.get(d.get("id")),
             "is_evergreen": True
         })
 
     for post_id, info in active_posts.items():
+        clean_tag = TAG_MAP.get(info.get("main_tag", "скидки"), "скидки")
         items.append({
             "id": post_id,
             "title": info.get("title"),
             "category": info.get("category"),
             "badge": f"🔥 [{info.get('category', 'Скидка')}]",
-            "benefit": "Актуальная скидка / раздача",
+            "benefit": info.get("benefit", "Актуальная скидка / раздача"),
             "duration": "Временное предложение",
-            "region": "Онлайн / ЕС",
+            "region": "Онлайн / Кошице",
             "requirements": "Учётная запись платформы",
             "description": "",
             "how_to": "Перейдите по ссылке предложения.",
             "link": info.get("target_link") or info.get("source_link"),
-            "main_tag": info.get("main_tag", "горящее"),
-            "extra_tags": ["горящее"],
+            "main_tag": clean_tag,
+            "extra_tags": [clean_tag],
             "message_id": info.get("message_id"),
             "is_evergreen": False
         })
@@ -1042,28 +768,25 @@ def main():
                 if message_id:
                     deal_to_msg_id[deal_id] = message_id
 
-    # =========================================================================
-    # СТРОКИ ПОСЛЕ for deal in EVERGREEN_DEALS:
-    # =========================================================================
+    # Шаг 3: Сохранение номеров постов и публикация закреплённого навигатора с кнопкой
     save_json_file(evergreen_posts_file, deal_to_msg_id)
 
-    # Шаг 3: Публикация и закрепление текстового навигатора
     nav_file = "data/navigator_info.json"
     nav_info = load_json_file(nav_file) or {}
 
     if is_initial_fill or not nav_info.get("pinned"):
-        print("[Навигатор] Публикация закреплённого поста-навигатора...")
+        print("[Навигатор] Публикация закреплённого поста-навигатора с кнопкой...")
         nav_msg_id = send_pinned_navigator()
         if nav_msg_id:
             pin_telegram_message(nav_msg_id)
             save_json_file(nav_file, {"pinned": True, "message_id": nav_msg_id})
 
-    # Шаг 4: Выгрузка всех доступных новостей из КАЖДОГО источника
+    # Шаг 4: Выгрузка новостей из КАЖДОГО источника с отдельным лимитом
     per_feed_limit = 10 if is_initial_fill else 4
     dynamic_published = 0
     now = time.time()
 
-    print(f"[Динамика] Опрос всех источников. Лимит на источник: {per_feed_limit} постов.")
+    print(f"[Динамика] Опрос источников. Лимит на источник: {per_feed_limit} постов.")
 
     for feed_info in DYNAMIC_FEEDS:
         feed_cat = feed_info.get("category", "Новости")
@@ -1086,13 +809,6 @@ def main():
                     new_processed.add(post_id)
                     continue
 
-                # Игры: разрешены СТРОГО только Steam и Epic Games
-                if feed_info.get("type") == "game":
-                    comb_game = f"{title} {entry.get('link', '')}".lower()
-                    if not any(p in comb_game for p in ("steam", "epic", "epicgames")):
-                        new_processed.add(post_id)
-                        continue
-
                 raw_link = entry.get("link", "")
                 summary = entry.get("summary", "")
 
@@ -1113,7 +829,7 @@ def main():
                     continue
 
                 topic_tags = extract_topic_tags(title, summary)
-                extra_tags = ["горящее"]
+                extra_tags = []
                 for t in topic_tags:
                     if t != feed_info["main_tag"] and t not in extra_tags:
                         extra_tags.append(t)
@@ -1124,8 +840,8 @@ def main():
                     "category": feed_info["category"],
                     "badge": feed_info["badge"],
                     "main_tag": feed_info["main_tag"],
-                    "benefit": feed_info["default_benefit"],
-                    "duration": feed_info["default_duration"],
+                    "benefit": entry.get("benefit") or feed_info["default_benefit"],
+                    "duration": entry.get("duration") or feed_info["default_duration"],
                     "region": feed_info["default_region"],
                     "requirements": "Учётная запись платформы / студенческий",
                     "description": clean_summary_text(summary),
@@ -1147,6 +863,7 @@ def main():
                             "title": title,
                             "category": feed_info["category"],
                             "main_tag": feed_info["main_tag"],
+                            "benefit": card["benefit"],
                             "target_link": final_url,
                             "source_link": raw_link,
                             "type": feed_info.get("type", "promo"),
