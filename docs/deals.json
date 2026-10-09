@@ -52,7 +52,7 @@
     "requirements": "Карта студента ISIC соответствующего университета",
     "description": "Министерство образования Словакии субсидирует горячее питание для студентов. В университетских столовых Кошице полноценный комплексный обед стоит от €2 до €3.50.",
     "how_to": "1. Пополните баланс питания через портал jedalen.tuke.sk или в кассе столовой.\n2. Приложите карту ISIC на раздаче.",
-    "link": "https://jedalen.tuke.sk/jedalny-listok",
+    "link": "https://jedalen.tuke.sk/",
     "main_tag": "кошице",
     "extra_tags": [
       "словакия",
@@ -94,7 +94,7 @@
     "requirements": "Справка об учёбе (Potvrdenie o návšteve školy) и возраст до 26 лет",
     "description": "Специальный тип трудового договора для студентов (Dohoda). Позволяет легально подрабатывать до 20 часов в неделю. При подаче заявления на налоговое исключение (Odvodová úľava) с первых €200 заработка в месяц не удерживаются страховые взносы.",
     "how_to": "Ищите вакансии с пометкой «Brigáda» на официальном словацком портале Profesia.sk в разделе Košice.",
-    "link": "https://www.profesia.sk/praca/kosice/",
+    "link": "https://www.profesia.sk/praca/kosice/brigady/",
     "main_tag": "работа",
     "extra_tags": [
       "словакия",
@@ -199,7 +199,7 @@
     "requirements": "Студенческая университетская почта или карта ISIC",
     "description": "Полный пакет профессиональных сред разработки от JetBrains для программистов и студентов IT-специальностей без функциональных ограничений.",
     "how_to": "1. Откройте страницу JetBrains for Students.\n2. Подайте заявку, указав университетскую почту.\n3. Получите активацию в профиле JetBrains Account.",
-    "link": "https://www.jetbrains.com/academy/student-pack/#students",
+    "link": "https://www.jetbrains.com/community/education/#students",
     "main_tag": "dev",
     "extra_tags": [
       "программирование",
@@ -367,7 +367,7 @@
     "requirements": "Верификация через SheerID",
     "description": "Официальный студенческий тариф Spotify. Вся музыка мира, подкасты для изучения языков, прослушивание офлайн без рекламы.",
     "how_to": "Перейдите на страницу Spotify Student, войдите в аккаунт и пройдите валидацию учебного заведения.",
-    "link": "https://www.spotify.com/us/student/",
+    "link": "https://www.spotify.com/student/",
     "main_tag": "подписки",
     "extra_tags": [
       "музыка",
@@ -1073,6 +1073,158 @@
       "горящее"
     ],
     "message_id": 578,
+    "is_evergreen": false
+  },
+  {
+    "id": "3785",
+    "title": "RIDE 6 Welcome Bikes Pack Steam Key Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/ride-6-welcome-bikes-pack-steam-key-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 579,
+    "is_evergreen": false
+  },
+  {
+    "id": "3719",
+    "title": "Fantasy Grounds Dragons NPC Dice Pack Volume 1 Steam Key Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/fantasy-grounds-dragons-npc-dice-pack-volume-1-steam-key-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 580,
+    "is_evergreen": false
+  },
+  {
+    "id": "3718",
+    "title": "Deadswitch Combat Vehicle Bundle Steam Key Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/deadswitch-combat-vehicle-bundle-steam-key-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 581,
+    "is_evergreen": false
+  },
+  {
+    "id": "3716",
+    "title": "Dwarven Realms (Steam) Key Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/dwarven-realms-steam-key-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 582,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wvquhl",
+    "title": "Weekly Discussion Thread | Oct 02, 2026",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/r/FreeGamesOnSteam/comments/1wvquhl/weekly_discussion_thread_oct_02_2026/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 583,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wuhr8b",
+    "title": "BAFF E",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://givee.club/en/event/1454",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 584,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wu3odf",
+    "title": "Endor Awakens: Roguelite DRPG",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/3594170/Endor_Awakens_Roguelite_DRPG/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 585,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wtl7cu",
+    "title": "JAYWALK: An Endless Arcade Hopper Game",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/4319430/JAYWALK_An_Endless_Arcade_Hopper_Game/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 586,
     "is_evergreen": false
   }
 ]
