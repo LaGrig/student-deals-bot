@@ -104,8 +104,8 @@
     "region": "🇪🇺 Словакия и Центральная Европа",
     "requirements": "Карта ISIC",
     "description": "Путешествия из Кошице в Прагу, Вену, Будапешт, Краков или Братиславу на автобусах и поездах со студенческой скидкой по карте ISIC.",
-    "how_to": "При поиске билетов на сайте RegioJet выберите тариф «Študent (ISIC)». Для FlixBus активируйте купон через приложение ISIC Slovakia.",
-    "link": "https://www.regiojet.sk/zlavy-a-tarify",
+    "how_to": "При поиске билетов на сайте RegioJet выберите тариф «Študent (ISIC)». Для FlixBus и RegioJet оформляйте студенческий билет на официальных сайтах перевозчиков.",
+    "link": "https://www.flixbus.sk/sluzby/studentske-zlavy",
     "main_tag": "поездки",
     "extra_tags": [
       "поездки"
@@ -423,11 +423,11 @@
     "category": "подписки",
     "badge": "🛍 [Подписки: Alza Student]",
     "benefit": "Скидки до 30% на технику, электронику и бесплатная доставка",
-    "duration": "На весь период обучения в вузе",
+    "duration": "В течение срока действия карты",
     "region": "🇸🇰 Словакия",
-    "requirements": "Студенческий статус (студенческая почта, ISIC или справка из деканата)",
-    "description": "Официальная студенческая программа Alza в Словакии (Alza pre študentov). Студентам доступны постоянные ценовые скидки на ноутбуки, комплектующие, канцелярию и бесплатная доставка в отделения и AlzaBox.",
-    "how_to": "1. Войдите в личный кабинет на alza.sk в раздел alza.sk/student.\n2. Подтвердите статус студента (по номеру карты ISIC или справке из вуза).\n3. Получайте автоматические клубные скидки в корзине.",
+    "requirements": "Действующая карта ISIC",
+    "description": "Карта ISIC в Словакии дает сотни скидок: от покупки билетов в кино до скидок на электронику в Nay / Datart, фастфуд (McDonalds, Subway) и книжные магазины Martinus.",
+    "how_to": "1. Войдите в личный кабинет на alza.sk в раздел alza.sk/student.\n2. Подтвердите статус студента (по номеру карты ISIC или справке из деканата).\n3. Получайте автоматические клубные скидки в корзине.",
     "link": "https://www.alza.sk/student",
     "main_tag": "подписки",
     "extra_tags": [
@@ -624,6 +624,101 @@
       "игры"
     ],
     "message_id": 638,
+    "is_evergreen": false
+  },
+  {
+    "id": "3716",
+    "title": "Dwarven Realms (Steam) Key Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $9.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/dwarven-realms-steam-key-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 639,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1tq14g0",
+    "title": "Certified Online Fraud Prevention Specialist (COFPS) training",
+    "category": "курсы",
+    "badge": "🎓 [Курсы]",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://academy.hackandfix.com/courses-archive/certified-online-fraud-prevention-specialist/",
+    "main_tag": "курсы",
+    "extra_tags": [
+      "курсы"
+    ],
+    "message_id": 640,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1toyhp8",
+    "title": "is udemy page working for you on web today?",
+    "category": "курсы",
+    "badge": "🎓 [Курсы]",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/r/udemyfreebies/comments/1toyhp8/is_udemy_page_working_for_you_on_web_today/",
+    "main_tag": "курсы",
+    "extra_tags": [
+      "курсы"
+    ],
+    "message_id": 641,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1pwfqhp",
+    "title": "Tips for Preparing for the PSPO II Certification + Free Practice Exams Resource",
+    "category": "курсы",
+    "badge": "🎓 [Курсы]",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.udemy.com/course/pspo-ii-practice-exams-fast-track-to-success-pspo-2/?couponCode=AC6BF702042D04AEB11B",
+    "main_tag": "курсы",
+    "extra_tags": [
+      "курсы"
+    ],
+    "message_id": 642,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1lseh0y",
+    "title": "Docker, Kubernetes and Azure container services course",
+    "category": "курсы",
+    "badge": "🎓 [Курсы]",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.shorturl.at/r6AA2",
+    "main_tag": "курсы",
+    "extra_tags": [
+      "курсы"
+    ],
+    "message_id": 643,
     "is_evergreen": false
   }
 ]
