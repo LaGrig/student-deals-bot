@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ISIC Hacks — Студенческий гид</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg: var(--tg-theme-bg-color, #0f172a);
+      --card-bg: var(--tg-theme-secondary-bg-color, #1e293b);
+      --text: var(--tg-theme-text-color, #f8fafc);
+      --hint: var(--tg-theme-hint-color, #94a3b8);
+      --btn: var(--tg-theme-button-color, #2563eb);
+      --btn-text: var(--tg-theme-button-text-color, #ffffff);
+      --link: var(--tg-theme-link-color, #38bdf8);
+      --border: rgba(255, 255, 255, 0.08);
+      --green: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 12px;
+      padding-bottom: 40px;
+      min-height: 100vh;
+    }
+
+    header { margin-bottom: 12px; }
+
+    .app-title {
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .app-subtitle {
+      font-size: 13px;
+      color: var(--hint);
+      margin-bottom: 12px;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 38px 10px 14px;
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus { border-color: var(--btn); }
+
+    .clear-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--hint);
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+    }
+
+    .categories-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+    }
+    .categories-scroll::-webkit-scrollbar { display: none; }
+
+    .pill {
+      flex-shrink: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--hint);
+      padding: 7px 13px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pill.active {
+      background: var(--btn);
+      color: var(--btn-text);
+      border-color: var(--btn);
+    }
+
+    .stats-bar {
+      font-size: 12px;
+      color: var(--hint);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .deals-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .deal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.15s ease;
+    }
+    .deal-card:active { transform: scale(0.99); }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+
+    .badge-tag {
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(37, 99, 235, 0.15);
+      color: var(--link);
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .region-tag {
+      font-size: 11px;
+      color: var(--hint);
+    }
+
+    .deal-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .benefit-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .deal-desc {
+      font-size: 13px;
+      color: var(--hint);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .details-toggle {
+      font-size: 12px;
+      color: var(--link);
+      text-decoration: underline;
+      cursor: pointer;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .extra-details {
+      display: none;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .extra-details p { margin-bottom: 6px; }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-action {
+      flex: 1;
+      background: var(--btn);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      flex: 0 0 auto;
+      padding: 9px 12px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 16px;
+      color: var(--hint);
+    }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="app-title">🎓 ISIC Hacks & Скидки</div>
+    <div class="app-subtitle">Официальные льготы, софт и раздачи для студентов</div>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" class="search-input" placeholder="Поиск (Steam, ŽSSK, Notion, Кошице)...">
+      <button id="clearBtn" class="clear-btn">✕</button>
+    </div>
+
+    <div class="categories-scroll" id="categoriesBar">
+      <div class="pill active" data-cat="all">⚡️ Все</div>
+      <div class="pill" data-cat="словакия">🇸🇰 Словакия</div>
+      <div class="pill" data-cat="кошице">📍 Кошице</div>
+      <div class="pill" data-cat="транспорт">🚆 Транспорт</div>
+      <div class="pill" data-cat="игры">🎮 Игры</div>
+      <div class="pill" data-cat="работа">💼 Работа</div>
+      <div class="pill" data-cat="dev">💻 Dev & ИИ</div>
+      <div class="pill" data-cat="курсы">🎓 Курсы</div>
+      <div class="pill" data-cat="дизайн">🎨 Дизайн</div>
+      <div class="pill" data-cat="подписки">🎧 Подписки</div>
+      <div class="pill" data-cat="одежда">👟 Одежда</div>
+      <div class="pill" data-cat="горящее">🔥 Горящее</div>
+    </div>
+
+    <div class="stats-bar">
+      <span id="dealsCount">Загрузка предложений...</span>
+      <span>Канал: @discounts4students</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="deals-list" id="dealsContainer"></div>
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-icon">🔍</div>
+      <p>Ничего не найдено. Попробуйте другой запрос или категорию.</p>
+    </div>
+  </main>
+
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    let allDeals = [];
+    let currentCategory = 'all';
+
+    const container = document.getElementById('dealsContainer');
+    const emptyState = document.getElementById('emptyState');
+    const searchInput = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('clearBtn');
+    const categoriesBar = document.getElementById('categoriesBar');
+    const dealsCount = document.getElementById('dealsCount');
+
+    async function loadDeals() {
+      try {
+        const resp = await fetch('./deals.json?v=' + Date.now());
+        if (resp.ok) {
+          allDeals = await resp.json();
+          render();
+        } else {
+          showFallback();
+        }
+      } catch (e) {
+        showFallback();
+      }
+    }
+
+    function showFallback() {
+      dealsCount.innerText = 'Загрузка каталога...';
+    }
+
+    function render() {
+      const q = searchInput.value.toLowerCase().trim();
+      clearBtn.style.display = q ? 'block' : 'none';
+
+      const filtered = allDeals.filter(d => {
+        const matchesCat = currentCategory === 'all' || 
+          (d.main_tag && d.main_tag.toLowerCase() === currentCategory) ||
+          (d.extra_tags && d.extra_tags.map(t => t.toLowerCase()).includes(currentCategory));
+
+        const text = `${d.title} ${d.description || ''} ${d.category || ''} ${d.region || ''}`.toLowerCase();
+        const matchesQuery = !q || text.includes(q);
+
+        return matchesCat && matchesQuery;
+      });
+
+      dealsCount.innerText = `Предложений: ${filtered.length}`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      container.innerHTML = filtered.map((d, index) => {
+        const channelLink = d.message_id ? `https://t.me/discounts4students/${d.message_id}` : null;
+        return `
+          <div class="deal-card">
+            <div class="card-header">
+              <span class="badge-tag">${d.badge || '🎓 Льгота'}</span>
+              <span class="region-tag">${d.region || ''}</span>
+            </div>
+            <div class="deal-title">${d.title}</div>
+            <div class="benefit-row">
+              <span>💰</span>
+              <span>${d.benefit || 'Выгодные условия'}</span>
+            </div>
+            ${d.description ? `<div class="deal-desc">${d.description}</div>` : ''}
+
+            <span class="details-toggle" onclick="toggleDetails(${index})">Инструкция и условия ▼</span>
+            <div class="extra-details" id="details-${index}">
+              ${d.requirements ? `<p><b>Требования:</b> ${d.requirements}</p>` : ''}
+              ${d.how_to ? `<p><b>Как получить:</b> ${d.how_to}</p>` : ''}
+              ${d.duration ? `<p><b>Срок действия:</b> ${d.duration}</p>` : ''}
+            </div>
+
+            <div class="card-actions">
+              <button class="btn-action" onclick="openDealLink('${d.link}')">
+                🔗 Забрать
+              </button>
+              ${channelLink ? `
+                <button class="btn-action btn-secondary" onclick="openChannelPost('${channelLink}')">
+                  💬 Пост
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleDetails(index) {
+      const el = document.getElementById(`details-${index}`);
+      if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function openDealLink(url) {
+      if (tg && tg.openLink) {
+        tg.openLink(url);
+      } else {
+        window.open(url, '_blank');
+      }
+    }
+
+    function openChannelPost(url) {
+      if (tg && tg.openTelegramLink) {
+        tg.openTelegramLink(url);
+      } else {
+        window.open(url, '_blank');
+      }
+    }
+
+    categoriesBar.addEventListener('click', (e) => {
+      const pill = e.target.closest('.pill');
+      if (!pill) return;
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentCategory = pill.getAttribute('data-cat');
+      render();
+    });
+
+    searchInput.addEventListener('input', render);
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      render();
+      searchInput.focus();
+    });
+
+    loadDeals();
+  </script>
+</body>
+</html>
