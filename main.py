@@ -1267,10 +1267,9 @@ def main():
                     new_processed.add(post_id)
                     continue
 
-                # Кросс-дедупликация: исключаем повторные публикации одной игры из разных источников
-                norm_t = normalize_title(title)
-                if norm_t in seen_titles:
-                    print(f"[Дедупликация] Пропуск повтора по названию: '{title}'")
+                # 1. Фильтр информационного мусора, вопросов и жалоб (типа "is udemy working today?")
+                if "?" in title or any(w in title.lower() for w in ("working for you", "anyone else", "problem", "question", "is down", "how to")):
+                    print(f"[Фильтр обсуждений] Пропуск вопроса/жалобы: '{title}'")
                     new_processed.add(post_id)
                     continue
 
@@ -1285,6 +1284,19 @@ def main():
                     continue
 
                 direct_link = extract_direct_link(summary, raw_link) if "reddit.com" in raw_link else raw_link
+
+                # 2. Если пост из Reddit ведёт обратно на Reddit (нет внешней ссылки на акцию) — пропускаем!
+                if "reddit.com" in direct_link or "redd.it" in direct_link:
+                    print(f"[Reddit] Пропуск поста без внешней ссылки: '{title}'")
+                    new_processed.add(post_id)
+                    continue
+
+                # 3. Для категории Курсы ссылка ОБЯЗАТЕЛЬНО должна вести на образовательную платформу
+                if feed_info.get("category") == "Курсы" and not any(dom in direct_link for dom in ("udemy.com", "coursera.org", "edx.org")):
+                    print(f"[Курсы] Пропуск поста без ссылки на платформу обучения: '{title}'")
+                    new_processed.add(post_id)
+                    continue
+
                 status, final_url, is_fallback = validate_link(direct_link, fallback_url=raw_link)
 
                 if status == "DROP":
