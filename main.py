@@ -493,6 +493,48 @@ DYNAMIC_FEEDS = [
         "default_region": "Евросоюз",
         "how_to_tip": "Проверьте условия акции на сайте продавца перед покупкой.",
         "max_ttl_seconds": 259200
+    },
+    # 8. Живая афиша и молодежные события в Кошице (GoOut Košice)
+    {
+        "url": "https://goout.net/sk/kosice/akcie/lezfhdmkk/",
+        "format": "goout_html",
+        "type": "event",
+        "category": "Ивенты",
+        "badge": "🎭 [Ивенты: Кошице]",
+        "main_tag": "ивенты",
+        "default_benefit": "Студенческие билеты / Вход свободный",
+        "default_duration": "Афиша недели в Кошице",
+        "default_region": "🇸🇰 Кошице (Tabačka, Kulturpark, Úsmev)",
+        "how_to_tip": "Ознакомьтесь с программой и приобретайте билеты по студенческому тарифу на входе или онлайн.",
+        "max_ttl_seconds": 604800
+    },
+    # 9. Городские анонсы и фестивали Кошице (SlovakInfo)
+    {
+        "url": "https://slovakinfo.sk/afisha-koshicze/",
+        "format": "slovakinfo_afisha",
+        "type": "event",
+        "category": "Ивенты",
+        "badge": "📍 [Кошице: Афиша]",
+        "main_tag": "ивенты",
+        "default_benefit": "Бесплатные фестивали, ярмарки и выставки",
+        "default_duration": "Еженедельный дайджест",
+        "default_region": "🇸🇰 Кошице",
+        "how_to_tip": "Смотрите полную программу недели и время начала на официальной странице анонса.",
+        "max_ttl_seconds": 604800
+    },
+    # 10. Горящие скидки на еду и пиццу в Кошице до 15€ (Zľavomat Košice)
+    {
+        "url": "https://www.zlavomat.sk/kosice/restauracie-a-bary?filtre[okolie]=24008|20|0|0&filtre[pocet-osob]=1&list=1&radenia=najlacnejsie",
+        "format": "zlavomat_html",
+        "type": "promo",
+        "category": "Вкусное",
+        "badge": "🍕 [Вкусное: Кошице]",
+        "main_tag": "вкусное",
+        "default_benefit": "Обед или пицца со скидкой (до 15€)",
+        "default_duration": "Ограниченное количество купонов",
+        "default_region": "🇸🇰 Кошице",
+        "how_to_tip": "Приобретите купон со скидкой онлайн и покажите его при заказе в заведении.",
+        "max_ttl_seconds": 604800
     }
 ]
 
@@ -803,7 +845,141 @@ def fetch_feed_entries(feed_info):
                 return entries
         except Exception as e:
             print(f"Ошибка загрузки Epic Games API: {e}")
+        # 4. Парсер GoOut Košice (живая афиша концертов, кино и фестивалей)
+    if feed_format == "goout_html":
+        try:
+            resp = requests.get(url, timeout=10, headers=headers)
+            if resp.status_code == 200:
+                from bs4 import BeautifulSoup
+                soup = BeautifulSoup(resp.content, "html.parser")
+                entries = []
+                cards = soup.find_all("div", class_=re.compile(r"item|event|card", re.I))
+                if not cards:
+                    cards = soup.find_all("a", href=re.compile(r"/sk/.*-kosice/|/sk/akcie/"))
+
+                seen_event_titles = set()
+                for card in cards[:30]:
+                    title_elem = card.find(["h2", "h3", "h4", "strong", "span"])
+                    title = title_elem.get_text(strip=True) if title_elem else card.get_text(strip=True)
+                    if not title or len(title) < 5 or len(title) > 90:
+                        continue
+                    if title in seen_event_titles:
+                        continue
+
+                    link = card.get("href") if card.name == "a" else None
+                    if not link:
+                        a_tag = card.find("a")
+                        link = a_tag.get("href") if a_tag else None
+
+                    if not link or "javascript" in link:
+                        continue
+                    if not link.startswith("http"):
+                        link = "https://goout.net" + link
+
+                    # Отсекаем служебные страницы GoOut
+                    if any(skip in link for skip in ("/vstupenky/", "/registracia/", "/prihlasenie/")):
+                        continue
+
+                    seen_event_titles.add(title)
+                    entries.append({
+                        "id": f"goout_{re.sub(r'[^a-zA-Z0-9]', '', title)[:25]}",
+                        "title": title,
+                        "link": link,
+                        "summary": f"Событие в Кошице на площадках Tabačka, Kulturpark или Kino Úsmev. Билеты и расписание на GoOut.",
+                        "benefit": "Студенческие билеты / Вход свободный"
+                    })
+                return entries[:10]
+        except Exception as e:
+            print(f"Ошибка парсинга GoOut: {e}")
+        # 6. Парсер Zľavomat Košice (скидки на еду и пиццу до 15€)
+    if feed_format == "zlavomat_html":
+        try:
+            resp = requests.get(url, timeout=10, headers=headers)
+            if resp.status_code == 200:
+                from bs4 import BeautifulSoup
+                soup = BeautifulSoup(resp.content, "html.parser")
+                entries = []
+                cards = soup.find_all("div", class_=re.compile(r"deal|card|item", re.I)) or soup.find_all("a", href=re.compile(r"/akcia/\d+"))
+
+                for card in cards[:30]:
+                    a_tag = card if card.name == "a" else card.find("a", href=re.compile(r"/akcia/\d+"))
+                    if not a_tag:
+                        continue
+                    link = a_tag.get("href", "")
+                    if not link.startswith("http"):
+                        link = "https://www.zlavomat.sk" + link
+
+                    title_el = card.find(["h2", "h3", "h4", "strong", "span"])
+                    title = title_el.get_text(strip=True) if title_el else a_tag.get_text(strip=True)
+                    if not title or len(title) < 6:
+                        continue
+
+                    # Проверяем цену предложения
+                    text_all = card.get_text(" ", strip=True)
+                    price_match = re.search(r'(\d+[\.,]\d+)\s*€|€\s*(\d+[\.,]\d+)', text_all)
+                    price_val = 0.0
+                    if price_match:
+                        price_str = (price_match.group(1) or price_match.group(2)).replace(",", ".")
+                        try:
+                            price_val = float(price_str)
+                        except ValueError:
+                            pass
+
+                    # СТРОГИЙ СТУДЕНЧЕСКИЙ ФИЛЬТР: ТОЛЬКО ПРЕДЛОЖЕНИЯ ДО 15 ЕВРО!
+                    if price_val > 15.0:
+                        continue
+
+                    benefit_str = f"От €{price_val:.2f} по акции" if price_val > 0 else "Скидка на меню до 40–50%"
+
+                    entries.append({
+                        "id": f"zlavomat_{re.sub(r'[^a-zA-Z0-9]', '', link)[-15:]}",
+                        "title": title[:80],
+                        "link": link,
+                        "summary": "Выгодное предложение в ресторанах и кафе Кошице. Блюда и комбо по специальной цене.",
+                        "benefit": benefit_str
+                    })
+                return entries[:4]
+        except Exception as e:
+            print(f"Ошибка парсинга Zlavomat: {e}")
         return []
+    return []
+
+    # 5. Парсер SlovakInfo (еженедельная афиша событий Кошице)
+    if feed_format == "slovakinfo_afisha":
+        try:
+            resp = requests.get(url, timeout=10, headers=headers)
+            if resp.status_code == 200:
+                from bs4 import BeautifulSoup
+                soup = BeautifulSoup(resp.content, "html.parser")
+                entries = []
+                articles = soup.find_all("article") or soup.find_all("div", class_=re.compile(r"post|entry", re.I))
+
+                for art in articles[:10]:
+                    title_el = art.find(["h2", "h3", "h4", "a"])
+                    if not title_el:
+                        continue
+                    title = title_el.get_text(strip=True)
+                    if not title or "афиша" not in title.lower() and "кошице" not in title.lower():
+                        continue
+
+                    a_tag = art.find("a") if art.name != "a" else art
+                    link = a_tag.get("href") if a_tag else url
+
+                    summary_el = art.find(["p", "div", "span"], class_=re.compile(r"desc|summary|excerpt", re.I))
+                    summary = summary_el.get_text(strip=True) if summary_el else "Главные городские события, фестивали и выставки в Кошице."
+
+                    entries.append({
+                        "id": f"slovakinfo_{re.sub(r'[^a-zA-Z0-9]', '', title)[:25]}",
+                        "title": title,
+                        "link": link,
+                        "summary": summary[:250],
+                        "benefit": "Дайджест бесплатных и молодежных событий недели"
+                    })
+                return entries[:4]
+        except Exception as e:
+            print(f"Ошибка парсинга SlovakInfo: {e}")
+        return []
+    return []
 
     # 2. GamerPower API: только Steam и Epic Games, отсекаем обычный Free-to-play
     if feed_format == "gamerpower_json":
