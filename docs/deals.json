@@ -48,7 +48,7 @@
     "requirements": "Карта ISIC дневной формы обучения",
     "description": "Государство в Словакии субсидирует питание студентов. В студенческих столовых (študentské jedálne на Jedlíkova, Němcovej, Medická) по карте ISIC можно полноценно пообедать (первое, второе и напиток) всего за пару евро.",
     "how_to": "Пополните свой счет питания через систему университета (MAIS / AiS2) и прикладывайте ISIC на кассе столовой.",
-    "link": "https://jedalen.tuke.sk/jedalny-listok",
+    "link": "https://jedalen.tuke.sk/",
     "main_tag": "вкусное",
     "extra_tags": [
       "вкусное"
@@ -124,7 +124,7 @@
     "requirements": "Студенческий билет / ISIC европейского университета",
     "description": "Студенты европейских вузов имеют право на бесплатный или льготный вход в главные музеи Европы: Лувр в Париже, Бельведер в Вене, галерею Уффици во Флоренции и многие другие.",
     "how_to": "При бронировании онлайн выбирайте категорию «EU Student under 26» или покажите ISIC на кассе.",
-    "link": "https://youth.europa.eu/home_en",
+    "link": "https://youth.europa.eu/",
     "main_tag": "туризм",
     "extra_tags": [
       "туризм"
@@ -181,7 +181,7 @@
     "requirements": "Университетская почта (.edu / .sk) или карта ISIC",
     "description": "Полный профессиональный пакет сред разработки от JetBrains: IntelliJ IDEA Ultimate, PyCharm Pro, WebStorm, CLion, Rider, DataGrip и другие бесплатно для студентов.",
     "how_to": "Перейдите на страницу студенческой программы JetBrains и зарегистрируйтесь, указав свой университетский email (@tuke.sk, @upjs.sk) или загрузив фото ISIC.",
-    "link": "https://www.jetbrains.com/academy/student-pack/#students",
+    "link": "https://www.jetbrains.com/community/education/#students",
     "main_tag": "софт",
     "extra_tags": [
       "софт"
@@ -333,7 +333,7 @@
     "requirements": "Студент дневной формы обучения",
     "description": "Миллионы треков без рекламы, прослушивание офлайн и высокое качество звука по сниженной студенческой цене.",
     "how_to": "Оформите подписку на сайте Spotify Student, пройдя быструю проверку через сервис SheerID.",
-    "link": "https://www.spotify.com/sk-sk/student/",
+    "link": "https://www.spotify.com/sk/student/",
     "main_tag": "подписки",
     "extra_tags": [
       "подписки"
@@ -352,7 +352,7 @@
     "requirements": "Верификация через UNiDAYS",
     "description": "Уникальное предложение от Apple: при оформлении студенческой подписки Apple Music вы бесплатно получаете доступ к стримингу Apple TV+ без доплаты.",
     "how_to": "В приложении Apple Music или на сайте выберите план «Студенческий» и подтвердите статус через сервис UNiDAYS.",
-    "link": "https://www.apple.com/apple-music/",
+    "link": "https://www.apple.com/sk/apple-music/",
     "main_tag": "подписки",
     "extra_tags": [
       "подписки"
@@ -454,5 +454,176 @@
     ],
     "message_id": 624,
     "is_evergreen": true
+  },
+  {
+    "id": "egs_af6b823b8698465f9aedc3bddf2e8686",
+    "title": "TerraScape",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо €15.29)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/f229ed53ddba40788e0ab62978e9eaf9",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 630,
+    "is_evergreen": false
+  },
+  {
+    "id": "3807",
+    "title": "TerraScape (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $14.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/terrascape-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 631,
+    "is_evergreen": false
+  },
+  {
+    "id": "3806",
+    "title": "Out of Sight (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $9.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/out-of-sight-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 632,
+    "is_evergreen": false
+  },
+  {
+    "id": "3805",
+    "title": "Gear.Club Unlimited 3 - Gear.Club Signature Pack Steam Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $4.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/gear-club-unlimited-3-gear-club-signature-pack-steam-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 633,
+    "is_evergreen": false
+  },
+  {
+    "id": "3804",
+    "title": "Spooky Cats Steam Key Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $2.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/spooky-cats-steam-key-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 634,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x1idkr",
+    "title": "Weekly Discussion Thread | Oct 09, 2026",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (Лицензия Steam)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://discord.com/invite/fHtVEf7",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 635,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x1huag",
+    "title": "Fly Over! 100KM! Mountains!",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (Лицензия Steam)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/3943750/Fly_Over_100KM_Mountains/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 636,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0yn7y",
+    "title": "Slavistan",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (Лицензия Steam)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://givee.club/en/event/1460",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 637,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0wcfc",
+    "title": "Pony Island",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (Лицензия Steam)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/405640/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 638,
+    "is_evergreen": false
   }
 ]
