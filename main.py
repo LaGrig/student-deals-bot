@@ -59,6 +59,34 @@ EVERGREEN_DEALS = [
         'title': 'Студенческие обеды в Кошице по ISIC за €1.80–€2.50'
     },
     {
+        'benefit': 'Скидка 10% на все напитки по студенческому билету / ISIC',
+        'category': 'Вкусное',
+        'description': 'Кофейня Starbucks в ТЦ Aupark Košice предоставляет официальную студенческую скидку на весь кофе, сезонные напитки и выпечку при предъявлении студенческого билета.',
+        'duration': 'Круглый год',
+        'extra_tags': ['вкусное'],
+        'how_to': 'Предъявите студенческий билет или карту ISIC бариста на кассе перед оплатой заказа.',
+        'id': 'starbucks_student_ke',
+        'link': 'https://www.starbucks.sk/',
+        'main_tag': 'вкусное',
+        'region': '🇸🇰 Кошице (Aupark Košice, Námestie osloboditeľov 1)',
+        'requirements': 'Студенческий билет или карта ISIC',
+        'title': 'Скидка 10% на кофе и напитки в Starbucks Košice'
+    },
+    {
+        'benefit': 'Студенческое комбо и специальные цены на бургеры и кофе',
+        'category': 'Вкусное',
+        'description': 'McDonalds на Protifašistických bojovníkov и в ТЦ Optima/Aupark предлагает специальные комбо-цены для студентов (McMenu по льготному тарифу) при сканировании студенческого статуса.',
+        'duration': 'Постоянная программа',
+        'extra_tags': ['вкусное'],
+        'how_to': 'Сканируйте карту студента на кассе или выберите студенческий купон в киоске самообслуживания.',
+        'id': 'mcdonalds_student_ke',
+        'link': 'https://www.mcdonalds.sk/menu/',
+        'main_tag': 'вкусное',
+        'region': '🇸🇰 Кошице (Aupark, Optima, Hlavná)',
+        'requirements': 'Студенческий билет',
+        'title': 'Студенческие комбо и скидки в McDonald\'s Košice'
+    },
+    {
         'benefit': 'Скидки до 40% на концерты, фестивали и кино',
         'category': 'Ивенты и Досуг',
         'description': 'Главные культурные пространства Кошице — Tabačka Kulturfabrik и кинотеатр Kino Úsmev — дают постоянные скидки на киносеансы, лекции, спектакли и вечеринки для студентов.',
@@ -760,20 +788,6 @@ def fetch_feed_entries(feed_info):
                     price_info = el.get("price", {}).get("totalPrice", {})
                     if is_free_now and price_info.get("discountPrice") == 0:
                         slug = el.get("productSlug") or el.get("urlSlug")
-                        if not slug:
-                            # Проверяем offerMappings / catalogNs / customAttributes
-                            mappings = el.get("offerMappings", []) or el.get("catalogNs", {}).get("mappings", [])
-                            for m in mappings:
-                                if m.get("pageSlug"):
-                                    slug = m.get("pageSlug")
-                                    break
-                            if not slug:
-                                for attr in el.get("customAttributes", []):
-                                    if attr.get("key") in ("com.epicgames.app.productSlug", "pageSlug"):
-                                        slug = attr.get("value")
-                                        break
-                        if slug and slug.endswith("/home"):
-                            slug = slug[:-5]
                         orig = price_info.get("originalPrice", 0) / 100
                         worth_str = f"€{orig:.2f}" if orig > 0 else "Бесплатно"
                         link = f"https://store.epicgames.com/p/{slug}" if slug else "https://store.epicgames.com/free-games"
@@ -835,6 +849,13 @@ def fetch_feed_entries(feed_info):
             for e in feed.entries[:25]:
                 title = getattr(e, "title", "")
 
+                # Строгий фильтр вопросов, жалоб и технического мусора
+                if "?" in title or any(w in title.lower() for w in (
+                    "working for you", "anyone else", "problem", "question", 
+                    "is down", "how to", "discussion", "megathread", "discord", "weekly thread"
+                )):
+                    continue
+
                 # Для Steam: отсекаем обсуждения, дискорд, F2P и посты без ссылки на игру
                 if feed_format == "steam_reddit":
                     t_low = title.lower()
@@ -852,6 +873,11 @@ def fetch_feed_entries(feed_info):
                         continue
                     # И ТОЛЬКО если Steam API подтверждает 100% скидку на платную игру
                     if not check_steam_game_is_free(direct):
+                        continue
+
+                # Для образовательных лент обязательно наличие прямой ссылки на курс
+                if "udemyfreebies" in url.lower():
+                    if not any(dom in direct for dom in ("udemy.com", "coursera.org", "edx.org")):
                         continue
 
                 entries.append({
@@ -880,6 +906,8 @@ CATEGORY_CONFIG = {
 
 # Строгая привязка всех постоянных программ (никаких ссылок на ISIC!)
 DEAL_PRIMARY_CATEGORY = {
+    "starbucks_student_ke": ("вкусное", "🍕 [Вкусное: Starbucks]"),
+    "mcdonalds_student_ke": ("вкусное", "🍕 [Вкусное: McDonald's]"),
     "sk_trains_free": ("поездки", "🚆 [Поездки: Поезда ŽSSK]"),
     "kosice_dpmk_transport": ("поездки", "🚆 [Поездки: Транспорт DPMK]"),
     "sk_isic_jedalne": ("вкусное", "🍕 [Вкусное: СтудСтоловые]"),
@@ -1314,6 +1342,14 @@ def main():
                     new_processed.add(post_id)
                     continue
 
+                # Двойной заслон от вопросов и мусора
+                if "?" in title or any(w in title.lower() for w in (
+                    "working for you", "anyone else", "problem", "question", 
+                    "is down", "how to", "discussion", "megathread", "discord"
+                )):
+                    new_processed.add(post_id)
+                    continue
+
                 # Кросс-дедупликация: исключаем повторные публикации одной игры из разных источников
                 norm_t = normalize_title(title)
                 if norm_t in seen_titles:
@@ -1332,6 +1368,17 @@ def main():
                     continue
 
                 direct_link = extract_direct_link(summary, raw_link) if "reddit.com" in raw_link else raw_link
+
+                # Не постим ссылки на Reddit
+                if "reddit.com" in direct_link or "redd.it" in direct_link:
+                    new_processed.add(post_id)
+                    continue
+
+                # Курсы обязаны вести на Udemy / Coursera
+                if feed_info.get("category") == "Курсы" and not any(dom in direct_link for dom in ("udemy.com", "coursera.org", "edx.org")):
+                    new_processed.add(post_id)
+                    continue
+
                 status, final_url, is_fallback = validate_link(direct_link, fallback_url=raw_link)
 
                 if status == "DROP":
