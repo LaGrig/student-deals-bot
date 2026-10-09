@@ -812,13 +812,32 @@ def get_navigator_text():
     )
 
 def send_pinned_navigator():
-    text = get_navigator_text()
+    text = (
+        "🎓 <b>Интерактивный каталог студенческих льгот и скидок</b>\n\n"
+        "Мы запустили удобное приложение прямо внутри Telegram!\n"
+        "Здесь собраны все актуальные скидки в Словакии (Кошице), раздачи игр в Steam/Epic Games, бесплатный софт и курсы.\n\n"
+        "⚡️ <i>Используйте фильтры по категориям и мгновенный поиск:</i>"
+    )
+
+    # Прикрепляем красивую кнопку запуска Mini App
+    reply_markup = {
+        "inline_keyboard": [
+            [
+                {
+                    "text": "📱 Открыть каталог скидок",
+                    "url": "https://t.me/discount4studentsbot/deals"
+                }
+            ]
+        ]
+    }
+
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text,
         "parse_mode": "HTML",
-        "disable_web_page_preview": True
+        "disable_web_page_preview": True,
+        "reply_markup": reply_markup
     }
 
     try:
