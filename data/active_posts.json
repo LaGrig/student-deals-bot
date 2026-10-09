@@ -416,5 +416,77 @@
     "type": "game",
     "posted_at": 1791543486.7748365,
     "max_ttl": 1791889086.7748365
+  },
+  "egs_cb733f3432db46bca94965b422c33ede": {
+    "message_id": 589,
+    "title": "Out of Sight",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо €13.99)",
+    "target_link": "https://store.epicgames.com/p/f350878fcb5242d6851cfe2fa1316e76",
+    "source_link": "https://store.epicgames.com/p/f350878fcb5242d6851cfe2fa1316e76",
+    "type": "game",
+    "posted_at": 1791546327.264224,
+    "max_ttl": 1792151127.264224
+  },
+  "egs_af6b823b8698465f9aedc3bddf2e8686": {
+    "message_id": 590,
+    "title": "TerraScape",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо €15.29)",
+    "target_link": "https://store.epicgames.com/p/f229ed53ddba40788e0ab62978e9eaf9",
+    "source_link": "https://store.epicgames.com/p/f229ed53ddba40788e0ab62978e9eaf9",
+    "type": "game",
+    "posted_at": 1791546327.264224,
+    "max_ttl": 1792151127.264224
+  },
+  "t3_1wt63mq": {
+    "message_id": 591,
+    "title": "Grid Tactics: Duel",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (Лицензия Steam)",
+    "target_link": "https://store.steampowered.com/app/3294170/Grid_Tactics_Duel/",
+    "source_link": "https://store.steampowered.com/app/3294170/Grid_Tactics_Duel/",
+    "type": "game",
+    "posted_at": 1791546327.264224,
+    "max_ttl": 1791891927.264224
+  },
+  "t3_1ws42dp": {
+    "message_id": 592,
+    "title": "Explosive Odds - Supporter Pack",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (Лицензия Steam)",
+    "target_link": "https://store.steampowered.com/app/4059370/Explosive_Odds__Supporter_Pack/",
+    "source_link": "https://store.steampowered.com/app/4059370/Explosive_Odds__Supporter_Pack/",
+    "type": "game",
+    "posted_at": 1791546327.264224,
+    "max_ttl": 1791891927.264224
+  },
+  "t3_1wnhuzi": {
+    "message_id": 593,
+    "title": "Police Stories",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (Лицензия Steam)",
+    "target_link": "https://givee.club/en/event/1448",
+    "source_link": "https://givee.club/en/event/1448",
+    "type": "game",
+    "posted_at": 1791546327.264224,
+    "max_ttl": 1791891927.264224
+  },
+  "t3_1wm58us": {
+    "message_id": 594,
+    "title": "Pirate Guy 2 New Land",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (Лицензия Steam)",
+    "target_link": "https://gleam.io/s4RdD/free-x2500-pirate-guy-2-new-land-steam-keys",
+    "source_link": "https://gleam.io/s4RdD/free-x2500-pirate-guy-2-new-land-steam-keys",
+    "type": "game",
+    "posted_at": 1791546327.264224,
+    "max_ttl": 1791891927.264224
   }
 }
