@@ -772,19 +772,63 @@ def fetch_feed_entries(feed_info):
         print(f"Ошибка загрузки RSS {url}: {err}")
     return []
 
-# Единая карта соответствия 8 компактным категориям
+CATEGORY_CONFIG = {
+    "вкусное": {"icon": "🍕", "name": "Вкусное"},
+    "поездки": {"icon": "🚆", "name": "Поездки"},
+    "туризм": {"icon": "🏕", "name": "Туризм"},
+    "ивенты": {"icon": "🎭", "name": "Ивенты"},
+    "кошице": {"icon": "📍", "name": "Кошице"},
+    "работа": {"icon": "💼", "name": "Работа"},
+    "софт": {"icon": "💻", "name": "IT & Софт"},
+    "курсы": {"icon": "🎓", "name": "Курсы"},
+    "игры": {"icon": "🎮", "name": "Игры"},
+    "подписки": {"icon": "🛍", "name": "Подписки"}
+}
+
+# Строгая привязка всех постоянных программ к 10 компактным категориям
+DEAL_PRIMARY_CATEGORY = {
+    "sk_trains_free": ("поездки", "🚆 [Поездки: Поезда ŽSSK]"),
+    "kosice_dpmk_transport": ("поездки", "🚆 [Поездки: Транспорт DPMK]"),
+    "sk_isic_jedalne": ("вкусное", "🍕 [Вкусное: СтудСтоловые]"),
+    "kosice_tabacka_usmev": ("ивенты", "🎭 [Ивенты: Tabačka & Кино]"),
+    "k13_kosice_culture": ("ивенты", "🎭 [Ивенты: Kulturpark & Опен-эйр]"),
+    "sk_student_brigady": ("работа", "💼 [Работа: Кошице]"),
+    "flixbus_regiojet_discounts": ("поездки", "🚆 [Поездки: Автобусы & Поезда]"),
+    "europe_isic_benefits": ("туризм", "🏕 [Туризм: Музеи Европы]"),
+    "lowcost_flights_kosice": ("поездки", "🚆 [Поездки: Лоукостеры]"),
+    "fusion_360_edu": ("софт", "💻 [IT & Софт: 3D CAD]"),
+    "jetbrains_all_products": ("софт", "💻 [IT & Софт: Dev]"),
+    "github_student_pack": ("софт", "💻 [IT & Софт: GitHub Pack]"),
+    "azure_students": ("софт", "💻 [IT & Софт: Azure Cloud]"),
+    "figma_education": ("софт", "💻 [IT & Софт: Дизайн]"),
+    "canva_pro_student": ("софт", "💻 [IT & Софт: Дизайн]"),
+    "notion_education": ("софт", "💻 [IT & Софт: Учёба]"),
+    "coursera_student": ("курсы", "🎓 [Курсы: Coursera]"),
+    "youtube_premium_student": ("подписки", "🛍 [Подписки: Видео]"),
+    "spotify_student": ("подписки", "🛍 [Подписки: Музыка]"),
+    "apple_music_tv": ("подписки", "🛍 [Подписки: Стриминг]"),
+    "asos_student_discount": ("подписки", "🛍 [Подписки: Одежда]"),
+    "epic_games_weekly": ("игры", "🎮 [Игры: Epic Games]"),
+    "steam_free_to_play": ("игры", "🎮 [Игры: Steam Каталог]"),
+    "isic_extra_hot_deals": ("подписки", "🛍 [Подписки: Alza Student]"),
+    "github_perks_hot_credits": ("софт", "💻 [IT & Софт: IT Кредиты]")
+}
+
 TAG_MAP = {
-    "кошице": "кошице",
-    "словакия": "кошице",
-    "транспорт": "кошице",
-    "поезда": "кошице",
-    "ивенты": "ивенты",
-    "культура": "ивенты",
-    "работа": "работа",
-    "стажировки": "работа",
+    "вкусное": "вкусное",
+    "столовая": "вкусное",
+    "еда": "вкусное",
+    "поездки": "поездки",
+    "транспорт": "поездки",
+    "поезда": "поездки",
     "туризм": "туризм",
     "путешествия": "туризм",
-    "авиа": "туризм",
+    "авиа": "поездки",
+    "ивенты": "ивенты",
+    "культура": "ивенты",
+    "кошице": "кошице",
+    "работа": "работа",
+    "стажировки": "работа",
     "софт": "софт",
     "dev": "софт",
     "cad": "софт",
@@ -793,27 +837,27 @@ TAG_MAP = {
     "ии": "софт",
     "курсы": "курсы",
     "игры": "игры",
-    "скидки": "скидки",
-    "подписки": "скидки",
-    "одежда": "скидки",
-    "горящее": "скидки"
+    "подписки": "подписки",
+    "скидки": "подписки",
+    "одежда": "подписки",
+    "горящее": "подписки"
 }
 
-def get_canonical_tags(deal):
-    raw_tags = [deal.get("main_tag")] + deal.get("extra_tags", [])
-    result = []
-    for t in raw_tags:
-        if not t:
-            continue
-        mapped = TAG_MAP.get(str(t).lower())
-        if mapped and mapped not in result:
-            result.append(mapped)
-    return result[:2] if result else ["скидки"]
+def get_deal_meta(deal):
+    deal_id = deal.get("id")
+    if deal_id in DEAL_PRIMARY_CATEGORY:
+        return DEAL_PRIMARY_CATEGORY[deal_id]
+
+    raw_tag = str(deal.get("main_tag", "подписки")).lower()
+    canonical_cat = TAG_MAP.get(raw_tag, "подписки")
+    cfg = CATEGORY_CONFIG.get(canonical_cat, {"icon": "🔥", "name": "Скидка"})
+    official_badge = deal.get("badge") or f"{cfg['icon']} [{cfg['name']}]"
+    return canonical_cat, official_badge
 
 def send_telegram_card(deal, is_fallback=False):
     title = escape_html(deal.get("title"))
-    category = escape_html(deal.get("category"))
-    badge = escape_html(deal.get("badge", f"🎓 [{category}]"))
+    canonical_cat, badge = get_deal_meta(deal)
+
     benefit = escape_html(deal.get("benefit"))
     duration = escape_html(deal.get("duration"))
     region = escape_html(deal.get("region"))
@@ -822,8 +866,7 @@ def send_telegram_card(deal, is_fallback=False):
     how_to = escape_html(deal.get("how_to", ""))
     link = deal.get("link")
 
-    clean_tags = get_canonical_tags(deal)
-    tags_string = " ".join(f"#{t}@{CHANNEL_USERNAME}" for t in clean_tags)
+    tags_string = f"#{canonical_cat}@{CHANNEL_USERNAME}"
 
     parts = [
         f"{badge} — <b>{title}</b>",
@@ -887,14 +930,16 @@ def get_navigator_text():
         "🎓 <b>Интерактивный каталог студенческих льгот и скидок</b>\n\n"
         "Мы собрали актуальные льготы в Кошице, бесплатные лицензии на софт, раздачи игр в Steam/Epic Games и полезные курсы.\n\n"
         "⚡️ <i>Нажмите на хештег темы для быстрого поиска по каналу:</i>\n"
-        f"• 📍 #кошице@{CHANNEL_USERNAME} — транспорт DPMK 50%, поезда ŽSSK, столовые, ISIC\n"
-        f"• 🎭 #ивенты@{CHANNEL_USERNAME} — Tabačka, Kino Úsmev, бесплатные музеи Европы\n"
+        f"• 🍕 #вкусное@{CHANNEL_USERNAME} — студенческие столовые TUKE/UPJŠ, обеды за €2, скидки на еду\n"
+        f"• 🚆 #поездки@{CHANNEL_USERNAME} — бесплатные поезда ŽSSK, DPMK 50%, FlixBus, лоукостеры\n"
+        f"• 🏕 #туризм@{CHANNEL_USERNAME} — Словацкий Рай, Татры, Спишский Град, музеи Европы\n"
+        f"• 🎭 #ивенты@{CHANNEL_USERNAME} — Tabačka, Kulturpark, городские фестивали, опен-эйры\n"
+        f"• 📍 #кошице@{CHANNEL_USERNAME} — студенческий кампус, общежития и жизнь в городе\n"
         f"• 💼 #работа@{CHANNEL_USERNAME} — студенческие бригады в Кошице, контракт Dohoda\n"
-        f"• 🌍 #туризм@{CHANNEL_USERNAME} — автобусы FlixBus, поезда RegioJet, авиабилеты\n"
         f"• 💻 #софт@{CHANNEL_USERNAME} — лицензии JetBrains, GitHub Pack, Figma, ИИ\n"
         f"• 🎓 #курсы@{CHANNEL_USERNAME} — онлайн-курсы Coursera и промокоды Udemy\n"
         f"• 🎮 #игры@{CHANNEL_USERNAME} — 100% бесплатные раздачи Steam и Epic Games\n"
-        f"• 🛍 #скидки@{CHANNEL_USERNAME} — подписки за 50% (Spotify, Apple), ASOS 10%\n\n"
+        f"• 🛍 #подписки@{CHANNEL_USERNAME} — скидки на Spotify, Apple, ASOS, Alza Student\n\n"
         "📱 <b>Или откройте удобный поиск прямо в Telegram:</b>\n"
         "Нажмите на кнопку ниже, чтобы запустить Mini App с фильтрами по категориям! 👇"
     )
@@ -1040,12 +1085,12 @@ def cleanup_expired_posts(active_posts):
 def export_deals_for_webapp(deal_to_msg_id, active_posts):
     items = []
     for d in EVERGREEN_DEALS:
-        clean_tag = get_canonical_tags(d)[0] if get_canonical_tags(d) else "софт"
+        canonical_cat, official_badge = get_deal_meta(d)
         items.append({
             "id": d.get("id"),
             "title": d.get("title"),
-            "category": d.get("category"),
-            "badge": d.get("badge", f"🎓 [{d.get('category')}]"),
+            "category": canonical_cat,
+            "badge": official_badge,
             "benefit": d.get("benefit"),
             "duration": d.get("duration"),
             "region": d.get("region"),
@@ -1053,19 +1098,19 @@ def export_deals_for_webapp(deal_to_msg_id, active_posts):
             "description": d.get("description"),
             "how_to": d.get("how_to"),
             "link": d.get("link"),
-            "main_tag": clean_tag,
-            "extra_tags": get_canonical_tags(d),
+            "main_tag": canonical_cat,
+            "extra_tags": [canonical_cat],
             "message_id": deal_to_msg_id.get(d.get("id")),
             "is_evergreen": True
         })
 
     for post_id, info in active_posts.items():
-        clean_tag = TAG_MAP.get(info.get("main_tag", "скидки"), "скидки")
+        canonical_cat, official_badge = get_deal_meta(info)
         items.append({
             "id": post_id,
             "title": info.get("title"),
-            "category": info.get("category"),
-            "badge": f"🔥 [{info.get('category', 'Скидка')}]",
+            "category": canonical_cat,
+            "badge": official_badge,
             "benefit": info.get("benefit", "Актуальная скидка / раздача"),
             "duration": "Временное предложение",
             "region": "Онлайн / Кошице",
@@ -1073,8 +1118,8 @@ def export_deals_for_webapp(deal_to_msg_id, active_posts):
             "description": "",
             "how_to": "Перейдите по ссылке предложения.",
             "link": info.get("target_link") or info.get("source_link"),
-            "main_tag": clean_tag,
-            "extra_tags": [clean_tag],
+            "main_tag": canonical_cat,
+            "extra_tags": [canonical_cat],
             "message_id": info.get("message_id"),
             "is_evergreen": False
         })
@@ -1083,6 +1128,21 @@ def export_deals_for_webapp(deal_to_msg_id, active_posts):
     with open("docs/deals.json", "w", encoding="utf-8") as f:
         json.dump(items, f, ensure_ascii=False, indent=2)
     print(f"[WebApp] Экспортировано {len(items)} предложений в docs/deals.json")
+
+def normalize_title(title):
+    t = title.lower()
+    t = re.sub(r'\[.*?\]|\(.*?\)', '', t)
+    t = re.sub(r'[^a-zA-Zа-яА-Я0-9\s]', ' ', t)
+    return ' '.join(t.split())
+
+def normalize_link(link):
+    if not link:
+        return ""
+    try:
+        p = urlparse(link)
+        return f"{p.netloc}{p.path}".rstrip("/").lower()
+    except Exception:
+        return link.strip().lower()
 
 def main():
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
@@ -1095,6 +1155,10 @@ def main():
 
     active_posts_raw = load_json_file(ACTIVE_POSTS_FILE)
     active_posts = active_posts_raw if isinstance(active_posts_raw, dict) else {}
+
+    # Набор для сквозной дедупликации по названию и прямой ссылке
+    seen_titles = set(normalize_title(p.get("title", "")) for p in active_posts.values() if p.get("title"))
+    seen_links = set(normalize_link(p.get("target_link", "")) for p in active_posts.values() if p.get("target_link"))
 
     is_initial_fill = len(processed_ids) == 0
     print(f"Запуск бота. Режим первичного наполнения: {is_initial_fill}")
@@ -1165,6 +1229,13 @@ def main():
                     new_processed.add(post_id)
                     continue
 
+                # Кросс-дедупликация: исключаем повторные публикации одной игры из разных источников
+                norm_t = normalize_title(title)
+                if norm_t in seen_titles:
+                    print(f"[Дедупликация] Пропуск повтора по названию: '{title}'")
+                    new_processed.add(post_id)
+                    continue
+
                 raw_link = entry.get("link", "")
                 summary = entry.get("summary", "")
 
@@ -1182,6 +1253,12 @@ def main():
                     new_processed.add(post_id)
                     continue
                 elif status == "RETRY":
+                    continue
+
+                norm_link = normalize_link(final_url)
+                if norm_link in seen_links:
+                    print(f"[Дедупликация] Пропуск повтора по ссылке: '{final_url}'")
+                    new_processed.add(post_id)
                     continue
 
                 topic_tags = extract_topic_tags(title, summary)
@@ -1209,6 +1286,8 @@ def main():
                 success, message_id = send_telegram_card(card, is_fallback=is_fallback)
                 if success:
                     new_processed.add(post_id)
+                    seen_titles.add(norm_t)
+                    seen_links.add(norm_link)
                     dynamic_published += 1
                     feed_count += 1
 
