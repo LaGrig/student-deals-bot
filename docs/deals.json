@@ -1,0 +1,1078 @@
+[
+  {
+    "id": "sk_trains_free",
+    "title": "Бесплатные поезда по Словакии для студентов (ŽSSK)",
+    "category": "Транспорт и Путешествия",
+    "badge": "🎓 [Транспорт и Путешествия]",
+    "benefit": "100% бесплатно во 2-м классе всех поездов ŽSSK",
+    "duration": "На весь период дневной формы обучения (до 26 лет)",
+    "region": "🇸🇰 Словакия (Кошице, Братислава, Татры)",
+    "requirements": "Студенческий билет с чипом ISIC (вузы TUKE, UPJŠ и др.)",
+    "description": "Легендарная льгота в Словакии: бесплатный проезд во всех поездах государственной железной дороги по всей стране. Поездки из Кошице в горы Высокие Татры, Братиславу или к границам не стоят ни цента.",
+    "how_to": "1. Оформите студенческий ISIC в вашем вузе (TUKE, UPJŠ).\n2. В кассе ŽSSK на вокзале Кошице оформите регистрацию (Preukaz pre študenta).\n3. Оформляйте бесплатные нулевые билеты на сайте zssk.sk или в приложении Ideme vlakom.",
+    "link": "https://www.zssk.sk/bezplatna-preprava/studenti/",
+    "main_tag": "словакия",
+    "extra_tags": [
+      "кошице",
+      "поезда",
+      "isic"
+    ],
+    "message_id": 525,
+    "is_evergreen": true
+  },
+  {
+    "id": "kosice_dpmk_transport",
+    "title": "Студенческий проездной в Кошице (DPMK) со скидкой 50%",
+    "category": "Транспорт и Город",
+    "badge": "🎓 [Транспорт и Город]",
+    "benefit": "Скидка 50% на все билеты и месячные проездные",
+    "duration": "На учебный год (продление по ISIC)",
+    "region": "🇸🇰 Кошице (Словакия)",
+    "requirements": "Студенческая карта ISIC с активированным транспортным чипом",
+    "description": "Городской транспорт Кошице (трамваи и автобусы DPMK) для студентов стоит ровно вполовину дешевле. Выгоднее всего оформить электронный проездной (Mesačník) прямо на карту ISIC.",
+    "how_to": "1. Активируйте транспортный чип ISIC в университетском терминале.\n2. В приложении DPMK или в кассах на Bardejovská / Rooseveltova пополните студенческий проездной.",
+    "link": "https://www.dpmk.sk/prepravny-poriadok/vybavovanie-studentskych-zliav",
+    "main_tag": "кошице",
+    "extra_tags": [
+      "словакия",
+      "транспорт",
+      "dpmk"
+    ],
+    "message_id": 526,
+    "is_evergreen": true
+  },
+  {
+    "id": "sk_isic_jedalne",
+    "title": "Студенческие обеды в Кошице по ISIC за €2–€3",
+    "category": "Питание и Общежития",
+    "badge": "🎓 [Питание и Общежития]",
+    "benefit": "Государственная дотация на каждое блюдо (экономия 60%)",
+    "duration": "Каждый учебный семестр",
+    "region": "🇸🇰 Кошице (столовые TUKE и UPJŠ)",
+    "requirements": "Карта студента ISIC соответствующего университета",
+    "description": "Министерство образования Словакии субсидирует горячее питание для студентов. В университетских столовых Кошице полноценный комплексный обед стоит от €2 до €3.50.",
+    "how_to": "1. Пополните баланс питания через портал jedalen.tuke.sk или в кассе столовой.\n2. Приложите карту ISIC на раздаче.",
+    "link": "https://jedalen.tuke.sk/jedalny-listok",
+    "main_tag": "кошице",
+    "extra_tags": [
+      "словакия",
+      "еда",
+      "isic"
+    ],
+    "message_id": 527,
+    "is_evergreen": true
+  },
+  {
+    "id": "kosice_tabacka_usmev",
+    "title": "Студенческий досуг в Кошице: Tabačka Kulturfabrik и Kino Úsmev",
+    "category": "Культура и Ивенты",
+    "badge": "🎓 [Культура и Ивенты]",
+    "benefit": "Билеты в кино, на концерты и фестивали со скидкой до 40%",
+    "duration": "Постоянно при предъявлении карты",
+    "region": "🇸🇰 Кошице (Gorkého 2 / Kasárenské námestie)",
+    "requirements": "Студенческий билет или карта ISIC",
+    "description": "Главные точки культурной жизни Кошице: Tabačka Kulturfabrik и Kino Úsmev предлагают специальные студенческие тарифы на европейское кино, лекции, спектакли и концерты.",
+    "how_to": "Выбирайте тариф «Študent / ISIC» при покупке онлайн на сайтах площадок или покажите ISIC в кассе.",
+    "link": "https://tabacka.sk/",
+    "main_tag": "ивенты",
+    "extra_tags": [
+      "кошице",
+      "словакия",
+      "кино"
+    ],
+    "message_id": 528,
+    "is_evergreen": true
+  },
+  {
+    "id": "sk_student_brigady",
+    "title": "Работа для студентов в Словакии (Dohoda o brigádnickej práci)",
+    "category": "Работа и Карьера",
+    "badge": "🎓 [Работа и Карьера]",
+    "benefit": "Освобождение от налогов на доход до €200 в месяц (чистая зарплата)",
+    "duration": "До 26 лет при дневной форме обучения",
+    "region": "🇸🇰 Словакия (Кошице, Прешов и др.)",
+    "requirements": "Справка об учёбе (Potvrdenie o návšteve školy) и возраст до 26 лет",
+    "description": "Специальный тип трудового договора для студентов (Dohoda). Позволяет легально подрабатывать до 20 часов в неделю. При подаче заявления на налоговое исключение (Odvodová úľava) с первых €200 заработка в месяц не удерживаются страховые взносы.",
+    "how_to": "Ищите вакансии с пометкой «Brigáda» на официальном словацком портале Profesia.sk в разделе Košice.",
+    "link": "https://www.profesia.sk/praca/kosice/",
+    "main_tag": "работа",
+    "extra_tags": [
+      "словакия",
+      "кошице",
+      "стажировки"
+    ],
+    "message_id": 529,
+    "is_evergreen": true
+  },
+  {
+    "id": "flixbus_regiojet_discounts",
+    "title": "Скидки 10–15% на FlixBus и поезда RegioJet по Европе",
+    "category": "Путешествия по Европе",
+    "badge": "🎓 [Путешествия по Европе]",
+    "benefit": "Скидка 10%–15% на автобусы и поезда по всей Европе",
+    "duration": "Круглый год",
+    "region": "🇪🇺 Вся Европа (маршруты из Кошице в Вену, Прагу, Будапешт)",
+    "requirements": "Действующая карта ISIC",
+    "description": "Дешёвые путешествия по Европе прямо из Кошице. Автобусы FlixBus и поезда RegioJet соединяют Кошице с Прагой, Братиславой, Будапештом, Краковом и Веной.",
+    "how_to": "1. Авторизуйтесь на словацком портале isic.sk в разделе льгот.\n2. Сгенерируйте промокод на поездку FlixBus или привяжите ISIC в профиле RegioJet.",
+    "link": "https://isic.sk/zlavy-na-slovensku/",
+    "main_tag": "путешествия",
+    "extra_tags": [
+      "европа",
+      "поезда",
+      "flixbus"
+    ],
+    "message_id": 530,
+    "is_evergreen": true
+  },
+  {
+    "id": "europe_isic_benefits",
+    "title": "Карта ISIC в Европе: бесплатные музеи, скидки на хостелы и паромы",
+    "category": "Путешествия и Музеи",
+    "badge": "🎓 [Путешествия и Музеи]",
+    "benefit": "Скидки до 50% или бесплатный вход в 150 000 локаций",
+    "duration": "В течение срока действия карты",
+    "region": "🇪🇺 Все страны Европейского Союза",
+    "requirements": "Международное удостоверение студента ISIC",
+    "description": "Ваш студенческий билет ISIC словацкого вуза — ключ к скидкам по всей Европе. Музеи, галереи и достопримечательности часто делают вход для студентов бесплатным или за полцены.",
+    "how_to": "Перед поездкой проверяйте список скидок в конкретном городе через международную базу скидок ISIC.",
+    "link": "https://www.isic.org/discounts/",
+    "main_tag": "европа",
+    "extra_tags": [
+      "путешествия",
+      "isic",
+      "скидки"
+    ],
+    "message_id": 531,
+    "is_evergreen": true
+  },
+  {
+    "id": "lowcost_flights_kosice",
+    "title": "Дешёвые перелёты по Европе из Кошице, Будапешта и Кракова",
+    "category": "Авиабилеты и Лоукостеры",
+    "badge": "🎓 [Авиабилеты и Лоукостеры]",
+    "benefit": "Прямые билеты от €15 в Лондон, Милан, Рим, Вену",
+    "duration": "Сезонные распродажи лоукостеров",
+    "region": "🇸🇰 Кошице (KSC), 🇭🇺 Будапешт (BUD), 🇵🇱 Краков (KRK)",
+    "requirements": "Паспорт / ВНЖ студента",
+    "description": "Из аэропорта Кошице летают прямые рейсы Wizz Air и Ryanair. Прямой автобус из Кошице доставляет прямо в аэропорт Будапешта (2.5 часа) и Кракова, откуда открывается сеть сотен рейсов по €10–€25.",
+    "how_to": "Следите за расписанием и новыми прямыми направлениями на официальном сайте аэропорта Кошице.",
+    "link": "https://www.airportkosice.sk/sk",
+    "main_tag": "авиа",
+    "extra_tags": [
+      "путешествия",
+      "европа",
+      "билеты"
+    ],
+    "message_id": 532,
+    "is_evergreen": true
+  },
+  {
+    "id": "fusion_360_edu",
+    "title": "Autodesk Fusion 360 (CAD / 3D-моделирование) бесплатно",
+    "category": "Инженерия и CAD",
+    "badge": "🎓 [Инженерия и CAD]",
+    "benefit": "Бесплатная образовательная подписка (экономия $680/год)",
+    "duration": "1 год с возможностью ежегодного продления на время учёбы",
+    "region": "🌍 Global (актуально для студентов TUKE и технических вузов)",
+    "requirements": "Университетская почта или студенческий билет ISIC",
+    "description": "Профессиональный облачный пакет для 3D-проектирования, моделирования деталей, симуляции нагрузок и подготовки к ЧПУ-обработке.",
+    "how_to": "1. Перейдите на образовательный портал Autodesk.\n2. Зарегистрируйтесь с почтой вуза (@tuke.sk) или загрузите фото ISIC.\n3. Скачайте и активируйте лицензию.",
+    "link": "https://www.autodesk.com/education/edu-software/overview",
+    "main_tag": "cad",
+    "extra_tags": [
+      "софт",
+      "3d",
+      "инженерия"
+    ],
+    "message_id": 533,
+    "is_evergreen": true
+  },
+  {
+    "id": "jetbrains_all_products",
+    "title": "JetBrains All Products Pack (Профессиональные IDE)",
+    "category": "Разработка и IT",
+    "badge": "🎓 [Разработка и IT]",
+    "benefit": "Бесплатный доступ ко всем IDE: IntelliJ IDEA Ultimate, PyCharm Pro, WebStorm, CLion (экономия $289/год)",
+    "duration": "1 год с ежегодным продлением на весь срок учёбы",
+    "region": "🌍 Global",
+    "requirements": "Студенческая университетская почта или карта ISIC",
+    "description": "Полный пакет профессиональных сред разработки от JetBrains для программистов и студентов IT-специальностей без функциональных ограничений.",
+    "how_to": "1. Откройте страницу JetBrains for Students.\n2. Подайте заявку, указав университетскую почту.\n3. Получите активацию в профиле JetBrains Account.",
+    "link": "https://www.jetbrains.com/academy/student-pack/#students",
+    "main_tag": "dev",
+    "extra_tags": [
+      "программирование",
+      "софт",
+      "jetbrains"
+    ],
+    "message_id": 534,
+    "is_evergreen": true
+  },
+  {
+    "id": "github_student_pack",
+    "title": "GitHub Student Developer Pack (включая Copilot Pro)",
+    "category": "Инструменты Разработки и ИИ",
+    "badge": "🎓 [Инструменты Разработки и ИИ]",
+    "benefit": "Бесплатный доступ к GitHub Copilot, доменам .me, облачным серверам (ценность свыше $1000)",
+    "duration": "На всё время обучения",
+    "region": "🌍 Global",
+    "requirements": "Аккаунт GitHub + подтверждение статуса студента",
+    "description": "Главный набор студента-разработчика: интеллектуальный ИИ-ассистент GitHub Copilot, бесплатные домены Namecheap, серверы DigitalOcean и десятки премиум-инструментов.",
+    "how_to": "1. Войдите в GitHub и перейдите в GitHub Education.\n2. Добавьте студенческую почту и загрузите фото расписания или карты ISIC.\n3. Получите одобрение и доступ к пакету преимуществ.",
+    "link": "https://education.github.com/pack",
+    "main_tag": "ИИ",
+    "extra_tags": [
+      "разработка",
+      "copilot",
+      "софт"
+    ],
+    "message_id": 535,
+    "is_evergreen": true
+  },
+  {
+    "id": "azure_students",
+    "title": "Microsoft Azure for Students ($100 на серверы и ИИ)",
+    "category": "Облачные Технологии и Серверы",
+    "badge": "🎓 [Облачные Технологии и Серверы]",
+    "benefit": "$100 стартового баланса на облачные сервисы + бесплатные службы без привязки банковской карты",
+    "duration": "12 месяцев с возможностью продления",
+    "region": "🌍 Global",
+    "requirements": "Студенческий адрес электронной почты",
+    "description": "Облачная инфраструктура для учебных проектов, развертывания веб-сайтов, баз данных и запуска моделей машинного обучения без риска списания денег.",
+    "how_to": "1. Перейдите на страницу Azure for Students.\n2. Нажмите «Start free» и пройдите верификацию через студенческий email.\n3. Создавайте виртуальные машины и тестируйте ИИ.",
+    "link": "https://azure.microsoft.com/free/students/",
+    "main_tag": "ИИ",
+    "extra_tags": [
+      "облако",
+      "azure",
+      "серверы"
+    ],
+    "message_id": null,
+    "is_evergreen": true
+  },
+  {
+    "id": "figma_education",
+    "title": "Figma Professional для студентов",
+    "category": "Дизайн и Интерфейсы",
+    "badge": "🎓 [Дизайн и Интерфейсы]",
+    "benefit": "Бесплатный профессиональный тариф Figma Pro и FigJam (экономия $144/год)",
+    "duration": "До 2 лет с возможностью повторной верификации",
+    "region": "🌍 Global",
+    "requirements": "Студенческий статус (название вуза и подтверждение)",
+    "description": "Инструмент для UX/UI-дизайна, совместного прототипирования мобильных приложений, веб-сайтов и интерактивных досок FigJam для командной работы.",
+    "how_to": "1. Войдите в аккаунт Figma и перейдите на страницу Education.\n2. Заполните короткую форму с указанием вуза и загрузите студенческий.\n3. Команда получит статус Professional бесплатно.",
+    "link": "https://www.figma.com/education/",
+    "main_tag": "дизайн",
+    "extra_tags": [
+      "figma",
+      "uiux",
+      "дизайн"
+    ],
+    "message_id": 536,
+    "is_evergreen": true
+  },
+  {
+    "id": "canva_pro_student",
+    "title": "Canva Pro для студентов",
+    "category": "Графика и Презентации",
+    "badge": "🎓 [Графика и Презентации]",
+    "benefit": "Премиальные шаблоны, удаление фона, генеративный ИИ и миллионы фото бесплатно",
+    "duration": "На период учёбы",
+    "region": "🌍 Global",
+    "requirements": "Образовательная почта или доступ через университетский домен",
+    "description": "Сервис для оформления рефератов, презентаций курсовых, постеров студенческих мероприятий и постов для соцсетей.",
+    "how_to": "Перейдите на страницу Canva for Education и зарегистрируйтесь по университетскому адресу.",
+    "link": "https://www.canva.com/education/",
+    "main_tag": "дизайн",
+    "extra_tags": [
+      "canva",
+      "графика",
+      "презентации"
+    ],
+    "message_id": 537,
+    "is_evergreen": true
+  },
+  {
+    "id": "notion_education",
+    "title": "Notion Plus Plan for Education",
+    "category": "Продуктивность и Заметки",
+    "badge": "🎓 [Продуктивность и Заметки]",
+    "benefit": "Бесплатный тариф Plus с неограниченным хранилищем файлов (экономия $120/год)",
+    "duration": "Бессрочно на весь период студенчества",
+    "region": "🌍 Global",
+    "requirements": "Студенческая почта вуза",
+    "description": "Универсальное рабочее пространство для ведения конспектов лекций, базы знаний по предметам, расписания дедлайнов и подготовки к экзаменам.",
+    "how_to": "1. Создайте аккаунт Notion.\n2. В настройках смените email на студенческий.\n3. В разделе Upgrade выберите тариф «Get free Education plan».",
+    "link": "https://www.notion.so/product/notion-for-education",
+    "main_tag": "продуктивность",
+    "extra_tags": [
+      "notion",
+      "заметки",
+      "учеба"
+    ],
+    "message_id": 538,
+    "is_evergreen": true
+  },
+  {
+    "id": "coursera_student",
+    "title": "Coursera for Campus (Студенческий доступ)",
+    "category": "Онлайн-Обучение",
+    "badge": "🎓 [Онлайн-Обучение]",
+    "benefit": "Бесплатный доступ к курсам ведущих мировых университетов с выдачей сертификатов",
+    "duration": "В рамках университетских программ партнёрства",
+    "region": "🌍 Global",
+    "requirements": "Почта аккредитованного университета",
+    "description": "Курсы по машинному обучению, бизнесу, программированию и языкам от Google, IBM, Stanford и Yale с получением официальных сертификатов.",
+    "how_to": "Авторизуйтесь на странице студенческой программы Coursera с вашим вузовским адресом.",
+    "link": "https://www.coursera.org/for-university-and-college-students",
+    "main_tag": "продуктивность",
+    "extra_tags": [
+      "курсы",
+      "образование",
+      "сертификаты"
+    ],
+    "message_id": null,
+    "is_evergreen": true
+  },
+  {
+    "id": "youtube_premium_student",
+    "title": "YouTube Premium + YouTube Music для студентов",
+    "category": "Медиа и Развлечения",
+    "badge": "🎓 [Медиа и Развлечения]",
+    "benefit": "Скидка около 50% на подписку без рекламы и с фоновым воспроизведением",
+    "duration": "До 4 лет (ежегодная проверка через SheerID)",
+    "region": "🇸🇰 Словакия и 🇪🇺 ЕС",
+    "requirements": "Подтверждение статуса через SheerID (справка или ISIC)",
+    "description": "Просмотр обучающих лекций и видео без рекламы, скачивание в офлайн и доступ к трекам YouTube Music по студенческой цене (€4.49 вместо €8.99).",
+    "how_to": "Откройте страницу студенческой подписки YouTube, выберите вуз и подтвердите статус через систему SheerID.",
+    "link": "https://www.youtube.com/premium/student",
+    "main_tag": "подписки",
+    "extra_tags": [
+      "музыка",
+      "youtube",
+      "подписки"
+    ],
+    "message_id": 539,
+    "is_evergreen": true
+  },
+  {
+    "id": "spotify_student",
+    "title": "Spotify Premium Student",
+    "category": "Музыка и Подкасты",
+    "badge": "🎓 [Музыка и Подкасты]",
+    "benefit": "Скидка 50% на премиум-подписку без рекламы в высоком качестве",
+    "duration": "До 4 лет с ежегодным продлением",
+    "region": "🇸🇰 Словакия (€3.49/месяц вместо €6.99)",
+    "requirements": "Верификация через SheerID",
+    "description": "Официальный студенческий тариф Spotify. Вся музыка мира, подкасты для изучения языков, прослушивание офлайн без рекламы.",
+    "how_to": "Перейдите на страницу Spotify Student, войдите в аккаунт и пройдите валидацию учебного заведения.",
+    "link": "https://www.spotify.com/us/student/",
+    "main_tag": "подписки",
+    "extra_tags": [
+      "музыка",
+      "spotify",
+      "подписки"
+    ],
+    "message_id": 540,
+    "is_evergreen": true
+  },
+  {
+    "id": "apple_music_tv",
+    "title": "Apple Music + Apple TV+ для студентов",
+    "category": "Музыка и Кино",
+    "badge": "🎓 [Музыка и Кино]",
+    "benefit": "Apple Music со скидкой 50% + бесплатный доступ к онлайн-кинотеатру Apple TV+",
+    "duration": "До 48 месяцев",
+    "region": "🇸🇰 Словакия и 🇪🇺 ЕС",
+    "requirements": "Студенческая верификация через UNiDAYS",
+    "description": "Студенческая цена на Apple Music (Spatial Audio, Lossless) плюс бесплатный полный доступ ко всем фильмам и сериалам сервиса Apple TV+.",
+    "how_to": "В приложении «Музыка» или на сайте Apple выберите студенческую подписку и подтвердите статус через UNiDAYS.",
+    "link": "https://www.apple.com/apple-music/",
+    "main_tag": "подписки",
+    "extra_tags": [
+      "кино",
+      "музыка",
+      "apple"
+    ],
+    "message_id": 541,
+    "is_evergreen": true
+  },
+  {
+    "id": "asos_student_discount",
+    "title": "Скидка 10% на одежду и обувь в ASOS (доставка в ЕС)",
+    "category": "Одежда и Стиль",
+    "badge": "🎓 [Одежда и Стиль]",
+    "benefit": "Постоянная скидка 10% на весь ассортимент",
+    "duration": "Круглый год на весь период учёбы",
+    "region": "🇸🇰 Словакия, 🇪🇺 ЕС",
+    "requirements": "Студенческая почта или верификация ASOS",
+    "description": "Брендовые кроссовки (Nike, New Balance, adidas) и базовый гардероб. Студенческий код действует постоянно и суммируется со многими распродажами.",
+    "how_to": "Перейдите на страницу валидации ASOS, укажите страну учёбы и подтвердите статус студента для получения персонального кода.",
+    "link": "https://www.asos.com/student-validation",
+    "main_tag": "одежда",
+    "extra_tags": [
+      "одежда",
+      "стиль",
+      "кроссовки"
+    ],
+    "message_id": 542,
+    "is_evergreen": true
+  },
+  {
+    "id": "epic_games_weekly",
+    "title": "Еженедельные бесплатные игры в Epic Games Store",
+    "category": "Игры и Раздачи",
+    "badge": "🎓 [Игры и Раздачи]",
+    "benefit": "100% бесплатно (1–2 лицензионные игры каждую неделю)",
+    "duration": "Обновление каждый четверг в 17:00 (навсегда в библиотеку)",
+    "region": "🌍 Global / Онлайн",
+    "requirements": "Бесплатный аккаунт Epic Games Store",
+    "description": "Каждую неделю Epic Games дарит отличные игры: от инди-хитов до крупных AAA-проектов. Добавленная игра остаётся на вашем аккаунте навсегда.",
+    "how_to": "1. Зарегистрируйтесь в Epic Games Store.\n2. Перейдите в раздел «Бесплатные игры» и нажмите «Получить».\n3. Игра навсегда привяжется к вашему аккаунту.",
+    "link": "https://store.epicgames.com/free-games",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры",
+      "epicgames",
+      "раздача"
+    ],
+    "message_id": 543,
+    "is_evergreen": true
+  },
+  {
+    "id": "steam_free_to_play",
+    "title": "Постоянный каталог бесплатных игр в Steam (Free to Play)",
+    "category": "Игры и Развлечения",
+    "badge": "🎓 [Игры и Развлечения]",
+    "benefit": "Сотни топовых игр без оплаты (Dota 2, CS2, Apex Legends, Destiny 2)",
+    "duration": "Доступно всегда",
+    "region": "🌍 Global / Онлайн",
+    "requirements": "Аккаунт Steam",
+    "description": "Официальный раздел бесплатных соревновательных, кооперативных и сюжетных игр в Steam. Отличный способ отвлечься от учёбы вместе с друзьями без затрат.",
+    "how_to": "Откройте раздел Free to Play в клиенте Steam или браузере и добавьте любую игру в библиотеку.",
+    "link": "https://store.steampowered.com/genre/Free%20to%20Play/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры",
+      "steam",
+      "онлайн"
+    ],
+    "message_id": 544,
+    "is_evergreen": true
+  },
+  {
+    "id": "isic_extra_hot_deals",
+    "title": "Горящие акции и специальные купоны месяца по ISIC (Словакия)",
+    "category": "Горящие Акции и Скидки",
+    "badge": "🎓 [Горящие Акции и Скидки]",
+    "benefit": "Скидки до 50% на фастфуд, электронику, доставку и покупки",
+    "duration": "Временные ежемесячные промокоды",
+    "region": "🇸🇰 Словакия (Кошице, Прешов, Братислава)",
+    "requirements": "Карта студента ISIC",
+    "description": "Кроме базовых льгот на поезда, держателям словацкого ISIC доступны ежемесячные горящие купоны (Extra kupóny): скидки в McDonald's, KFC, Martinus, Panta Rhei, Alza и спортивных магазинах.",
+    "how_to": "1. Авторизуйтесь на сайте isic.sk или в приложении ISIC Slovakia.\n2. Перейдите в раздел «Kupóny» и активируйте спецпредложения месяца.",
+    "link": "https://isic.sk/zlavy-na-slovensku/",
+    "main_tag": "горящее",
+    "extra_tags": [
+      "горящее",
+      "словакия",
+      "кошице",
+      "скидки"
+    ],
+    "message_id": 545,
+    "is_evergreen": true
+  },
+  {
+    "id": "github_perks_hot_credits",
+    "title": "Горящие кредиты и лицензии: DigitalOcean, JetBrains и Namecheap",
+    "category": "Бонусы и Студенческие Кредиты",
+    "badge": "🎓 [Бонусы и Студенческие Кредиты]",
+    "benefit": "$200 на серверы DigitalOcean, бесплатный домен .me и SSL на 1 год",
+    "duration": "На время учёбы",
+    "region": "🌍 Global / Онлайн",
+    "requirements": "Студенческий статус (студенческая почта или ISIC)",
+    "description": "Щедрые стартовые бонусы для студентов в рамках GitHub Education: поднимайте личные серверы, VPN и учебные веб-проекты с бесплатным балансом.",
+    "how_to": "Авторизуйтесь через GitHub Education Pack и активируйте промокоды партнёров в разделе Offers.",
+    "link": "https://education.github.com/pack",
+    "main_tag": "горящее",
+    "extra_tags": [
+      "горящее",
+      "софт",
+      "it",
+      "серверы"
+    ],
+    "message_id": 546,
+    "is_evergreen": true
+  },
+  {
+    "id": "3809",
+    "title": "Pony Island (Steam) Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/pony-island-steam-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 549,
+    "is_evergreen": false
+  },
+  {
+    "id": "3807",
+    "title": "TerraScape (Epic Games) Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/terrascape-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 550,
+    "is_evergreen": false
+  },
+  {
+    "id": "3806",
+    "title": "Out of Sight (Epic Games) Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/out-of-sight-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 551,
+    "is_evergreen": false
+  },
+  {
+    "id": "3805",
+    "title": "Gear.Club Unlimited 3 - Gear.Club Signature Pack Steam Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/gear-club-unlimited-3-gear-club-signature-pack-steam-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 552,
+    "is_evergreen": false
+  },
+  {
+    "id": "3804",
+    "title": "Spooky Cats Steam Key Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/spooky-cats-steam-key-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 553,
+    "is_evergreen": false
+  },
+  {
+    "id": "3803",
+    "title": "Everwind AW-51 Pack Steam Key Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/everwind-aw-51-pack-steam-key-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 554,
+    "is_evergreen": false
+  },
+  {
+    "id": "3802",
+    "title": "Scallywags Playtest Steam Key Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/scallywags-playtest-steam-key-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 555,
+    "is_evergreen": false
+  },
+  {
+    "id": "3800",
+    "title": "Rotwood: Drakin Armoury Pack (Steam) Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/rotwood-drakin-armoury-pack-steam-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 556,
+    "is_evergreen": false
+  },
+  {
+    "id": "3796",
+    "title": "MXGP 26 - Scrubdesignz Liveries (Steam) Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/mxgp-26-scrubdesignz-liveries-steam-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 557,
+    "is_evergreen": false
+  },
+  {
+    "id": "3795",
+    "title": "No Brakes Club Playtest Steam Key Giveaway",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/no-brakes-club-playtest-steam-keys",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 558,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x1huag",
+    "title": "Fly Over! 100KM! Mountains!",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/3943750/Fly_Over_100KM_Mountains/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 559,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0yn7y",
+    "title": "Slavistan",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://givee.club/en/event/1460",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 560,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0wcfc",
+    "title": "Pony Island",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/405640/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 561,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0vnyr",
+    "title": "World of Warships — Ning Hai",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/2283211/World_of_Warships__Ning_Hai/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 562,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0n2cj",
+    "title": "World of Warships x Blue Archive — Complimentary Camouflage",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/4261730/World_of_Warships_x_Blue_Archive__Complimentary_Camouflage/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 563,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wzsm8r",
+    "title": "Spooky Cats",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.fanatical.com/en/game/spooky-cats",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 564,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wzse9j",
+    "title": "Hex Reverse",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/5257350/Hex_Reverse/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 565,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wydmdk",
+    "title": "Save the Earth",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/2236920/Save_the_Earth/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 566,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wwvmet",
+    "title": "Assassin Of Werewolf",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://gleam.io/vQyEi/free-x2500-assassin-of-werewolf-steam-keys",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 567,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wwj8qe",
+    "title": "Legend of Cina",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.steampowered.com/app/1041390/Legend_of_Cina/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 568,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0wmro",
+    "title": "Square-Enix have finally put a Kingdom Hearts bundle up on the store",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fh4zbc4340auh1.png",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 569,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0ump3",
+    "title": "Devolver Digital Publisher Sale has begun on the store!",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/browse?sortBy=relevancy&amp;sortDir=DESC&amp;tag=Devolver%20Digital%20Publisher%20Sale&amp;count=40&amp;start=0",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 570,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0u3w8",
+    "title": "PC Freebie｜Out of Sight & TerraScape",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/r/EpicGamesPC/comments/1x0u3w8/pc_freebieout_of_sight_terrascape/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 571,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0tdth",
+    "title": "Mobile Freebie｜The Big Con",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/r/EpicGamesPC/comments/1x0tdth/mobile_freebiethe_big_con/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 572,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0suxw",
+    "title": "Next Week PC Freebie｜Bad Cheese",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fmxsoxmxha9uh1.png",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 573,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0saih",
+    "title": "Next Week Mobile Freebie｜Agent A: A puzzle in disguise",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fiyvrpvff69uh1.png",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 574,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0s81n",
+    "title": "Next Week PC Freebie｜Agent A: A puzzle in disguise",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fc9r82oxx59uh1.png",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 575,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x0rlgu",
+    "title": "AC Syndicate bought on Epic — can I buy the DLCs from Ubisoft Connect in 2026?",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/r/EpicGamesPC/comments/1x0rlgu/ac_syndicate_bought_on_epic_can_i_buy_the_dlcs/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 576,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1x044oo",
+    "title": "Has Epic said anything about adding cloud support to mobile?",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/r/EpicGamesPC/comments/1x044oo/has_epic_said_anything_about_adding_cloud_support/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 577,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1wy7kii",
+    "title": "what? free game and then not available in my region?",
+    "category": "Раздача недели (Игры)",
+    "badge": "🔥 [Раздача недели (Игры)]",
+    "benefit": "Актуальная скидка / раздача",
+    "duration": "Временное предложение",
+    "region": "Онлайн / ЕС",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.reddit.com/r/EpicGamesPC/comments/1wy7kii/what_free_game_and_then_not_available_in_my_region/",
+    "main_tag": "игры",
+    "extra_tags": [
+      "горящее"
+    ],
+    "message_id": 578,
+    "is_evergreen": false
+  }
+]
