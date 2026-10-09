@@ -760,6 +760,20 @@ def fetch_feed_entries(feed_info):
                     price_info = el.get("price", {}).get("totalPrice", {})
                     if is_free_now and price_info.get("discountPrice") == 0:
                         slug = el.get("productSlug") or el.get("urlSlug")
+                        if not slug:
+                            # Проверяем offerMappings / catalogNs / customAttributes
+                            mappings = el.get("offerMappings", []) or el.get("catalogNs", {}).get("mappings", [])
+                            for m in mappings:
+                                if m.get("pageSlug"):
+                                    slug = m.get("pageSlug")
+                                    break
+                            if not slug:
+                                for attr in el.get("customAttributes", []):
+                                    if attr.get("key") in ("com.epicgames.app.productSlug", "pageSlug"):
+                                        slug = attr.get("value")
+                                        break
+                        if slug and slug.endswith("/home"):
+                            slug = slug[:-5]
                         orig = price_info.get("originalPrice", 0) / 100
                         worth_str = f"€{orig:.2f}" if orig > 0 else "Бесплатно"
                         link = f"https://store.epicgames.com/p/{slug}" if slug else "https://store.epicgames.com/free-games"
