@@ -48,7 +48,7 @@
     "requirements": "Карта ISIC дневной формы обучения",
     "description": "Государство в Словакии субсидирует питание студентов. В студенческих столовых (študentské jedálne на Jedlíkova, Němcovej, Medická) по карте ISIC можно полноценно пообедать (первое, второе и напиток) всего за пару евро.",
     "how_to": "Пополните свой счет питания через систему университета (MAIS / AiS2) и прикладывайте ISIC на кассе столовой.",
-    "link": "https://jedalen.tuke.sk/jedalny-listok",
+    "link": "https://jedalen.tuke.sk/",
     "main_tag": "вкусное",
     "extra_tags": [
       "вкусное"
@@ -162,7 +162,7 @@
     "requirements": "Студенческий билет / ISIC европейского университета",
     "description": "Студенты европейских вузов имеют право на бесплатный или льготный вход в главные музеи Европы: Лувр в Париже, Бельведер в Вене, галерею Уффици во Флоренции и многие другие.",
     "how_to": "При бронировании онлайн выбирайте категорию «EU Student under 26» или покажите ISIC на кассе.",
-    "link": "https://youth.europa.eu/home_en",
+    "link": "https://youth.europa.eu/",
     "main_tag": "туризм",
     "extra_tags": [
       "туризм"
@@ -219,7 +219,7 @@
     "requirements": "Университетская почта (.edu / .sk) или карта ISIC",
     "description": "Полный профессиональный пакет сред разработки от JetBrains: IntelliJ IDEA Ultimate, PyCharm Pro, WebStorm, CLion, Rider, DataGrip и другие бесплатно для студентов.",
     "how_to": "Перейдите на страницу студенческой программы JetBrains и зарегистрируйтесь, указав свой университетский email (@tuke.sk, @upjs.sk) или загрузив фото ISIC.",
-    "link": "https://www.jetbrains.com/academy/student-pack/#students",
+    "link": "https://www.jetbrains.com/community/education/#students",
     "main_tag": "софт",
     "extra_tags": [
       "софт"
@@ -371,7 +371,7 @@
     "requirements": "Студент дневной формы обучения",
     "description": "Миллионы треков без рекламы, прослушивание офлайн и высокое качество звука по сниженной студенческой цене.",
     "how_to": "Оформите подписку на сайте Spotify Student, пройдя быструю проверку через сервис SheerID.",
-    "link": "https://www.spotify.com/sk-sk/student/",
+    "link": "https://www.spotify.com/sk/student/",
     "main_tag": "подписки",
     "extra_tags": [
       "подписки"
@@ -390,7 +390,7 @@
     "requirements": "Верификация через UNiDAYS",
     "description": "Уникальное предложение от Apple: при оформлении студенческой подписки Apple Music вы бесплатно получаете доступ к стримингу Apple TV+ без доплаты.",
     "how_to": "В приложении Apple Music или на сайте выберите план «Студенческий» и подтвердите статус через сервис UNiDAYS.",
-    "link": "https://www.apple.com/apple-music/",
+    "link": "https://www.apple.com/sk/apple-music/",
     "main_tag": "подписки",
     "extra_tags": [
       "подписки"
@@ -624,6 +624,25 @@
       "игры"
     ],
     "message_id": 674,
+    "is_evergreen": false
+  },
+  {
+    "id": "3810",
+    "title": "Fireside Feelings (Steam) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $7.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/fireside-feelings-steam-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 675,
     "is_evergreen": false
   }
 ]
