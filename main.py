@@ -1,3 +1,359 @@
+import os
+import json
+import time
+import re
+import html
+from urllib.parse import urlparse
+import feedparser
+import requests
+
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+HISTORY_FILE = "data/processed_ids.json"
+ACTIVE_POSTS_FILE = "data/active_posts.json"
+
+CHANNEL_USERNAME = TELEGRAM_CHAT_ID.replace("@", "") if TELEGRAM_CHAT_ID else "discounts4students"
+
+# 24 выверенные программы: полный охват категорий
+EVERGREEN_DEALS = [
+    {
+        'benefit': '100% бесплатно во 2-м классе всех поездов ŽSSK',
+        'category': 'Транспорт и Путешествия',
+        'description': 'Легендарная льгота в Словакии: бесплатный проезд во 2-м классе поездов государственной компании ŽSSK (RegioJet и EuroCity требуют символической доплаты). Оформить можно на любом крупном вокзале.',
+        'duration': 'На весь период обучения в вузе',
+        'extra_tags': ['кошице', 'поезда', 'isic'],
+        'how_to': '1. Возьмите в деканате справку об обучении (Potvrdenie o návšteve školy) или карту ISIC.\n2. В кассе ŽSSK (на вокзале в Кошице) оформите «Preukaz pre žiaka/študenta».\n3. Покупайте «нулевые» билеты через кассу или приложение Ideme vlakom.',
+        'id': 'sk_trains_free',
+        'link': 'https://www.zssk.sk/en/zero-fare/',
+        'main_tag': 'словакия',
+        'region': '🇸🇰 Вся Словакия',
+        'requirements': 'Студент дневной формы обучения словацкого вуза до 26 лет',
+        'title': 'Бесплатные поезда по Словакии для студентов (ŽSSK)'
+    },
+    {
+        'benefit': 'Скидка 50% на разовые билеты и проездные карты',
+        'category': 'Транспорт и Город',
+        'description': 'Городской транспорт в Кошице (автобусы и трамваи DPMK) для студентов стоит ровно вполовину дешевле. Выгоднее всего оформить электронный проездной (Mesačník) прямо на карту ISIC.',
+        'duration': 'На учебный год (продление по ISIC)',
+        'extra_tags': ['словакия', 'транспорт', 'dpmk'],
+        'how_to': '1. Активируйте транспортный чип ISIC в университетском терминале.\n2. В приложении DPMK или в кассах на Bardejovská / Rooseveltova пополните студенческий проездной.',
+        'id': 'kosice_dpmk_transport',
+        'link': 'https://www.dpmk.sk/prepravny-poriadok/vybavovanie-studentskych-zliav',
+        'main_tag': 'кошице',
+        'region': '🇸🇰 Кошице (Словакия)',
+        'requirements': 'Студенческая карта ISIC с активированным транспортным чипом',
+        'title': 'Студенческий проездной в Кошице (DPMK) со скидкой 50%'
+    },
+    {
+        'benefit': 'Горячий комплексный обед за ~€2 вместо €7–€9',
+        'category': 'Лайфхаки и Еда',
+        'description': 'Государство в Словакии субсидирует питание студентов. В студенческих столовых (študentské jedálne на Jedlíkova, Němcovej, Medická) по карте ISIC можно полноценно пообедать (первое, второе и напиток) всего за пару евро.',
+        'duration': 'Ежедневно в учебные дни',
+        'extra_tags': ['словакия', 'еда', 'isic'],
+        'how_to': 'Пополните свой счет питания через систему университета (MAIS / AiS2) и прикладывайте ISIC на кассе столовой.',
+        'id': 'sk_isic_jedalne',
+        'link': 'https://jedalen.tuke.sk/',
+        'main_tag': 'кошице',
+        'region': '🇸🇰 Кошице (столовые TUKE и UPJŠ)',
+        'requirements': 'Карта ISIC дневной формы обучения',
+        'title': 'Студенческие обеды в Кошице по ISIC за €1.80–€2.50'
+    },
+    {
+        'benefit': 'Скидки до 40% на концерты, фестивали и кино',
+        'category': 'Ивенты и Досуг',
+        'description': 'Главные культурные пространства Кошице — Tabačka Kulturfabrik и кинотеатр Kino Úsmev — дают постоянные скидки на киносеансы, лекции, спектакли и вечеринки для студентов.',
+        'duration': 'Круглый год',
+        'extra_tags': ['кошице', 'словакия', 'кино'],
+        'how_to': 'Предъявляйте ISIC при покупке билетов в кассе или выбирайте тариф «Študent» онлайн.',
+        'id': 'kosice_tabacka_usmev',
+        'link': 'https://tabacka.sk/',
+        'main_tag': 'ивенты',
+        'region': '🇸🇰 Кошице (Gorkého 2 / Kasárenské námestie)',
+        'requirements': 'Действующий студенческий билет или ISIC',
+        'title': 'Студенческий досуг в Кошице: Tabačka Kulturfabrik и Kino Úsmev'
+    },
+    {
+        'benefit': 'Официальная работа без налога на доход до €200/мес',
+        'category': 'Работа и Доход',
+        'description': 'Специальный тип трудового договора для студентов дневной формы в Словакии. Вы освобождаетесь от уплаты пенсионных и медицинских взносов с суммы заработка до €200 в месяц.',
+        'duration': 'До окончания статуса студента (максимум до 26 лет)',
+        'extra_tags': ['словакия', 'кошице', 'стажировки'],
+        'how_to': '1. Возьмите в университете справку о статусе студента.\n2. При оформлении на работу подпишите «Oznámenie a čestné vyhlásenie k uplatneniu odvodovej odpočítateľnej položky».',
+        'id': 'sk_student_brigady',
+        'link': 'https://www.employment.gov.sk/sk/praca-zamestnanost/vztah-zamestnanca-zamestnavatela/dohody-o-pracach-vykonavanych-mimo-pracovneho-pomeru/dohoda-o-brigadnickej-praci-studentov.html',
+        'main_tag': 'работа',
+        'region': '🇸🇰 Вся Словакия',
+        'requirements': 'Студент очного отделения до 26 лет',
+        'title': 'Работа для студентов в Словакии (Dohoda o brigádnickej práci študentov)'
+    },
+    {
+        'benefit': 'Скидки 10–15% на междугородние и международные рейсы',
+        'category': 'Путешествия по Европе',
+        'description': 'Путешествия из Кошице в Прагу, Вену, Будапешт, Краков или Братиславу на автобусах и поездах со студенческой скидкой по карте ISIC.',
+        'duration': 'Постоянно круглый год',
+        'extra_tags': ['европа', 'поезда', 'flixbus'],
+        'how_to': 'При поиске билетов на сайте RegioJet выберите тариф «Študent (ISIC)». Для FlixBus активируйте купон через приложение ISIC Slovakia.',
+        'id': 'flixbus_regiojet_discounts',
+        'link': 'https://www.regiojet.sk/zlavy-a-tarify',
+        'main_tag': 'путешествия',
+        'region': '🇪🇺 Словакия и Центральная Европа',
+        'requirements': 'Карта ISIC',
+        'title': 'Скидки 10–15% на FlixBus и поезда RegioJet'
+    },
+    {
+        'benefit': 'Бесплатный вход или скидка 50% в тысячи музеев Европы',
+        'category': 'Путешествия по Европе',
+        'description': 'Студенты европейских вузов имеют право на бесплатный или льготный вход в главные музеи Европы: Лувр в Париже, Бельведер в Вене, галерею Уффици во Флоренции и многие другие.',
+        'duration': 'До достижения 26 лет',
+        'extra_tags': ['путешествия', 'isic', 'скидки'],
+        'how_to': 'При бронировании онлайн выбирайте категорию «EU Student under 26» или покажите ISIC на кассе.',
+        'id': 'europe_isic_benefits',
+        'link': 'https://www.isic.sk/zlavy-v-zahranici/',
+        'main_tag': 'европа',
+        'region': '🇪🇺 Страны Евросоюза',
+        'requirements': 'Студенческий билет / ISIC европейского университета',
+        'title': 'Бесплатные музеи и достопримечательности Европы до 26 лет'
+    },
+    {
+        'benefit': 'Авиабилеты по Европе от €10–€20 (Wizz Air, Ryanair)',
+        'category': 'Путешествия по Европе',
+        'description': 'Из Кошице (KSC), а также соседних Будапешта и Кракова летают лоукостеры по десяткам направлений. Wizz Air предлагает студенческий тариф и клубные скидки WIZZ Discount Club.',
+        'duration': 'Круглый год при раннем бронировании',
+        'extra_tags': ['путешествия', 'европа', 'билеты'],
+        'how_to': 'Используйте агрегаторы (Skyscanner / Google Flights) с вылетом из Košice, Budapest или Kraków.',
+        'id': 'lowcost_flights_kosice',
+        'link': 'https://www.airportkosice.sk/sk/lety/odlety',
+        'main_tag': 'авиа',
+        'region': '✈️ Кошице / Будапешт / Краков',
+        'requirements': 'Загранпаспорт и студенческий статус',
+        'title': 'Дешёвые путешествия из Кошице: лоукостеры по Европе'
+    },
+    {
+        'benefit': 'Бесплатная лицензия на софт стоимостью $545 в год',
+        'category': '3D и Инженерия',
+        'description': 'Autodesk предоставляет студентам технических специальностей (особенно актуально для TUKE) полный бесплатный доступ к Fusion 360, AutoCAD, Inventor, Maya и 3ds Max.',
+        'duration': 'Возобновляемая годовая подписка на всё время учёбы',
+        'extra_tags': ['софт', '3d', 'инженерия'],
+        'how_to': '1. Зарегистрируйтесь на образовательном портале Autodesk.\n2. Загрузите фото студенческого или справку с портала MAIS.\n3. Доступ активируется в течение 20 минут.',
+        'id': 'fusion_360_edu',
+        'link': 'https://www.autodesk.com/education/edu-software/overview',
+        'main_tag': 'cad',
+        'region': '🌍 Global / Онлайн',
+        'requirements': 'Студенческий статус в аккредитованном вузе',
+        'title': 'Autodesk Fusion 360 & AutoCAD — бесплатно для студентов'
+    },
+    {
+        'benefit': 'Бесплатный All Products Pack (экономия от $250 до $650 в год)',
+        'category': 'Программирование / Софт',
+        'description': 'Полный профессиональный пакет сред разработки от JetBrains: IntelliJ IDEA Ultimate, PyCharm Pro, WebStorm, CLion, Rider, DataGrip и другие бесплатно для студентов.',
+        'duration': '1 год с ежегодным бесплатным продлением',
+        'extra_tags': ['программирование', 'софт', 'jetbrains'],
+        'how_to': 'Перейдите на страницу студенческой программы JetBrains и зарегистрируйтесь, указав свой университетский email (@tuke.sk, @upjs.sk) или загрузив фото ISIC.',
+        'id': 'jetbrains_all_products',
+        'link': 'https://www.jetbrains.com/community/education/#students',
+        'main_tag': 'dev',
+        'region': '🌍 Global / Онлайн',
+        'requirements': 'Университетская почта (.edu / .sk) или карта ISIC',
+        'title': 'Бесплатные лицензии JetBrains на все IDE (PyCharm, IntelliJ, WebStorm)'
+    },
+    {
+        'benefit': 'Инструменты разработки и сервисы стоимостью свыше $1000',
+        'category': 'ИИ и Разработка',
+        'description': 'Легендарный набор разработчика: бесплатный GitHub Copilot (ИИ-ассистент), бесплатные домены Namecheap, кредиты на облачные серверы DigitalOcean, доступ к Canva Pro, JetBrains и десяткам сервисов.',
+        'duration': 'На весь период обучения в университете',
+        'extra_tags': ['разработка', 'copilot', 'софт'],
+        'how_to': 'Авторизуйтесь на GitHub, перейдите в раздел Education, добавьте университетский email и прикрепите фото карты ISIC.',
+        'id': 'github_student_pack',
+        'link': 'https://education.github.com/pack',
+        'main_tag': 'ИИ',
+        'region': '🌍 Global / Онлайн',
+        'requirements': 'Аккаунт GitHub и подтверждение студенческого статуса',
+        'title': 'GitHub Student Developer Pack + бесплатный GitHub Copilot'
+    },
+    {
+        'benefit': '$100 на баланс облака и бесплатный доступ к популярным сервисам',
+        'category': 'Облачные сервисы и ИИ',
+        'description': 'Microsoft дарит студентам $100 на использование серверов, виртуальных машин, баз данных и ИИ-моделей в облаке Azure без необходимости привязывать банковскую карту.',
+        'duration': '12 месяцев с возможностью продления',
+        'extra_tags': ['облако', 'azure', 'серверы'],
+        'how_to': 'Зайдите на портал Azure for Students и подтвердите статус через студенческий email.',
+        'id': 'azure_students',
+        'link': 'https://azure.microsoft.com/en-us/free/students/',
+        'main_tag': 'ИИ',
+        'region': '🌍 Global / Онлайн',
+        'requirements': 'Студенческая почта вуза',
+        'title': 'Microsoft Azure for Students: $100 бесплатных кредитов на серверы и ИИ'
+    },
+    {
+        'benefit': 'Бесплатный профессиональный тариф Figma Enterprise / Education',
+        'category': 'Дизайн и UI/UX',
+        'description': 'Главный инструмент продуктового дизайна и совместной работы. Студенческий тариф открывает неограниченное число проектов, командных библиотек и истории версий.',
+        'duration': '2 года с правом продления',
+        'extra_tags': ['figma', 'uiux', 'дизайн'],
+        'how_to': 'Зайдите на страницу Figma Education, заполните форму с названием вуза (TUKE, UPJŠ и др.) и прикрепите фото ISIC.',
+        'id': 'figma_education',
+        'link': 'https://www.figma.com/education/',
+        'main_tag': 'дизайн',
+        'region': '🌍 Global / Онлайн',
+        'requirements': 'Студенческий статус',
+        'title': 'Figma Professional — бесплатно для студентов и дизайнеров'
+    },
+    {
+        'benefit': 'Премиум-доступ к шаблонам, графике и ИИ-генераторам Canva',
+        'category': 'Дизайн и Презентации',
+        'description': 'Создавайте презентации для пар, курсовых и проектов за считанные минуты с полным набором инструментов Canva Pro.',
+        'duration': 'На время учёбы',
+        'extra_tags': ['canva', 'графика', 'презентации'],
+        'how_to': 'Активируйте через GitHub Student Developer Pack или образовательный аккаунт Canva.',
+        'id': 'canva_pro_student',
+        'link': 'https://www.canva.com/education/',
+        'main_tag': 'дизайн',
+        'region': '🌍 Global / Онлайн',
+        'requirements': 'Подтверждение через GitHub Pack или edu-почту',
+        'title': 'Canva Pro: бесплатный графический редактор для студентов'
+    },
+    {
+        'benefit': 'Бесплатный план Plus без лимитов на блоки и файлы',
+        'category': 'Продуктивность и Учёба',
+        'description': 'Идеальное рабочее пространство для конспектов, расписания, дедлайнов и подготовки к экзаменам. Студенческий тариф снимает ограничение на загрузку больших файлов.',
+        'duration': 'Бессрочно при привязке университетской почты',
+        'extra_tags': ['notion', 'заметки', 'учеба'],
+        'how_to': 'Зарегистрируйте аккаунт Notion на личную почту, затем в настройках аккаунта смените email на студенческий (@tuke.sk / @upjs.sk) и перейдите на вкладку Upgrade -> Get free student plan.',
+        'id': 'notion_education',
+        'link': 'https://www.notion.so/product/notion-for-education',
+        'main_tag': 'продуктивность',
+        'region': '🌍 Global / Онлайн',
+        'requirements': 'Студенческая почта вуза',
+        'title': 'Notion Plus: бесплатный тариф для студентов на организацию учёбы'
+    },
+    {
+        'benefit': 'Бесплатные курсы от Google, IBM, Stanford и сертификаты за $0',
+        'category': 'Курсы и Обучение',
+        'description': 'Получайте востребованные навыки в ИТ, маркетинге и аналитике бесплатно. На любой платный курс на Coursera можно подать заявку на финансовую помощь (Financial Aid) и учиться бесплатно с выдачей официального сертификата.',
+        'duration': 'Постоянно (на каждый курс подаётся отдельная заявка)',
+        'extra_tags': ['курсы', 'образование', 'сертификаты'],
+        'how_to': 'На странице курса нажмите на ссылку «Financial Aid Available» рядом с кнопкой записи, укажите статус студента и обоснуйте необходимость бесплатного обучения. Одобрение приходит за 16 дней.',
+        'id': 'coursera_student',
+        'link': 'https://www.coursera.org/',
+        'main_tag': 'продуктивность',
+        'region': '🌍 Global / Онлайн',
+        'requirements': 'Аккаунт Coursera',
+        'title': 'Бесплатные курсы и сертификаты на Coursera через Financial Aid'
+    },
+    {
+        'benefit': 'YouTube без рекламы, фоновый режим и YouTube Music со скидкой 45%',
+        'category': 'Музыка и Видео',
+        'description': 'Официальная студенческая подписка на YouTube Premium в Словакии стоит вдвое дешевле обычной семейной или индивидуальной подписки.',
+        'duration': 'До 4 лет (ежегодная верификация через SheerID)',
+        'extra_tags': ['музыка', 'youtube', 'подписки'],
+        'how_to': 'Перейдите на страницу оформления студенческой подписки YouTube, выберите университет и подтвердите статус через SheerID.',
+        'id': 'youtube_premium_student',
+        'link': 'https://www.youtube.com/premium/student',
+        'main_tag': 'подписки',
+        'region': '🇸🇰 Словакия / ЕС',
+        'requirements': 'Студент вуза (подтверждение через SheerID)',
+        'title': 'YouTube Premium Student со скидкой 45% (включая YouTube Music)'
+    },
+    {
+        'benefit': 'Скидка 50% на премиум-подписку (€3.49 вместо €6.99 в месяц)',
+        'category': 'Музыка и Аудио',
+        'description': 'Миллионы треков без рекламы, прослушивание офлайн и высокое качество звука по сниженной студенческой цене.',
+        'duration': 'До 4 лет с ежегодным продлением',
+        'extra_tags': ['музыка', 'spotify', 'подписки'],
+        'how_to': 'Оформите подписку на сайте Spotify Student, пройдя быструю проверку через сервис SheerID.',
+        'id': 'spotify_student',
+        'link': 'https://www.spotify.com/sk/student/',
+        'main_tag': 'подписки',
+        'region': '🇸🇰 Словакия / ЕС',
+        'requirements': 'Студент дневной формы обучения',
+        'title': 'Spotify Premium Student со скидкой 50%'
+    },
+    {
+        'benefit': 'Скидка 50% на музыку + бесплатный доступ к сериалам и фильмам Apple TV+',
+        'category': 'Музыка и Кино',
+        'description': 'Уникальное предложение от Apple: при оформлении студенческой подписки Apple Music вы бесплатно получаете доступ к стримингу Apple TV+ без доплаты.',
+        'duration': 'До 48 месяцев',
+        'extra_tags': ['кино', 'музыка', 'apple'],
+        'how_to': 'В приложении Apple Music или на сайте выберите план «Студенческий» и подтвердите статус через сервис UNiDAYS.',
+        'id': 'apple_music_tv',
+        'link': 'https://www.apple.com/sk/apple-music/',
+        'main_tag': 'подписки',
+        'region': '🇸🇰 Словакия / ЕС',
+        'requirements': 'Верификация через UNiDAYS',
+        'title': 'Apple Music Student со скидкой 50% + бесплатный Apple TV+'
+    },
+    {
+        'benefit': 'Постоянная скидка 10% на все заказы одежды и обуви',
+        'category': 'Одежда и Стиль',
+        'description': 'Один из крупнейших европейских интернет-магазинов одежды, обуви и аксессуаров ASOS дарит студентам постоянный персональный промокод на 10% скидку, действующий даже на распродажи.',
+        'duration': 'До окончания учёбы',
+        'extra_tags': ['одежда', 'стиль', 'кроссовки'],
+        'how_to': 'Заполните форму подтверждения студента на сайте ASOS, указав год окончания вуза и университетский email, чтобы получить персональный код.',
+        'id': 'asos_student_discount',
+        'link': 'https://www.asos.com/discover/students/asosteam/discount/',
+        'main_tag': 'одежда',
+        'region': '🇪🇺 Доставка в Словакию',
+        'requirements': 'Студенческий статус',
+        'title': 'Постоянная студенческая скидка 10% на ASOS'
+    },
+    {
+        'benefit': 'Каждую неделю 1–2 полноценные платные игры бесплатно навсегда',
+        'category': 'Игры и Раздачи',
+        'description': 'Цифровой магазин Epic Games Store каждый четверг в 17:00 (по Братиславе) запускает бесплатную раздачу лицензионных игр. Забрав игру один раз, вы сохраняете её навсегда.',
+        'duration': 'Обновление каждый четверг, акция длится 7 дней',
+        'extra_tags': ['игры', 'epicgames', 'раздача'],
+        'how_to': 'Войдите в аккаунт Epic Games Store, перейдите в раздел «Бесплатные игры» и оформите заказ за 0€.',
+        'id': 'epic_games_weekly',
+        'link': 'https://store.epicgames.com/ru/free-games',
+        'main_tag': 'игры',
+        'region': '🌍 Global (ПК)',
+        'requirements': 'Учетная запись Epic Games',
+        'title': 'Еженедельные бесплатные раздачи ПК-игр в Epic Games Store'
+    },
+    {
+        'benefit': 'Сотни топовых лицензионных игр без необходимости платить',
+        'category': 'Игры и Развлечения',
+        'description': 'База лучших соревновательных и кооперативных игр в Steam, доступных абсолютно бесплатно: Counter-Strike 2, Dota 2, Apex Legends, Destiny 2, PUBG: Battlegrounds и Team Fortress 2.',
+        'duration': 'Бессрочно',
+        'extra_tags': ['игры', 'steam', 'онлайн'],
+        'how_to': 'Установите клиент Steam, откройте страницу нужной игры и нажмите «Играть бесплатно». Игра навсегда закрепится в вашей библиотеке.',
+        'id': 'steam_free_to_play',
+        'link': 'https://store.steampowered.com/genre/Free%20to%20Play/',
+        'main_tag': 'игры',
+        'region': '🌍 Global (Steam)',
+        'requirements': 'Аккаунт Steam',
+        'title': 'Постоянный каталог бесплатных игр в Steam (Free to Play)'
+    },
+    {
+        'benefit': 'Скидки от 10% до 50% в ресторанах, магазинах и сервисах Словакии',
+        'category': 'Горящие Акции и Скидки',
+        'description': 'Карта ISIC в Словакии дает сотни скидок: от покупки билетов в кино до скидок на электронику в Nay / Datart, фастфуд (McDonalds, Subway) и книжные магазины Martinus.',
+        'duration': 'В течение срока действия карты',
+        'extra_tags': ['горящее', 'словакия', 'кошице', 'скидки'],
+        'how_to': 'Установите официальное приложение «ISIC Slovakia» (доступно в App Store / Google Play), привяжите карту и пользуйтесь цифровыми купонами со штрихкодами.',
+        'id': 'isic_extra_hot_deals',
+        'link': 'https://www.isic.sk/databaza-zliav/',
+        'main_tag': 'горящее',
+        'region': '🇸🇰 Словакия',
+        'requirements': 'Действующая карта ISIC',
+        'title': 'Официальная база скидок по карте ISIC в Словакии'
+    },
+    {
+        'benefit': '$200 кредитов DigitalOcean, бесплатные домены .me и SSL-сертификаты',
+        'category': 'Бонусы и Студенческие Кредиты',
+        'description': 'Дополнительные эксклюзивные предложения для студентов: запуск собственных проектов, пет-проектов и ботов на бесплатном облачном сервере в течение целого года.',
+        'duration': '1 год с момента активации',
+        'extra_tags': ['горящее', 'софт', 'it', 'серверы'],
+        'how_to': 'Активируйте купон из GitHub Student Developer Pack на сайте DigitalOcean или Namecheap.',
+        'id': 'github_perks_hot_credits',
+        'link': 'https://education.github.com/pack',
+        'main_tag': 'горящее',
+        'region': '🌍 Global / Онлайн',
+        'requirements': 'Студенческий статус (студенческая почта или ISIC)',
+        'title': 'Горящие кредиты и лицензии: DigitalOcean, JetBrains и Namecheap'
+    }
+]
+
 DYNAMIC_FEEDS = [
     # 1. Официальный API еженедельных бесплатных раздач Epic Games Store (СТРОГО 100% бесплатно)
     {
