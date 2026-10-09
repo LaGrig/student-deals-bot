@@ -938,6 +938,51 @@ def cleanup_expired_posts(active_posts):
 
     return remaining_posts
 
+def export_deals_for_webapp(deal_to_msg_id, active_posts):
+    items = []
+    for d in EVERGREEN_DEALS:
+        items.append({
+            "id": d.get("id"),
+            "title": d.get("title"),
+            "category": d.get("category"),
+            "badge": d.get("badge", f"🎓 [{d.get('category')}]"),
+            "benefit": d.get("benefit"),
+            "duration": d.get("duration"),
+            "region": d.get("region"),
+            "requirements": d.get("requirements"),
+            "description": d.get("description"),
+            "how_to": d.get("how_to"),
+            "link": d.get("link"),
+            "main_tag": d.get("main_tag", "скидки"),
+            "extra_tags": d.get("extra_tags", []),
+            "message_id": deal_to_msg_id.get(d.get("id")),
+            "is_evergreen": True
+        })
+
+    for post_id, info in active_posts.items():
+        items.append({
+            "id": post_id,
+            "title": info.get("title"),
+            "category": info.get("category"),
+            "badge": f"🔥 [{info.get('category', 'Скидка')}]",
+            "benefit": "Актуальная скидка / раздача",
+            "duration": "Временное предложение",
+            "region": "Онлайн / ЕС",
+            "requirements": "Учётная запись платформы",
+            "description": "",
+            "how_to": "Перейдите по ссылке предложения.",
+            "link": info.get("target_link") or info.get("source_link"),
+            "main_tag": info.get("main_tag", "горящее"),
+            "extra_tags": ["горящее"],
+            "message_id": info.get("message_id"),
+            "is_evergreen": False
+        })
+
+    os.makedirs("docs", exist_ok=True)
+    with open("docs/deals.json", "w", encoding="utf-8") as f:
+        json.dump(items, f, ensure_ascii=False, indent=2)
+    print(f"[WebApp] Экспортировано {len(items)} предложений в docs/deals.json")
+
 def main():
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         print("ОШИБКА: Токен или ID канала не заданы.")
@@ -1094,6 +1139,7 @@ def main():
 
     save_json_file(HISTORY_FILE, list(new_processed)[-1500:])
     save_json_file(ACTIVE_POSTS_FILE, active_posts)
+    export_deals_for_webapp(deal_to_msg_id, active_posts)
     print(f"Сбор завершён. Опубликовано динамических постов: {dynamic_published}. Активных на мониторинге: {len(active_posts)}")
 
 if __name__ == "__main__":
