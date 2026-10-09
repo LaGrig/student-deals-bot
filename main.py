@@ -852,6 +852,48 @@ DEAL_PRIMARY_CATEGORY = {
     "github_perks_hot_credits": ("софт", "💻 [IT & Софт: IT Кредиты]")
 }
 
+CATEGORY_CONFIG = {
+    "вкусное": {"icon": "🍕", "name": "Вкусное"},
+    "поездки": {"icon": "🚆", "name": "Поездки"},
+    "туризм": {"icon": "🏕", "name": "Туризм"},
+    "ивенты": {"icon": "🎭", "name": "Ивенты"},
+    "кошице": {"icon": "📍", "name": "Кошице"},
+    "работа": {"icon": "💼", "name": "Работа"},
+    "софт": {"icon": "💻", "name": "IT & Софт"},
+    "курсы": {"icon": "🎓", "name": "Курсы"},
+    "игры": {"icon": "🎮", "name": "Игры"},
+    "подписки": {"icon": "🛍", "name": "Подписки"}
+}
+
+# Строгая привязка: 1 пост = ровно 1 раздел
+DEAL_PRIMARY_CATEGORY = {
+    "sk_trains_free": ("поездки", "🚆 [Поездки: Поезда ŽSSK]"),
+    "kosice_dpmk_transport": ("поездки", "🚆 [Поездки: Транспорт DPMK]"),
+    "sk_isic_jedalne": ("вкусное", "🍕 [Вкусное: СтудСтоловые]"),
+    "kosice_tabacka_usmev": ("ивенты", "🎭 [Ивенты: Tabačka & Кино]"),
+    "k13_kosice_culture": ("ивенты", "🎭 [Ивенты: Kulturpark & Опен-эйр]"),
+    "sk_student_brigady": ("работа", "💼 [Работа: Кошице]"),
+    "flixbus_regiojet_discounts": ("поездки", "🚆 [Поездки: Автобусы & Поезда]"),
+    "europe_isic_benefits": ("туризм", "🏕 [Туризм: Музеи Европы]"),
+    "lowcost_flights_kosice": ("поездки", "🚆 [Поездки: Лоукостеры]"),
+    "fusion_360_edu": ("софт", "💻 [IT & Софт: 3D CAD]"),
+    "jetbrains_all_products": ("софт", "💻 [IT & Софт: Dev]"),
+    "github_student_pack": ("софт", "💻 [IT & Софт: GitHub Pack]"),
+    "azure_students": ("софт", "💻 [IT & Софт: Azure Cloud]"),
+    "figma_education": ("софт", "💻 [IT & Софт: Дизайн]"),
+    "canva_pro_student": ("софт", "💻 [IT & Софт: Дизайн]"),
+    "notion_education": ("софт", "💻 [IT & Софт: Учёба]"),
+    "coursera_student": ("курсы", "🎓 [Курсы: Coursera]"),
+    "youtube_premium_student": ("подписки", "🛍 [Подписки: Видео]"),
+    "spotify_student": ("подписки", "🛍 [Подписки: Музыка]"),
+    "apple_music_tv": ("подписки", "🛍 [Подписки: Стриминг]"),
+    "asos_student_discount": ("подписки", "🛍 [Подписки: Одежда]"),
+    "epic_games_weekly": ("игры", "🎮 [Игры: Epic Games]"),
+    "steam_free_to_play": ("игры", "🎮 [Игры: Steam Каталог]"),
+    "isic_extra_hot_deals": ("подписки", "🛍 [Подписки: Alza Student]"),
+    "github_perks_hot_credits": ("софт", "💻 [IT & Софт: IT Кредиты]")
+}
+
 TAG_MAP = {
     "вкусное": "вкусное",
     "столовая": "вкусное",
@@ -1194,17 +1236,16 @@ def main():
     active_posts_raw = load_json_file(ACTIVE_POSTS_FILE)
     active_posts = active_posts_raw if isinstance(active_posts_raw, dict) else {}
 
-    # Набор для сквозной дедупликации по названию и прямой ссылке
     seen_titles = set(normalize_title(p.get("title", "")) for p in active_posts.values() if p.get("title"))
     seen_links = set(normalize_link(p.get("target_link", "")) for p in active_posts.values() if p.get("target_link"))
 
     is_initial_fill = len(processed_ids) == 0
     print(f"Запуск бота. Режим первичного наполнения: {is_initial_fill}")
 
-    # Шаг 1: Автоматическая чистка канала от неактуальных постов
+    # Шаг 1: Очистка канала от завершившихся акций
     active_posts = cleanup_expired_posts(active_posts)
 
-    # Шаг 2: Каталог постоянных программ (все 24 выверенные программы)
+    # Шаг 2: Каталог постоянных программ
     evergreen_posts_file = "data/evergreen_posts.json"
     deal_to_msg_id = load_json_file(evergreen_posts_file) or {}
 
@@ -1226,7 +1267,6 @@ def main():
                 if message_id:
                     deal_to_msg_id[deal_id] = message_id
 
-    # Шаг 3: Сохранение номеров постов и публикация закреплённого навигатора с кнопкой
     save_json_file(evergreen_posts_file, deal_to_msg_id)
 
     nav_file = "data/navigator_info.json"
@@ -1239,7 +1279,7 @@ def main():
             pin_telegram_message(nav_msg_id)
             save_json_file(nav_file, {"pinned": True, "message_id": nav_msg_id})
 
-    # Шаг 4: Выгрузка новостей из КАЖДОГО источника с отдельным лимитом
+    # Шаг 3: Выгрузка динамических предложений
     per_feed_limit = 10 if is_initial_fill else 4
     dynamic_published = 0
     now = time.time()
@@ -1267,38 +1307,33 @@ def main():
                     new_processed.add(post_id)
                     continue
 
-                # 1. Фильтр информационного мусора, вопросов и жалоб (типа "is udemy working today?")
                 if "?" in title or any(w in title.lower() for w in ("working for you", "anyone else", "problem", "question", "is down", "how to")):
-                    print(f"[Фильтр обсуждений] Пропуск вопроса/жалобы: '{title}'")
+                    new_processed.add(post_id)
+                    continue
+
+                norm_t = normalize_title(title)
+                if norm_t in seen_titles:
                     new_processed.add(post_id)
                     continue
 
                 raw_link = entry.get("link", "")
                 summary = entry.get("summary", "")
 
-                # Фильтрация по языкам: разрешены только EN, RU, UK, SK
                 is_ok_lang, lang_reason = is_allowed_language(f"{title} {summary}")
                 if not is_ok_lang:
-                    print(f"[Языковой фильтр] Пропущен '{title[:40]}...': {lang_reason}")
                     new_processed.add(post_id)
                     continue
 
                 direct_link = extract_direct_link(summary, raw_link) if "reddit.com" in raw_link else raw_link
-
-                # 2. Если пост из Reddit ведёт обратно на Reddit (нет внешней ссылки на акцию) — пропускаем!
                 if "reddit.com" in direct_link or "redd.it" in direct_link:
-                    print(f"[Reddit] Пропуск поста без внешней ссылки: '{title}'")
                     new_processed.add(post_id)
                     continue
 
-                # 3. Для категории Курсы ссылка ОБЯЗАТЕЛЬНО должна вести на образовательную платформу
                 if feed_info.get("category") == "Курсы" and not any(dom in direct_link for dom in ("udemy.com", "coursera.org", "edx.org")):
-                    print(f"[Курсы] Пропуск поста без ссылки на платформу обучения: '{title}'")
                     new_processed.add(post_id)
                     continue
 
                 status, final_url, is_fallback = validate_link(direct_link, fallback_url=raw_link)
-
                 if status == "DROP":
                     new_processed.add(post_id)
                     continue
@@ -1307,15 +1342,8 @@ def main():
 
                 norm_link = normalize_link(final_url)
                 if norm_link in seen_links:
-                    print(f"[Дедупликация] Пропуск повтора по ссылке: '{final_url}'")
                     new_processed.add(post_id)
                     continue
-
-                topic_tags = extract_topic_tags(title, summary)
-                extra_tags = []
-                for t in topic_tags:
-                    if t != feed_info["main_tag"] and t not in extra_tags:
-                        extra_tags.append(t)
 
                 card = {
                     "id": post_id,
@@ -1330,7 +1358,7 @@ def main():
                     "description": clean_summary_text(summary),
                     "how_to": feed_info["how_to_tip"],
                     "link": final_url,
-                    "extra_tags": extra_tags
+                    "extra_tags": [feed_info["main_tag"]]
                 }
 
                 success, message_id = send_telegram_card(card, is_fallback=is_fallback)
