@@ -596,6 +596,7 @@ def extract_direct_link(summary_html, default_link):
 def clean_summary_text(summary_html):
     if not summary_html:
         return ""
+    # Декодируем HTML-сущности (&#32; превращается в обычный пробел)
     text = html.unescape(summary_html)
     text = re.sub(r'<[^>]+>', ' ', text)
     text = re.sub(r'&#\d+;|&[a-zA-Z]+;', ' ', text)
@@ -680,7 +681,7 @@ def fetch_feed_entries(feed_info):
             return entries
         return []
 
-    req_headers = {"User-Agent": "telegram:discounts4students_bot:v2.0 (by /u/studentdealsbot)"} if "reddit.com" in url else headers
+    req_headers = {"User-Agent": "telegram:discount4studentsbot:v2.0 (by /u/studentdealsbot)"} if "reddit.com" in url else headers
     try:
         resp = requests.get(url, timeout=10, headers=req_headers)
         if resp.status_code == 200:
@@ -890,7 +891,7 @@ def check_is_deal_still_active(info):
         try:
             reddit_json_url = source_link.rstrip("/") + ".json"
             r_headers = {
-                "User-Agent": "telegram:discounts4students_bot:v2.0 (by /u/studentdealsbot)"
+                "User-Agent": "telegram:discount4studentsbot:v2.0 (by /u/studentdealsbot)"
             }
             r_resp = requests.get(reddit_json_url, timeout=7, headers=r_headers)
             if r_resp.status_code == 200:
@@ -977,6 +978,9 @@ def main():
                 if message_id:
                     deal_to_msg_id[deal_id] = message_id
 
+    # =========================================================================
+    # СТРОКИ ПОСЛЕ for deal in EVERGREEN_DEALS:
+    # =========================================================================
     save_json_file(evergreen_posts_file, deal_to_msg_id)
 
     # Шаг 3: Публикация и закрепление текстового навигатора
