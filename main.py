@@ -584,15 +584,53 @@ def is_allowed_language(text):
     return True, "Английский или Словацкий язык"
 
 def extract_direct_link(summary_html, default_link):
+    """
+    Извлекает прямую целевую ссылку на внешний ресурс (Udemy, магазин, сайт акции),
+    минуя промежуточные страницы Reddit.
+    """
     if not summary_html:
         return default_link
+
+    # 1. Сначала ищем стандартную ссылку Reddit link-поста
     match = re.search(r'<a\s+href="([^"]+)">\[link\]</a>', summary_html, re.IGNORECASE)
     if match:
-        return match.group(1)
-    urls = re.findall(r'https?://[^\s<>"]+|www\.[^\s<>"]+', summary_html)
+        target = match.group(1)
+        if "reddit.com" not in target and "redd.it" not in target:
+            return target
+
+    # 2. Ищем любые внешние URL внутри текста сообщения
+    urls = re.findall(r'https?://[^\s<>"\'\)]+', summary_html)
     for u in urls:
+        # Приоритет целевым образовательным и игровым сайтам
+        if any(domain in u for domain in ("udemy.com", "coursera.org", "steampowered.com", "epicgames.com", "gog.com")):
+            return u
+        # Любой внешний сайт, не являющийся Reddit
         if "reddit.com" not in u and "redd.it" not in u:
             return u
+
+    # 3. Если в RSS ссылка ведёт на reddit.com, пробуем забрать целевой URL из Reddit JSON
+    if "reddit.com" in default_link:
+        try:
+            json_url = default_link.rstrip("/") + ".json"
+            r = requests.get(json_url, timeout=5, headers={"User-Agent": "telegram:discount4studentsbot:v2.0 (by /u/studentdealsbot)"})
+            if r.status_code == 200:
+                data = r.json()
+                post_data = data[0]["data"]["children"][0]["data"]
+                # Проверяем url поста
+                post_url = post_data.get("url", "")
+                if post_url and "reddit.com" not in post_url and "redd.it" not in post_url:
+                    return post_url
+                # Проверяем текст самого поста (selftext)
+                selftext = post_data.get("selftext", "")
+                body_urls = re.findall(r'https?://[^\s<>"\'\)]+', selftext)
+                for u in body_urls:
+                    if any(domain in u for domain in ("udemy.com", "coursera.org", "steampowered.com", "epicgames.com")):
+                        return u
+                    if "reddit.com" not in u and "redd.it" not in u:
+                        return u
+        except Exception:
+            pass
+
     return default_link
 
 def clean_summary_text(summary_html):
