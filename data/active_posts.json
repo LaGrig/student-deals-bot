@@ -94,5 +94,53 @@
     "type": "game",
     "posted_at": 1791567420.0424778,
     "max_ttl": 1792172220.0424778
+  },
+  "t3_1pwfqhp": {
+    "message_id": 676,
+    "title": "Tips for Preparing for the PSPO II Certification + Free Practice Exams Resource",
+    "category": "Курсы",
+    "main_tag": "курсы",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "target_link": "https://www.udemy.com/course/pspo-ii-practice-exams-fast-track-to-success-pspo-2/?couponCode=AC6BF702042D04AEB11B",
+    "source_link": "https://www.udemy.com/course/pspo-ii-practice-exams-fast-track-to-success-pspo-2/?couponCode=AC6BF702042D04AEB11B",
+    "type": "promo",
+    "posted_at": 1791618595.9240382,
+    "max_ttl": 1791791395.9240382
+  },
+  "t3_1lsee75": {
+    "message_id": 677,
+    "title": "Docker, Kubernetes and Azure container services free coupons",
+    "category": "Курсы",
+    "main_tag": "курсы",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "target_link": "https://www.udemy.com/course/docker-kubernetes-and-azure-container-services/?couponCode=816AE364875E2C9D6B01",
+    "source_link": "https://www.udemy.com/course/docker-kubernetes-and-azure-container-services/?couponCode=816AE364875E2C9D6B01",
+    "type": "promo",
+    "posted_at": 1791618595.9240382,
+    "max_ttl": 1791791395.9240382
+  },
+  "t3_19fd2m1": {
+    "message_id": 678,
+    "title": "100% off limited time promo on Building a Mass Cold Email Engine Course",
+    "category": "Курсы",
+    "main_tag": "курсы",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "target_link": "https://www.udemy.com/course/build-your-mass-cold-email-engine-with-python-2024/?couponCode=5DECF58E16B164DFBDFF",
+    "source_link": "https://www.udemy.com/course/build-your-mass-cold-email-engine-with-python-2024/?couponCode=5DECF58E16B164DFBDFF",
+    "type": "promo",
+    "posted_at": 1791618595.9240382,
+    "max_ttl": 1791791395.9240382
+  },
+  "t3_159ja3e": {
+    "message_id": 679,
+    "title": "Building an Online Shop with Play Framework in Java",
+    "category": "Курсы",
+    "main_tag": "курсы",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "target_link": "https://www.udemy.com/course/building-an-online-shop-with-play-framework-in-java/?couponCode=A516DDB58CA1BE10CE4F",
+    "source_link": "https://www.udemy.com/course/building-an-online-shop-with-play-framework-in-java/?couponCode=A516DDB58CA1BE10CE4F",
+    "type": "promo",
+    "posted_at": 1791618595.9240382,
+    "max_ttl": 1791791395.9240382
   }
 }

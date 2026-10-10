@@ -644,5 +644,81 @@
     ],
     "message_id": 675,
     "is_evergreen": false
+  },
+  {
+    "id": "t3_1pwfqhp",
+    "title": "Tips for Preparing for the PSPO II Certification + Free Practice Exams Resource",
+    "category": "курсы",
+    "badge": "🎓 [Курсы]",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.udemy.com/course/pspo-ii-practice-exams-fast-track-to-success-pspo-2/?couponCode=AC6BF702042D04AEB11B",
+    "main_tag": "курсы",
+    "extra_tags": [
+      "курсы"
+    ],
+    "message_id": 676,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1lsee75",
+    "title": "Docker, Kubernetes and Azure container services free coupons",
+    "category": "курсы",
+    "badge": "🎓 [Курсы]",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.udemy.com/course/docker-kubernetes-and-azure-container-services/?couponCode=816AE364875E2C9D6B01",
+    "main_tag": "курсы",
+    "extra_tags": [
+      "курсы"
+    ],
+    "message_id": 677,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_19fd2m1",
+    "title": "100% off limited time promo on Building a Mass Cold Email Engine Course",
+    "category": "курсы",
+    "badge": "🎓 [Курсы]",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.udemy.com/course/build-your-mass-cold-email-engine-with-python-2024/?couponCode=5DECF58E16B164DFBDFF",
+    "main_tag": "курсы",
+    "extra_tags": [
+      "курсы"
+    ],
+    "message_id": 678,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_159ja3e",
+    "title": "Building an Online Shop with Play Framework in Java",
+    "category": "курсы",
+    "badge": "🎓 [Курсы]",
+    "benefit": "Бесплатный доступ к курсу (Скидка 100%)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.udemy.com/course/building-an-online-shop-with-play-framework-in-java/?couponCode=A516DDB58CA1BE10CE4F",
+    "main_tag": "курсы",
+    "extra_tags": [
+      "курсы"
+    ],
+    "message_id": 679,
+    "is_evergreen": false
   }
 ]
