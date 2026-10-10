@@ -803,7 +803,7 @@ def fetch_feed_entries(feed_info):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     }
 
-    # 1. Официальный API Epic Games Store (СТРОГО 100% бесплатные игры недели)
+    # 1. Epic API
     if feed_format == "epic_api":
         try:
             resp = requests.get(url, timeout=10, headers=headers)
@@ -845,7 +845,9 @@ def fetch_feed_entries(feed_info):
                 return entries
         except Exception as e:
             print(f"Ошибка загрузки Epic Games API: {e}")
-        # 4. Парсер GoOut Košice (живая афиша концертов, кино и фестивалей)
+        return []
+
+    # 2. GoOut
     if feed_format == "goout_html":
         try:
             resp = requests.get(url, timeout=10, headers=headers)
@@ -876,7 +878,6 @@ def fetch_feed_entries(feed_info):
                     if not link.startswith("http"):
                         link = "https://goout.net" + link
 
-                    # Отсекаем служебные страницы GoOut
                     if any(skip in link for skip in ("/vstupenky/", "/registracia/", "/prihlasenie/")):
                         continue
 
@@ -885,13 +886,15 @@ def fetch_feed_entries(feed_info):
                         "id": f"goout_{re.sub(r'[^a-zA-Z0-9]', '', title)[:25]}",
                         "title": title,
                         "link": link,
-                        "summary": f"Событие в Кошице на площадках Tabačka, Kulturpark или Kino Úsmev. Билеты и расписание на GoOut.",
+                        "summary": "Событие в Кошице на площадках Tabačka, Kulturpark или Kino Úsmev. Билеты и расписание на GoOut.",
                         "benefit": "Студенческие билеты / Вход свободный"
                     })
                 return entries[:10]
         except Exception as e:
             print(f"Ошибка парсинга GoOut: {e}")
-        # 6. Парсер Zľavomat Košice (скидки на еду и пиццу до 15€)
+        return []
+
+    # 3. Zlavomat
     if feed_format == "zlavomat_html":
         try:
             resp = requests.get(url, timeout=10, headers=headers)
@@ -914,7 +917,6 @@ def fetch_feed_entries(feed_info):
                     if not title or len(title) < 6:
                         continue
 
-                    # Проверяем цену предложения
                     text_all = card.get_text(" ", strip=True)
                     price_match = re.search(r'(\d+[\.,]\d+)\s*€|€\s*(\d+[\.,]\d+)', text_all)
                     price_val = 0.0
@@ -925,7 +927,6 @@ def fetch_feed_entries(feed_info):
                         except ValueError:
                             pass
 
-                    # СТРОГИЙ СТУДЕНЧЕСКИЙ ФИЛЬТР: ТОЛЬКО ПРЕДЛОЖЕНИЯ ДО 15 ЕВРО!
                     if price_val > 15.0:
                         continue
 
@@ -942,9 +943,8 @@ def fetch_feed_entries(feed_info):
         except Exception as e:
             print(f"Ошибка парсинга Zlavomat: {e}")
         return []
-    return []
 
-    # 5. Парсер SlovakInfo (еженедельная афиша событий Кошице)
+    # 4. SlovakInfo
     if feed_format == "slovakinfo_afisha":
         try:
             resp = requests.get(url, timeout=10, headers=headers)
@@ -959,7 +959,7 @@ def fetch_feed_entries(feed_info):
                     if not title_el:
                         continue
                     title = title_el.get_text(strip=True)
-                    if not title or "афиша" not in title.lower() and "кошице" not in title.lower():
+                    if not title or ("афиша" not in title.lower() and "кошице" not in title.lower()):
                         continue
 
                     a_tag = art.find("a") if art.name != "a" else art
@@ -979,9 +979,8 @@ def fetch_feed_entries(feed_info):
         except Exception as e:
             print(f"Ошибка парсинга SlovakInfo: {e}")
         return []
-    return []
 
-    # 2. GamerPower API: только Steam и Epic Games, отсекаем обычный Free-to-play
+    # 5. GamerPower
     if feed_format == "gamerpower_json":
         try:
             resp = requests.get(url, timeout=10, headers=headers)
@@ -994,12 +993,10 @@ def fetch_feed_entries(feed_info):
                     giveaway_url = str(item.get("open_giveaway_url") or item.get("open_giveaway") or item.get("gamerpower_url") or "")
                     worth = str(item.get("worth", "")).strip()
 
-                    # Платформы: ТОЛЬКО Steam и Epic Games
                     comb_check = f"{title} {platforms} {giveaway_url}".lower()
                     if not any(plat in comb_check for plat in ("steam", "epic", "epicgames")):
                         continue
 
-                    # Отсекаем мусорный Free-to-play (где изначальная цена 0 или в названии F2P)
                     if worth in ("$0.00", "0€", "N/A", "") or any(m in title.lower() for m in ("free to play", "f2p", "[f2p]")):
                         continue
 
@@ -1015,7 +1012,7 @@ def fetch_feed_entries(feed_info):
             print(f"Ошибка GamerPower: {e}")
         return []
 
-    # 3. RSS ленты (Reddit Steam, вакансии, курсы, скидки)
+    # 6. RSS
     req_headers = {"User-Agent": "telegram:discount4studentsbot:v2.0 (by /u/studentdealsbot)"} if "reddit.com" in url else headers
     try:
         resp = requests.get(url, timeout=10, headers=req_headers)
@@ -1025,14 +1022,12 @@ def fetch_feed_entries(feed_info):
             for e in feed.entries[:25]:
                 title = getattr(e, "title", "")
 
-                # Строгий фильтр вопросов, жалоб и технического мусора
                 if "?" in title or any(w in title.lower() for w in (
-                    "working for you", "anyone else", "problem", "question", 
+                    "working for you", "anyone else", "problem", "question",
                     "is down", "how to", "discussion", "megathread", "discord", "weekly thread"
                 )):
                     continue
 
-                # Для Steam: отсекаем обсуждения, дискорд, F2P и посты без ссылки на игру
                 if feed_format == "steam_reddit":
                     t_low = title.lower()
                     if any(m in t_low for m in ("discussion", "thread", "megathread", "discord", "weekly", "f2p", "free to play", "[f2p]")):
@@ -1044,14 +1039,11 @@ def fetch_feed_entries(feed_info):
                 direct = extract_direct_link(summary, raw_link) if "reddit.com" in raw_link else raw_link
 
                 if feed_format == "steam_reddit":
-                    # Публикуем ТОЛЬКО если прямая ссылка ведёт на страницу игры в Steam!
                     if "store.steampowered.com/app/" not in direct:
                         continue
-                    # И ТОЛЬКО если Steam API подтверждает 100% скидку на платную игру
                     if not check_steam_game_is_free(direct):
                         continue
 
-                # Для образовательных лент обязательно наличие прямой ссылки на курс
                 if "udemyfreebies" in url.lower():
                     if not any(dom in direct for dom in ("udemy.com", "coursera.org", "edx.org")):
                         continue
