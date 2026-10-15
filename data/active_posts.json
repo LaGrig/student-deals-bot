@@ -94,5 +94,53 @@
     "type": "game",
     "posted_at": 1791567420.0424778,
     "max_ttl": 1792172220.0424778
+  },
+  "egs_6a846880836044a2adad614ac771f487": {
+    "message_id": 728,
+    "title": "Bad Cheese",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо €11.69)",
+    "target_link": "https://store.epicgames.com/p/ae5d8fc5541f42eea105f64121dba382",
+    "source_link": "https://store.epicgames.com/p/ae5d8fc5541f42eea105f64121dba382",
+    "type": "game",
+    "posted_at": 1792079485.673376,
+    "max_ttl": 1792684285.673376
+  },
+  "egs_db1202a30c5541dd99cdf54c918a9348": {
+    "message_id": 729,
+    "title": "Agent A - игра под прикрытием",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо €17.99)",
+    "target_link": "https://store.epicgames.com/p/agent-a-a-puzzle-in-disguise",
+    "source_link": "https://store.epicgames.com/p/agent-a-a-puzzle-in-disguise",
+    "type": "game",
+    "posted_at": 1792079485.673376,
+    "max_ttl": 1792684285.673376
+  },
+  "3817": {
+    "message_id": 730,
+    "title": "Agent A: A puzzle in disguise (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $19.99)",
+    "target_link": "https://www.gamerpower.com/open/agent-a-a-puzzle-in-disguise-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/agent-a-a-puzzle-in-disguise-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1792079485.673376,
+    "max_ttl": 1792684285.673376
+  },
+  "3816": {
+    "message_id": 731,
+    "title": "Bad Cheese (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $12.99)",
+    "target_link": "https://www.gamerpower.com/open/bad-cheese-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/bad-cheese-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1792079485.673376,
+    "max_ttl": 1792684285.673376
   }
 }
