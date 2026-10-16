@@ -46,5 +46,53 @@
     "type": "game",
     "posted_at": 1792079485.673376,
     "max_ttl": 1792684285.673376
+  },
+  "goout_17620263112027": {
+    "message_id": 732,
+    "title": "17. 6. 2026–31. 1. 2027",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/muzeum-hodnot/szexmly/",
+    "source_link": "https://goout.net/sk/muzeum-hodnot/szexmly/",
+    "type": "event",
+    "posted_at": 1792182443.040859,
+    "max_ttl": 1792787243.040859
+  },
+  "goout_3102510": {
+    "message_id": 733,
+    "title": "3. 10.–25. 10.",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/taste-kosice-2026/szuewmy/",
+    "source_link": "https://goout.net/sk/taste-kosice-2026/szuewmy/",
+    "type": "event",
+    "posted_at": 1792182443.040859,
+    "max_ttl": 1792787243.040859
+  },
+  "goout_Stla": {
+    "message_id": 734,
+    "title": "Stála",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/zazi-barok/szhlkcv/",
+    "source_link": "https://goout.net/sk/zazi-barok/szhlkcv/",
+    "type": "event",
+    "posted_at": 1792182443.040859,
+    "max_ttl": 1792787243.040859
+  },
+  "goout_Zajtra": {
+    "message_id": 735,
+    "title": "Zajtra",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/kosice/akcie/lezfhdmkk/?scheduleTag=tomorrow",
+    "source_link": "https://goout.net/sk/kosice/akcie/lezfhdmkk/?scheduleTag=tomorrow",
+    "type": "event",
+    "posted_at": 1792182443.040859,
+    "max_ttl": 1792787243.040859
   }
 }
