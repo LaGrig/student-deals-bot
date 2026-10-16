@@ -644,5 +644,81 @@
     ],
     "message_id": 735,
     "is_evergreen": false
+  },
+  {
+    "id": "goout_pi26220272000",
+    "title": "pi 26. 2. 2027 20:00",
+    "category": "ивенты",
+    "badge": "🎭 [Ивенты]",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://goout.net/sk/peta-polnisova-and-evelyn-inzinierky-lasky-comedy-show/szqcpny/",
+    "main_tag": "ивенты",
+    "extra_tags": [
+      "ивенты"
+    ],
+    "message_id": 736,
+    "is_evergreen": false
+  },
+  {
+    "id": "goout_st18112000",
+    "title": "st 18. 11. 20:00",
+    "category": "ивенты",
+    "badge": "🎭 [Ивенты]",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://goout.net/sk/tiche-vody-celovecerny-dokumentarny-film/szerony/",
+    "main_tag": "ивенты",
+    "extra_tags": [
+      "ивенты"
+    ],
+    "message_id": 737,
+    "is_evergreen": false
+  },
+  {
+    "id": "goout_so21112000",
+    "title": "so 21. 11. 20:00",
+    "category": "ивенты",
+    "badge": "🎭 [Ивенты]",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://goout.net/sk/mama-je-spat/szgbumy/",
+    "main_tag": "ивенты",
+    "extra_tags": [
+      "ивенты"
+    ],
+    "message_id": 738,
+    "is_evergreen": false
+  },
+  {
+    "id": "goout_2026GoOutPLGAllrightsrese",
+    "title": "© 2026 GoOut PLG. All rights reserved.Nastavenia cookiesObchodné podmienky a zásady",
+    "category": "ивенты",
+    "badge": "🎭 [Ивенты]",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://terms.goout.net/",
+    "main_tag": "ивенты",
+    "extra_tags": [
+      "ивенты"
+    ],
+    "message_id": 739,
+    "is_evergreen": false
   }
 ]
