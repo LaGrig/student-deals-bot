@@ -166,5 +166,17 @@
     "type": "game",
     "posted_at": 1792432271.436647,
     "max_ttl": 1793037071.436647
+  },
+  "goout_pi13111900": {
+    "message_id": 742,
+    "title": "pi 13. 11. 19:00",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/kosicky-kaviar-2026/szqrmcy/",
+    "source_link": "https://goout.net/sk/kosicky-kaviar-2026/szqrmcy/",
+    "type": "event",
+    "posted_at": 1792451451.9422982,
+    "max_ttl": 1793056251.9422982
   }
 }

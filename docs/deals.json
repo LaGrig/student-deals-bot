@@ -758,5 +758,24 @@
     ],
     "message_id": 741,
     "is_evergreen": false
+  },
+  {
+    "id": "goout_pi13111900",
+    "title": "pi 13. 11. 19:00",
+    "category": "ивенты",
+    "badge": "🎭 [Ивенты]",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://goout.net/sk/kosicky-kaviar-2026/szqrmcy/",
+    "main_tag": "ивенты",
+    "extra_tags": [
+      "ивенты"
+    ],
+    "message_id": 742,
+    "is_evergreen": false
   }
 ]
