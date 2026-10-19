@@ -142,5 +142,29 @@
     "type": "event",
     "posted_at": 1792189001.811359,
     "max_ttl": 1792793801.811359
+  },
+  "3821": {
+    "message_id": 740,
+    "title": "HELLCARD Steam Key Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $24.99)",
+    "target_link": "https://www.gamerpower.com/open/hellcard-steam-key-giveaway",
+    "source_link": "https://www.gamerpower.com/open/hellcard-steam-key-giveaway",
+    "type": "game",
+    "posted_at": 1792432271.436647,
+    "max_ttl": 1793037071.436647
+  },
+  "3820": {
+    "message_id": 741,
+    "title": "GetHigh.EXE (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $1.99)",
+    "target_link": "https://www.gamerpower.com/open/gethigh-exe-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/gethigh-exe-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1792432271.436647,
+    "max_ttl": 1793037071.436647
   }
 }
