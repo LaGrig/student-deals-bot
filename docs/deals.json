@@ -796,5 +796,24 @@
     ],
     "message_id": 743,
     "is_evergreen": false
+  },
+  {
+    "id": "3822",
+    "title": "Terraspace (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $7.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/terraspace-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 744,
+    "is_evergreen": false
   }
 ]

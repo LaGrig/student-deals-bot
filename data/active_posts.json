@@ -190,5 +190,17 @@
     "type": "event",
     "posted_at": 1792548788.764732,
     "max_ttl": 1793153588.764732
+  },
+  "3822": {
+    "message_id": 744,
+    "title": "Terraspace (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $7.99)",
+    "target_link": "https://www.gamerpower.com/open/terraspace-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/terraspace-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1792623071.711094,
+    "max_ttl": 1793227871.711094
   }
 }
