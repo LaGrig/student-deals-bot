@@ -202,5 +202,29 @@
     "type": "game",
     "posted_at": 1792623071.711094,
     "max_ttl": 1793227871.711094
+  },
+  "goout_zajtra1830": {
+    "message_id": 745,
+    "title": "zajtra 18:30",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/nezfales+houba+support/szmqqfy/",
+    "source_link": "https://goout.net/sk/nezfales+houba+support/szmqqfy/",
+    "type": "event",
+    "posted_at": 1792634838.0547426,
+    "max_ttl": 1793239638.0547426
+  },
+  "goout_zajtra2300": {
+    "message_id": 746,
+    "title": "zajtra 23:00",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/katannah/szarbny/",
+    "source_link": "https://goout.net/sk/katannah/szarbny/",
+    "type": "event",
+    "posted_at": 1792634838.0547426,
+    "max_ttl": 1793239638.0547426
   }
 }
