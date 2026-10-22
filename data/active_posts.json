@@ -1,52 +1,4 @@
 {
-  "egs_6a846880836044a2adad614ac771f487": {
-    "message_id": 728,
-    "title": "Bad Cheese",
-    "category": "Игры",
-    "main_tag": "игры",
-    "benefit": "Бесплатно 100% (вместо €11.69)",
-    "target_link": "https://store.epicgames.com/p/ae5d8fc5541f42eea105f64121dba382",
-    "source_link": "https://store.epicgames.com/p/ae5d8fc5541f42eea105f64121dba382",
-    "type": "game",
-    "posted_at": 1792079485.673376,
-    "max_ttl": 1792684285.673376
-  },
-  "egs_db1202a30c5541dd99cdf54c918a9348": {
-    "message_id": 729,
-    "title": "Agent A - игра под прикрытием",
-    "category": "Игры",
-    "main_tag": "игры",
-    "benefit": "Бесплатно 100% (вместо €17.99)",
-    "target_link": "https://store.epicgames.com/p/agent-a-a-puzzle-in-disguise",
-    "source_link": "https://store.epicgames.com/p/agent-a-a-puzzle-in-disguise",
-    "type": "game",
-    "posted_at": 1792079485.673376,
-    "max_ttl": 1792684285.673376
-  },
-  "3817": {
-    "message_id": 730,
-    "title": "Agent A: A puzzle in disguise (Epic Games) Giveaway",
-    "category": "Игры",
-    "main_tag": "игры",
-    "benefit": "Бесплатно 100% (вместо $19.99)",
-    "target_link": "https://www.gamerpower.com/open/agent-a-a-puzzle-in-disguise-epic-games-giveaway",
-    "source_link": "https://www.gamerpower.com/open/agent-a-a-puzzle-in-disguise-epic-games-giveaway",
-    "type": "game",
-    "posted_at": 1792079485.673376,
-    "max_ttl": 1792684285.673376
-  },
-  "3816": {
-    "message_id": 731,
-    "title": "Bad Cheese (Epic Games) Giveaway",
-    "category": "Игры",
-    "main_tag": "игры",
-    "benefit": "Бесплатно 100% (вместо $12.99)",
-    "target_link": "https://www.gamerpower.com/open/bad-cheese-epic-games-giveaway",
-    "source_link": "https://www.gamerpower.com/open/bad-cheese-epic-games-giveaway",
-    "type": "game",
-    "posted_at": 1792079485.673376,
-    "max_ttl": 1792684285.673376
-  },
   "goout_17620263112027": {
     "message_id": 732,
     "title": "17. 6. 2026–31. 1. 2027",
@@ -226,5 +178,53 @@
     "type": "event",
     "posted_at": 1792634838.0547426,
     "max_ttl": 1793239638.0547426
+  },
+  "egs_6aab3ddef4f84fbc9dd81c60f9d8549c": {
+    "message_id": 747,
+    "title": "Sker Ritual",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо €22.39)",
+    "target_link": "https://store.epicgames.com/p/8dbc8d70481d4c0b8412d3aec76a35a1",
+    "source_link": "https://store.epicgames.com/p/8dbc8d70481d4c0b8412d3aec76a35a1",
+    "type": "game",
+    "posted_at": 1792685419.779315,
+    "max_ttl": 1793290219.779315
+  },
+  "egs_06190191cede42afb633fe89ef08c27e": {
+    "message_id": 748,
+    "title": "Home - A Unique Horror Adventure",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо €4.49)",
+    "target_link": "https://store.epicgames.com/p/ff70f2b02fd842f8961f7729af25cda9",
+    "source_link": "https://store.epicgames.com/p/ff70f2b02fd842f8961f7729af25cda9",
+    "type": "game",
+    "posted_at": 1792685419.779315,
+    "max_ttl": 1793290219.779315
+  },
+  "3824": {
+    "message_id": 749,
+    "title": "Sker Ritual (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $19.99)",
+    "target_link": "https://www.gamerpower.com/open/sker-ritual",
+    "source_link": "https://www.gamerpower.com/open/sker-ritual",
+    "type": "game",
+    "posted_at": 1792685419.779315,
+    "max_ttl": 1793290219.779315
+  },
+  "3823": {
+    "message_id": 750,
+    "title": "Home (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $4.99)",
+    "target_link": "https://www.gamerpower.com/open/home",
+    "source_link": "https://www.gamerpower.com/open/home",
+    "type": "game",
+    "posted_at": 1792685419.779315,
+    "max_ttl": 1793290219.779315
   }
 }

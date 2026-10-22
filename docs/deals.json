@@ -494,82 +494,6 @@
     "is_evergreen": true
   },
   {
-    "id": "egs_6a846880836044a2adad614ac771f487",
-    "title": "Bad Cheese",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо €11.69)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.epicgames.com/p/ae5d8fc5541f42eea105f64121dba382",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 728,
-    "is_evergreen": false
-  },
-  {
-    "id": "egs_db1202a30c5541dd99cdf54c918a9348",
-    "title": "Agent A - игра под прикрытием",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо €17.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.epicgames.com/p/agent-a-a-puzzle-in-disguise",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 729,
-    "is_evergreen": false
-  },
-  {
-    "id": "3817",
-    "title": "Agent A: A puzzle in disguise (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $19.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/agent-a-a-puzzle-in-disguise-epic-games-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 730,
-    "is_evergreen": false
-  },
-  {
-    "id": "3816",
-    "title": "Bad Cheese (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $12.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/bad-cheese-epic-games-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 731,
-    "is_evergreen": false
-  },
-  {
     "id": "goout_17620263112027",
     "title": "17. 6. 2026–31. 1. 2027",
     "category": "ивенты",
@@ -852,6 +776,82 @@
       "ивенты"
     ],
     "message_id": 746,
+    "is_evergreen": false
+  },
+  {
+    "id": "egs_6aab3ddef4f84fbc9dd81c60f9d8549c",
+    "title": "Sker Ritual",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо €22.39)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/8dbc8d70481d4c0b8412d3aec76a35a1",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 747,
+    "is_evergreen": false
+  },
+  {
+    "id": "egs_06190191cede42afb633fe89ef08c27e",
+    "title": "Home - A Unique Horror Adventure",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо €4.49)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/ff70f2b02fd842f8961f7729af25cda9",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 748,
+    "is_evergreen": false
+  },
+  {
+    "id": "3824",
+    "title": "Sker Ritual (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $19.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/sker-ritual",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 749,
+    "is_evergreen": false
+  },
+  {
+    "id": "3823",
+    "title": "Home (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $4.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/home",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 750,
     "is_evergreen": false
   }
 ]
