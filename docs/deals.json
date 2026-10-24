@@ -701,5 +701,24 @@
     ],
     "message_id": 750,
     "is_evergreen": false
+  },
+  {
+    "id": "goout_ne8112000",
+    "title": "ne 8. 11. 20:00",
+    "category": "ивенты",
+    "badge": "🎭 [Ивенты]",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://goout.net/sk/libor-machacek-poradna-prace/szlwggy/",
+    "main_tag": "ивенты",
+    "extra_tags": [
+      "ивенты"
+    ],
+    "message_id": 751,
+    "is_evergreen": false
   }
 ]

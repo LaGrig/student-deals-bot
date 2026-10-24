@@ -130,5 +130,17 @@
     "type": "game",
     "posted_at": 1792685419.779315,
     "max_ttl": 1793290219.779315
+  },
+  "goout_ne8112000": {
+    "message_id": 751,
+    "title": "ne 8. 11. 20:00",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/libor-machacek-poradna-prace/szlwggy/",
+    "source_link": "https://goout.net/sk/libor-machacek-poradna-prace/szlwggy/",
+    "type": "event",
+    "posted_at": 1792853882.399835,
+    "max_ttl": 1793458682.399835
   }
 }
