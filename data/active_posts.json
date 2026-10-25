@@ -154,5 +154,17 @@
     "type": "game",
     "posted_at": 1792893433.5658026,
     "max_ttl": 1793498233.5658026
+  },
+  "goout_pi30102000": {
+    "message_id": 753,
+    "title": "pi 30. 10. 20:00",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/saul-and-hasan-od-nekonecna-do-davna-tour-kosice/szrvoiy/",
+    "source_link": "https://goout.net/sk/saul-and-hasan-od-nekonecna-do-davna-tour-kosice/szrvoiy/",
+    "type": "event",
+    "posted_at": 1792940897.5692701,
+    "max_ttl": 1793545697.5692701
   }
 }
