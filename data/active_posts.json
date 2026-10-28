@@ -1,16 +1,4 @@
 {
-  "goout_zajtra2000": {
-    "message_id": 743,
-    "title": "zajtra 20:00",
-    "category": "Ивенты",
-    "main_tag": "ивенты",
-    "benefit": "Студенческие билеты / Вход свободный",
-    "target_link": "https://goout.net/sk/marko-damian/szhqimy/",
-    "source_link": "https://goout.net/sk/marko-damian/szhqimy/",
-    "type": "event",
-    "posted_at": 1792548788.764732,
-    "max_ttl": 1793153588.764732
-  },
   "3822": {
     "message_id": 744,
     "title": "Terraspace (Epic Games) Giveaway",
