@@ -494,82 +494,6 @@
     "is_evergreen": true
   },
   {
-    "id": "egs_6aab3ddef4f84fbc9dd81c60f9d8549c",
-    "title": "Sker Ritual",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо €22.39)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.epicgames.com/p/8dbc8d70481d4c0b8412d3aec76a35a1",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 747,
-    "is_evergreen": false
-  },
-  {
-    "id": "egs_06190191cede42afb633fe89ef08c27e",
-    "title": "Home - A Unique Horror Adventure",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо €4.49)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.epicgames.com/p/ff70f2b02fd842f8961f7729af25cda9",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 748,
-    "is_evergreen": false
-  },
-  {
-    "id": "3824",
-    "title": "Sker Ritual (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $19.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/sker-ritual",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 749,
-    "is_evergreen": false
-  },
-  {
-    "id": "3823",
-    "title": "Home (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $4.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/home",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 750,
-    "is_evergreen": false
-  },
-  {
     "id": "goout_ne8112000",
     "title": "ne 8. 11. 20:00",
     "category": "ивенты",
@@ -643,6 +567,63 @@
       "ивенты"
     ],
     "message_id": 754,
+    "is_evergreen": false
+  },
+  {
+    "id": "egs_4e469c7d8bbf49bcabc2c07127d3d946",
+    "title": "Sorry We're Closed",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо €22.39)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/f2dae10b3c45425ba1e91b4604262283",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 755,
+    "is_evergreen": false
+  },
+  {
+    "id": "3834",
+    "title": "Hexologic (Steam) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $4.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/hexologic-steam-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 756,
+    "is_evergreen": false
+  },
+  {
+    "id": "3426",
+    "title": "Sorry We're Closed (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $24.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/sorry-we-re-closed-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 757,
     "is_evergreen": false
   }
 ]
