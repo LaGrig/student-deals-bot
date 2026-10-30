@@ -625,5 +625,24 @@
     ],
     "message_id": 757,
     "is_evergreen": false
+  },
+  {
+    "id": "3836",
+    "title": "Asleep: Act 1 (Steam) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $9.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/asleep-act-1-steam-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 758,
+    "is_evergreen": false
   }
 ]
