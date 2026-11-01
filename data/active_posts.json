@@ -106,5 +106,17 @@
     "type": "event",
     "posted_at": 1793553531.075209,
     "max_ttl": 1794158331.075209
+  },
+  "3840": {
+    "message_id": 763,
+    "title": "Horse Racing (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $9.99)",
+    "target_link": "https://www.gamerpower.com/open/horse-racing-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/horse-racing-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1793574666.7237349,
+    "max_ttl": 1794179466.7237349
   }
 }

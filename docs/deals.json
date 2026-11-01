@@ -663,5 +663,24 @@
     ],
     "message_id": 762,
     "is_evergreen": false
+  },
+  {
+    "id": "3840",
+    "title": "Horse Racing (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $9.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/horse-racing-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 763,
+    "is_evergreen": false
   }
 ]
