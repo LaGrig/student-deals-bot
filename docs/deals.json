@@ -682,5 +682,43 @@
     ],
     "message_id": 763,
     "is_evergreen": false
+  },
+  {
+    "id": "3842",
+    "title": "Highway Driving (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $9.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/highway-driving-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 764,
+    "is_evergreen": false
+  },
+  {
+    "id": "3841",
+    "title": "Dark Mystery (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $7.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/dark-mystery-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 765,
+    "is_evergreen": false
   }
 ]
