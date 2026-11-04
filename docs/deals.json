@@ -720,5 +720,81 @@
     ],
     "message_id": 766,
     "is_evergreen": false
+  },
+  {
+    "id": "t3_1xnfmev",
+    "title": "Columbia Sportswear Men's Steens Mountain Fleece Jacket $26.97 (S, M, XL)",
+    "category": "подписки",
+    "badge": "🛍 [Подписки]",
+    "benefit": "Скидки до 60–70% в европейских магазинах",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.academy.com/p/columbia-sportswear-mens-steens-mountain-fleece-jacket?sku=black-delta-x-large",
+    "main_tag": "подписки",
+    "extra_tags": [
+      "подписки"
+    ],
+    "message_id": 767,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1xndztl",
+    "title": "Men's Ski Jacket and Pant Set (Red) 60% Off ($80)",
+    "category": "подписки",
+    "badge": "🛍 [Подписки]",
+    "benefit": "Скидки до 60–70% в европейских магазинах",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.mountainwarehouse.com/us/p/043578/mw/mens-ski-jacket-and-pant-set/red/",
+    "main_tag": "подписки",
+    "extra_tags": [
+      "подписки"
+    ],
+    "message_id": 768,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1xmw862",
+    "title": "New Balance Reconsidered running 20% off sale",
+    "category": "подписки",
+    "badge": "🛍 [Подписки]",
+    "benefit": "Скидки до 60–70% в европейских магазинах",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://newbalancereconsidered.com/",
+    "main_tag": "подписки",
+    "extra_tags": [
+      "подписки"
+    ],
+    "message_id": 769,
+    "is_evergreen": false
+  },
+  {
+    "id": "t3_1xmw0y9",
+    "title": "Levi's 501 - ORIGINAL FIT - 70% off ($33)",
+    "category": "подписки",
+    "badge": "🛍 [Подписки]",
+    "benefit": "Скидки до 60–70% в европейских магазинах",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.revolvrmens.com/products/501-original-fit-a-soft-spot",
+    "main_tag": "подписки",
+    "extra_tags": [
+      "подписки"
+    ],
+    "message_id": 770,
+    "is_evergreen": false
   }
 ]

@@ -142,5 +142,53 @@
     "type": "event",
     "posted_at": 1793763209.4021869,
     "max_ttl": 1794368009.4021869
+  },
+  "t3_1xnfmev": {
+    "message_id": 767,
+    "title": "Columbia Sportswear Men's Steens Mountain Fleece Jacket $26.97 (S, M, XL)",
+    "category": "Скидки",
+    "main_tag": "скидки",
+    "benefit": "Скидки до 60–70% в европейских магазинах",
+    "target_link": "https://www.academy.com/p/columbia-sportswear-mens-steens-mountain-fleece-jacket?sku=black-delta-x-large",
+    "source_link": "https://www.academy.com/p/columbia-sportswear-mens-steens-mountain-fleece-jacket?sku=black-delta-x-large",
+    "type": "promo",
+    "posted_at": 1793792394.417682,
+    "max_ttl": 1794051594.417682
+  },
+  "t3_1xndztl": {
+    "message_id": 768,
+    "title": "Men's Ski Jacket and Pant Set (Red) 60% Off ($80)",
+    "category": "Скидки",
+    "main_tag": "скидки",
+    "benefit": "Скидки до 60–70% в европейских магазинах",
+    "target_link": "https://www.mountainwarehouse.com/us/p/043578/mw/mens-ski-jacket-and-pant-set/red/",
+    "source_link": "https://www.mountainwarehouse.com/us/p/043578/mw/mens-ski-jacket-and-pant-set/red/",
+    "type": "promo",
+    "posted_at": 1793792394.417682,
+    "max_ttl": 1794051594.417682
+  },
+  "t3_1xmw862": {
+    "message_id": 769,
+    "title": "New Balance Reconsidered running 20% off sale",
+    "category": "Скидки",
+    "main_tag": "скидки",
+    "benefit": "Скидки до 60–70% в европейских магазинах",
+    "target_link": "https://newbalancereconsidered.com/",
+    "source_link": "http://newbalancereconsidered.com/",
+    "type": "promo",
+    "posted_at": 1793792394.417682,
+    "max_ttl": 1794051594.417682
+  },
+  "t3_1xmw0y9": {
+    "message_id": 770,
+    "title": "Levi's 501 - ORIGINAL FIT - 70% off ($33)",
+    "category": "Скидки",
+    "main_tag": "скидки",
+    "benefit": "Скидки до 60–70% в европейских магазинах",
+    "target_link": "https://www.revolvrmens.com/products/501-original-fit-a-soft-spot",
+    "source_link": "https://www.revolvrmens.com/products/501-original-fit-a-soft-spot",
+    "type": "promo",
+    "posted_at": 1793792394.417682,
+    "max_ttl": 1794051594.417682
   }
 }
