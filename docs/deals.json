@@ -494,63 +494,6 @@
     "is_evergreen": true
   },
   {
-    "id": "egs_4e469c7d8bbf49bcabc2c07127d3d946",
-    "title": "Sorry We're Closed",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо €22.39)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.epicgames.com/p/f2dae10b3c45425ba1e91b4604262283",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 755,
-    "is_evergreen": false
-  },
-  {
-    "id": "3834",
-    "title": "Hexologic (Steam) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $4.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/hexologic-steam-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 756,
-    "is_evergreen": false
-  },
-  {
-    "id": "3426",
-    "title": "Sorry We're Closed (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $24.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/sorry-we-re-closed-epic-games-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 757,
-    "is_evergreen": false
-  },
-  {
     "id": "3836",
     "title": "Asleep: Act 1 (Steam) Giveaway",
     "category": "игры",
@@ -814,6 +757,63 @@
       "игры"
     ],
     "message_id": 771,
+    "is_evergreen": false
+  },
+  {
+    "id": "egs_a9748abde1c94b66aae5250bb9fc5503",
+    "title": "Idle Champions of the Forgotten Realms",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо Бесплатно)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/idle-champions-of-the-forgotten-realms",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 772,
+    "is_evergreen": false
+  },
+  {
+    "id": "egs_3be0a0d8479946d78f60d90c9442a0b4",
+    "title": "Flotsam",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо €19.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/7ca01ab906ad4eff92d4ed1efa5fbfcb",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 773,
+    "is_evergreen": false
+  },
+  {
+    "id": "3845",
+    "title": "Flotsam (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $24.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/flotsam-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 774,
     "is_evergreen": false
   }
 ]

@@ -1,40 +1,4 @@
 {
-  "egs_4e469c7d8bbf49bcabc2c07127d3d946": {
-    "message_id": 755,
-    "title": "Sorry We're Closed",
-    "category": "Игры",
-    "main_tag": "игры",
-    "benefit": "Бесплатно 100% (вместо €22.39)",
-    "target_link": "https://store.epicgames.com/p/f2dae10b3c45425ba1e91b4604262283",
-    "source_link": "https://store.epicgames.com/p/f2dae10b3c45425ba1e91b4604262283",
-    "type": "game",
-    "posted_at": 1793295646.6639175,
-    "max_ttl": 1793900446.6639175
-  },
-  "3834": {
-    "message_id": 756,
-    "title": "Hexologic (Steam) Giveaway",
-    "category": "Игры",
-    "main_tag": "игры",
-    "benefit": "Бесплатно 100% (вместо $4.99)",
-    "target_link": "https://www.gamerpower.com/open/hexologic-steam-giveaway",
-    "source_link": "https://www.gamerpower.com/open/hexologic-steam-giveaway",
-    "type": "game",
-    "posted_at": 1793295646.6639175,
-    "max_ttl": 1793900446.6639175
-  },
-  "3426": {
-    "message_id": 757,
-    "title": "Sorry We're Closed (Epic Games) Giveaway",
-    "category": "Игры",
-    "main_tag": "игры",
-    "benefit": "Бесплатно 100% (вместо $24.99)",
-    "target_link": "https://www.gamerpower.com/open/sorry-we-re-closed-epic-games-giveaway",
-    "source_link": "https://www.gamerpower.com/open/sorry-we-re-closed-epic-games-giveaway",
-    "type": "game",
-    "posted_at": 1793295646.6639175,
-    "max_ttl": 1793900446.6639175
-  },
   "3836": {
     "message_id": 758,
     "title": "Asleep: Act 1 (Steam) Giveaway",
@@ -202,5 +166,41 @@
     "type": "game",
     "posted_at": 1793818618.9795413,
     "max_ttl": 1794423418.9795413
+  },
+  "egs_a9748abde1c94b66aae5250bb9fc5503": {
+    "message_id": 772,
+    "title": "Idle Champions of the Forgotten Realms",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо Бесплатно)",
+    "target_link": "https://store.epicgames.com/p/idle-champions-of-the-forgotten-realms",
+    "source_link": "https://store.epicgames.com/p/idle-champions-of-the-forgotten-realms",
+    "type": "game",
+    "posted_at": 1793905722.7534795,
+    "max_ttl": 1794510522.7534795
+  },
+  "egs_3be0a0d8479946d78f60d90c9442a0b4": {
+    "message_id": 773,
+    "title": "Flotsam",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо €19.99)",
+    "target_link": "https://store.epicgames.com/p/7ca01ab906ad4eff92d4ed1efa5fbfcb",
+    "source_link": "https://store.epicgames.com/p/7ca01ab906ad4eff92d4ed1efa5fbfcb",
+    "type": "game",
+    "posted_at": 1793905722.7534795,
+    "max_ttl": 1794510522.7534795
+  },
+  "3845": {
+    "message_id": 774,
+    "title": "Flotsam (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $24.99)",
+    "target_link": "https://www.gamerpower.com/open/flotsam-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/flotsam-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1793905722.7534795,
+    "max_ttl": 1794510522.7534795
   }
 }
