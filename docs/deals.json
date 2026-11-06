@@ -815,5 +815,24 @@
     ],
     "message_id": 774,
     "is_evergreen": false
+  },
+  {
+    "id": "3847",
+    "title": "GMH - Good Morning Human (Epic Games) Giveaways",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $9.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/gmh-good-morning-human-epic-games-giveaways",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 775,
+    "is_evergreen": false
   }
 ]
