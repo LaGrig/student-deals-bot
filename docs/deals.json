@@ -494,63 +494,6 @@
     "is_evergreen": true
   },
   {
-    "id": "3839",
-    "title": "Epic World - Hunt For Quest (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $6.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/epic-world-hunt-for-quest-epic-games-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 761,
-    "is_evergreen": false
-  },
-  {
-    "id": "goout_so19122000",
-    "title": "so 19. 12. 20:00",
-    "category": "ивенты",
-    "badge": "🎭 [Ивенты]",
-    "benefit": "Студенческие билеты / Вход свободный",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://goout.net/sk/porsche-boy-and-wen-east-side-sound-anniversary/sznisoy/",
-    "main_tag": "ивенты",
-    "extra_tags": [
-      "ивенты"
-    ],
-    "message_id": 762,
-    "is_evergreen": false
-  },
-  {
-    "id": "3840",
-    "title": "Horse Racing (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $9.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/horse-racing-epic-games-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 763,
-    "is_evergreen": false
-  },
-  {
     "id": "3842",
     "title": "Highway Driving (Epic Games) Giveaway",
     "category": "игры",
