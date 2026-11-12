@@ -494,63 +494,6 @@
     "is_evergreen": true
   },
   {
-    "id": "egs_a9748abde1c94b66aae5250bb9fc5503",
-    "title": "Idle Champions of the Forgotten Realms",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо Бесплатно)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.epicgames.com/p/idle-champions-of-the-forgotten-realms",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 772,
-    "is_evergreen": false
-  },
-  {
-    "id": "egs_3be0a0d8479946d78f60d90c9442a0b4",
-    "title": "Flotsam",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо €19.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.epicgames.com/p/7ca01ab906ad4eff92d4ed1efa5fbfcb",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 773,
-    "is_evergreen": false
-  },
-  {
-    "id": "3845",
-    "title": "Flotsam (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $24.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/flotsam-epic-games-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 774,
-    "is_evergreen": false
-  },
-  {
     "id": "3847",
     "title": "GMH - Good Morning Human (Epic Games) Giveaways",
     "category": "игры",
@@ -567,6 +510,44 @@
       "игры"
     ],
     "message_id": 775,
+    "is_evergreen": false
+  },
+  {
+    "id": "egs_9975548b6d404a94b8a9bdb34cad49e9",
+    "title": "Knightica",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо €13.49)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/72b46f5d95624fd5b7e7d81b7dcaead1",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 776,
+    "is_evergreen": false
+  },
+  {
+    "id": "3850",
+    "title": "Knightica (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $14.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/knightica-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 777,
     "is_evergreen": false
   }
 ]
