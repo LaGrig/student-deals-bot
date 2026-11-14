@@ -530,5 +530,24 @@
     ],
     "message_id": 777,
     "is_evergreen": false
+  },
+  {
+    "id": "goout_t1420271900",
+    "title": "št 1. 4. 2027 19:00",
+    "category": "ивенты",
+    "badge": "🎭 [Ивенты]",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://goout.net/sk/kosicky-bratislavsky-kaviar/szgjvny/",
+    "main_tag": "ивенты",
+    "extra_tags": [
+      "ивенты"
+    ],
+    "message_id": 778,
+    "is_evergreen": false
   }
 ]

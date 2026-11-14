@@ -22,5 +22,17 @@
     "type": "game",
     "posted_at": 1794511261.060214,
     "max_ttl": 1795116061.060214
+  },
+  "goout_t1420271900": {
+    "message_id": 778,
+    "title": "št 1. 4. 2027 19:00",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/kosicky-bratislavsky-kaviar/szgjvny/",
+    "source_link": "https://goout.net/sk/kosicky-bratislavsky-kaviar/szgjvny/",
+    "type": "event",
+    "posted_at": 1794616260.918183,
+    "max_ttl": 1795221060.918183
   }
 }
