@@ -70,5 +70,41 @@
     "type": "event",
     "posted_at": 1795063439.699039,
     "max_ttl": 1795668239.699039
+  },
+  "egs_1f9a12b06b4f437790b6913ad136a08c": {
+    "message_id": 782,
+    "title": "Mark of the Deep",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо €19.50)",
+    "target_link": "https://store.epicgames.com/p/2fd257a6cd80405a833f9004ff07993a",
+    "source_link": "https://store.epicgames.com/p/2fd257a6cd80405a833f9004ff07993a",
+    "type": "game",
+    "posted_at": 1795107165.6237743,
+    "max_ttl": 1795711965.6237743
+  },
+  "3853": {
+    "message_id": 783,
+    "title": "Mark of the Deep (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $19.99)",
+    "target_link": "https://www.gamerpower.com/open/mark-of-the-deep-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/mark-of-the-deep-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1795107165.6237743,
+    "max_ttl": 1795711965.6237743
+  },
+  "goout_191120261232027": {
+    "message_id": 784,
+    "title": "19. 11. 2026–12. 3. 2027",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/nekonecna-linia-pribeh-drotu-v-case/szaatpy/",
+    "source_link": "https://goout.net/sk/nekonecna-linia-pribeh-drotu-v-case/szaatpy/",
+    "type": "event",
+    "posted_at": 1795107165.6237743,
+    "max_ttl": 1795711965.6237743
   }
 }
