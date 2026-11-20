@@ -494,44 +494,6 @@
     "is_evergreen": true
   },
   {
-    "id": "egs_9975548b6d404a94b8a9bdb34cad49e9",
-    "title": "Knightica",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо €13.49)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.epicgames.com/p/72b46f5d95624fd5b7e7d81b7dcaead1",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 776,
-    "is_evergreen": false
-  },
-  {
-    "id": "3850",
-    "title": "Knightica (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $14.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/knightica-epic-games-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 777,
-    "is_evergreen": false
-  },
-  {
     "id": "goout_t1420271900",
     "title": "št 1. 4. 2027 19:00",
     "category": "ивенты",
