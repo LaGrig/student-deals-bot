@@ -606,5 +606,24 @@
     ],
     "message_id": 784,
     "is_evergreen": false
+  },
+  {
+    "id": "goout_pi532027",
+    "title": "pi 5. 3. 2027",
+    "category": "ивенты",
+    "badge": "🎭 [Ивенты]",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://goout.net/sk/alan-murin/szdsspy/",
+    "main_tag": "ивенты",
+    "extra_tags": [
+      "ивенты"
+    ],
+    "message_id": 785,
+    "is_evergreen": false
   }
 ]

@@ -70,5 +70,17 @@
     "type": "event",
     "posted_at": 1795107165.6237743,
     "max_ttl": 1795711965.6237743
+  },
+  "goout_pi532027": {
+    "message_id": 785,
+    "title": "pi 5. 3. 2027",
+    "category": "Ивенты",
+    "main_tag": "ивенты",
+    "benefit": "Студенческие билеты / Вход свободный",
+    "target_link": "https://goout.net/sk/alan-murin/szdsspy/",
+    "source_link": "https://goout.net/sk/alan-murin/szdsspy/",
+    "type": "event",
+    "posted_at": 1795462457.1842873,
+    "max_ttl": 1796067257.1842873
   }
 }
