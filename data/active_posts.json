@@ -1,16 +1,4 @@
 {
-  "goout_dnes1800": {
-    "message_id": 780,
-    "title": "dnes 18:00",
-    "category": "Ивенты",
-    "main_tag": "ивенты",
-    "benefit": "Студенческие билеты / Вход свободный",
-    "target_link": "https://goout.net/sk/tiche-vody-celovecerny-dokumentarny-film/szavhny/",
-    "source_link": "https://goout.net/sk/tiche-vody-celovecerny-dokumentarny-film/szavhny/",
-    "type": "event",
-    "posted_at": 1794966891.8401127,
-    "max_ttl": 1795571691.8401127
-  },
   "goout_Zruen": {
     "message_id": 781,
     "title": "Zrušené:",
