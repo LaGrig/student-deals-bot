@@ -1,16 +1,4 @@
 {
-  "goout_Zruen": {
-    "message_id": 781,
-    "title": "Zrušené:",
-    "category": "Ивенты",
-    "main_tag": "ивенты",
-    "benefit": "Студенческие билеты / Вход свободный",
-    "target_link": "https://goout.net/sk/sergei-barracuda/szwiily/",
-    "source_link": "https://goout.net/sk/sergei-barracuda/szwiily/",
-    "type": "event",
-    "posted_at": 1795063439.699039,
-    "max_ttl": 1795668239.699039
-  },
   "egs_1f9a12b06b4f437790b6913ad136a08c": {
     "message_id": 782,
     "title": "Mark of the Deep",
