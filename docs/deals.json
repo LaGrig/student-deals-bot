@@ -494,63 +494,6 @@
     "is_evergreen": true
   },
   {
-    "id": "egs_1f9a12b06b4f437790b6913ad136a08c",
-    "title": "Mark of the Deep",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо €19.50)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://store.epicgames.com/p/2fd257a6cd80405a833f9004ff07993a",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 782,
-    "is_evergreen": false
-  },
-  {
-    "id": "3853",
-    "title": "Mark of the Deep (Epic Games) Giveaway",
-    "category": "игры",
-    "badge": "🎮 [Игры]",
-    "benefit": "Бесплатно 100% (вместо $19.99)",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://www.gamerpower.com/open/mark-of-the-deep-epic-games-giveaway",
-    "main_tag": "игры",
-    "extra_tags": [
-      "игры"
-    ],
-    "message_id": 783,
-    "is_evergreen": false
-  },
-  {
-    "id": "goout_191120261232027",
-    "title": "19. 11. 2026–12. 3. 2027",
-    "category": "ивенты",
-    "badge": "🎭 [Ивенты]",
-    "benefit": "Студенческие билеты / Вход свободный",
-    "duration": "Временное предложение",
-    "region": "Онлайн / Кошице",
-    "requirements": "Учётная запись платформы",
-    "description": "",
-    "how_to": "Перейдите по ссылке предложения.",
-    "link": "https://goout.net/sk/nekonecna-linia-pribeh-drotu-v-case/szaatpy/",
-    "main_tag": "ивенты",
-    "extra_tags": [
-      "ивенты"
-    ],
-    "message_id": 784,
-    "is_evergreen": false
-  },
-  {
     "id": "goout_pi532027",
     "title": "pi 5. 3. 2027",
     "category": "ивенты",
@@ -567,6 +510,63 @@
       "ивенты"
     ],
     "message_id": 785,
+    "is_evergreen": false
+  },
+  {
+    "id": "egs_0623017cf9f341efbe07557f46beb4e8",
+    "title": "Firestone - кликер idle онлайн RPG",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо Бесплатно)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/1185abfe7c554a1e8c528aba37bf3d0f",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 786,
+    "is_evergreen": false
+  },
+  {
+    "id": "egs_f0a333114190492c84a9decd2bb43875",
+    "title": "Bread and Fred",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо €13.49)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://store.epicgames.com/p/3435439bd89847608f5299fb297d1466",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 787,
+    "is_evergreen": false
+  },
+  {
+    "id": "3857",
+    "title": "Bread and Fred (Epic Games) Giveaway",
+    "category": "игры",
+    "badge": "🎮 [Игры]",
+    "benefit": "Бесплатно 100% (вместо $14.99)",
+    "duration": "Временное предложение",
+    "region": "Онлайн / Кошице",
+    "requirements": "Учётная запись платформы",
+    "description": "",
+    "how_to": "Перейдите по ссылке предложения.",
+    "link": "https://www.gamerpower.com/open/bread-and-fred-epic-games-giveaway",
+    "main_tag": "игры",
+    "extra_tags": [
+      "игры"
+    ],
+    "message_id": 788,
     "is_evergreen": false
   }
 ]

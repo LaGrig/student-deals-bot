@@ -1,40 +1,4 @@
 {
-  "egs_1f9a12b06b4f437790b6913ad136a08c": {
-    "message_id": 782,
-    "title": "Mark of the Deep",
-    "category": "Игры",
-    "main_tag": "игры",
-    "benefit": "Бесплатно 100% (вместо €19.50)",
-    "target_link": "https://store.epicgames.com/p/2fd257a6cd80405a833f9004ff07993a",
-    "source_link": "https://store.epicgames.com/p/2fd257a6cd80405a833f9004ff07993a",
-    "type": "game",
-    "posted_at": 1795107165.6237743,
-    "max_ttl": 1795711965.6237743
-  },
-  "3853": {
-    "message_id": 783,
-    "title": "Mark of the Deep (Epic Games) Giveaway",
-    "category": "Игры",
-    "main_tag": "игры",
-    "benefit": "Бесплатно 100% (вместо $19.99)",
-    "target_link": "https://www.gamerpower.com/open/mark-of-the-deep-epic-games-giveaway",
-    "source_link": "https://www.gamerpower.com/open/mark-of-the-deep-epic-games-giveaway",
-    "type": "game",
-    "posted_at": 1795107165.6237743,
-    "max_ttl": 1795711965.6237743
-  },
-  "goout_191120261232027": {
-    "message_id": 784,
-    "title": "19. 11. 2026–12. 3. 2027",
-    "category": "Ивенты",
-    "main_tag": "ивенты",
-    "benefit": "Студенческие билеты / Вход свободный",
-    "target_link": "https://goout.net/sk/nekonecna-linia-pribeh-drotu-v-case/szaatpy/",
-    "source_link": "https://goout.net/sk/nekonecna-linia-pribeh-drotu-v-case/szaatpy/",
-    "type": "event",
-    "posted_at": 1795107165.6237743,
-    "max_ttl": 1795711965.6237743
-  },
   "goout_pi532027": {
     "message_id": 785,
     "title": "pi 5. 3. 2027",
@@ -46,5 +10,41 @@
     "type": "event",
     "posted_at": 1795462457.1842873,
     "max_ttl": 1796067257.1842873
+  },
+  "egs_0623017cf9f341efbe07557f46beb4e8": {
+    "message_id": 786,
+    "title": "Firestone - кликер idle онлайн RPG",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо Бесплатно)",
+    "target_link": "https://store.epicgames.com/p/1185abfe7c554a1e8c528aba37bf3d0f",
+    "source_link": "https://store.epicgames.com/p/1185abfe7c554a1e8c528aba37bf3d0f",
+    "type": "game",
+    "posted_at": 1795715763.2099457,
+    "max_ttl": 1796320563.2099457
+  },
+  "egs_f0a333114190492c84a9decd2bb43875": {
+    "message_id": 787,
+    "title": "Bread and Fred",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо €13.49)",
+    "target_link": "https://store.epicgames.com/p/3435439bd89847608f5299fb297d1466",
+    "source_link": "https://store.epicgames.com/p/3435439bd89847608f5299fb297d1466",
+    "type": "game",
+    "posted_at": 1795715763.2099457,
+    "max_ttl": 1796320563.2099457
+  },
+  "3857": {
+    "message_id": 788,
+    "title": "Bread and Fred (Epic Games) Giveaway",
+    "category": "Игры",
+    "main_tag": "игры",
+    "benefit": "Бесплатно 100% (вместо $14.99)",
+    "target_link": "https://www.gamerpower.com/open/bread-and-fred-epic-games-giveaway",
+    "source_link": "https://www.gamerpower.com/open/bread-and-fred-epic-games-giveaway",
+    "type": "game",
+    "posted_at": 1795715763.2099457,
+    "max_ttl": 1796320563.2099457
   }
 }
